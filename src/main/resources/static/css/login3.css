@@ -1,0 +1,22 @@
+body {
+    background-image: url(/images/mainloginwallpaper5.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+
+}
+
+.card {
+    width: 400px;
+    height: 550px;
+    padding: 20px;
+    background-color: rgba(240, 248, 255, 0.51);
+    box-shadow: 0 25px 25px rgba(0, 0, 0, 0.471);
+    border-radius: 10px;
+}

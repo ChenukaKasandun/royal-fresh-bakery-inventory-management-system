@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/supplierPayment.css">
+</head>
+
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+  <div class="container-fluid">
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-5">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">
+        <h4><i class="fa-solid fa-credit-card"></i> Supplier Payment Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+
+
+
+
+    <div class="row mt-2">
+      <div class="col-8"></div>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" data-bs-toggle="modal" data-bs-target="#supplierPayment"><i class="fa-solid fa-plus"></i>
+        <b>Add Item</b>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="supplierPayment" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+              <div class="row">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <div class="card"
+                          style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                          <div class="card-body">
+                            <form onsubmit="return false " id="supplierPaymentForm">
+
+
+                              <div class="row mt-2 mb-3">
+                                <div class="col">
+                                  <label for="selectSupplierBillNo" class="form-label"><b>Supplier Bill No :<span
+                                        class="text-danger">*</span></b></label>
+                                  <select class="form-select" id="selectSupplierBillNo"
+                                    onchange="dynamicElementValidator(this,'supplierPayment','bill_no');"></select>
+                                </div>
+
+                                <div class="col">
+                                  <label for="selectGRNNo" class="form-label"><b>GRN No :<span
+                                        class="text-danger">*</span></b></label>
+                                  <select class="form-select" id="selectGRNNo"
+                                    onchange="dynamicElementValidator(this,'supplierPayment','grn_id');"></select>
+                                </div>
+
+                              </div>
+
+
+                              <div class="row mt-2 mb-3">
+                                <div class="col">
+                                  <label for="selectSupplierName" class="form-label"><b>Supplier Name:<span
+                                        class="text-danger">*</span></b></label>
+                                  <select class="form-select" id="selectSupplierName"
+                                    onchange="dynamicElementValidator(this,'supplierPayment','supplier_id');"></select>
+                                </div>
+
+
+                                <div class="col">
+                                  <div class="mb-3">
+                                    <label for="txtTotalPrice" class="form-label"><b>Total Price:<span
+                                          class="text-danger">*</span></b></label>
+                                    <input type="text" class="form-control" id="txtTotalPrice"
+                                      onkeyup="supplierPayment.total_price = this.value">
+                                  </div>
+
+                                </div>
+
+
+
+
+                              </div>
+
+
+
+                              <div class="row">
+
+                                <!-- Payment Method Radio Buttons -->
+                                <div class="col">
+                                  <label class="form-label"><b>Payment Method:<span
+                                        class="text-danger">*</span></b></label>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashRadio"
+                                      onchange="paymentMethodValidator()" value="cash">
+                                    <label class="form-check-label" for="cashRadio">Cash</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardRadio"
+                                      onchange="paymentMethodValidator()" value="card">
+                                    <label class="form-check-label" for="cardRadio">Card</label>
+                                  </div>
+                                </div>
+
+
+                                <!-- Collapse Section -->
+                                <div class="collapse mt-3" id="paymentDetailsCollapse">
+                                  <div class="card card-body"
+                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                    <div class="row">
+                                      <div class="col">
+                                        <div class="mb-3">
+                                          <label for="textPaidAmount" class="form-label"><b>Paid
+                                              Amount:<span class="text-danger">*</span></b></label>
+                                          <input type="text" class="form-control" id="textPaidAmount"
+                                            onkeyup="supplierPayment.paid_amount = this.value">
+                                        </div>
+
+                                      </div>
+
+                                      <div class="col">
+                                        <div class="mb-3">
+                                          <label for="textBalanceAmount" class="form-label"><b>Balance
+                                              Amount:<span class="text-danger">*</span></b></label>
+                                          <input type="text" class="form-control" id="textBalanceAmount"
+                                            onkeyup="supplierPayment.balance_amount = this.value">
+                                        </div>
+
+                                      </div>
+
+
+
+                                    </div>
+
+
+
+
+                                  </div>
+                                </div>
+
+
+                              </div>
+
+                              <div class="row mt-3">
+                                <div class="col">
+                                  <label class="form-label"><b>Payment Status:<span
+                                        class="text-danger">*</span></b></label>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentStatus" id="paidRadio"
+                                      onchange="paymentStatusValidator()" value="paid">
+                                    <label class="form-check-label" for="paidRadio">Paid</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="paymentStatus" id="notPaidRadio"
+                                      onchange="paymentStatusValidator()" value="notpaid">
+                                    <label class="form-check-label" for="notPaidRadio">Not Paid</label>
+                                  </div>
+                                </div>
+
+                              </div>
+
+
+
+
+
+
+
+
+
+                              <div class="row mt-2"></div>
+                              <div class="row mt-2"></div>
+                              <div class="row mt-2"></div>
+
+
+
+
+                              <div class="row mb-3">
+
+
+
+                                <label for="textNote" class="form-label fw-bold">Note :</label>
+                                <textarea class="form-control " id="textNote" rows="2"></textarea>
+
+                              </div>
+
+
+
+                            </form>
+
+
+                          </div>
+
+
+                        </div>
+
+
+                      </div>
+
+                      <div class="col">
+
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="card"
+                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                              <div class="card-body">
+
+                                <div class="row">
+                                  <div class="  text-center fw-bold title text-light">
+                                    <h5>Supplier Payment Inner Form</h5>
+                                  </div>
+
+                                  <div class="row"></div>
+                                  <div class="row"></div>
+
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="mb-3">
+                                      <label for="txtMaterial" class="form-label"><b>Material Name:<span
+                                            class="text-danger">*</span></b></label>
+                                      <input type="text" class="form-control" id="txtMaterial"
+                                        placeholder="Ex: Enter Item Name">
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                      <div class="invalid-feedback">
+                                        Looks not good!
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col">
+
+                                    <div class="mb-3">
+                                      <label for="txtMaterialQuantity" class="form-label"><b>Material Quantity:<span
+                                            class="text-danger">*</span></b></label>
+                                      <input type="text" class="form-control" id="txtMaterialQuantity"
+                                        placeholder="Ex: Enter Item Quantity">
+                                      <div class="valid-feedback">
+                                        Looks good!
+                                      </div>
+                                      <div class="invalid-feedback">
+                                        Looks not good!
+                                      </div>
+                                    </div>
+
+                                  </div>
+
+
+                                </div>
+
+
+
+
+                                <div class="row mt-2">
+
+                                  <div class="col-3 text-start">
+                                  </div>
+                                  <div class="col-9 text-end">
+                                    <button type="reset" class="btn btn-info"
+                                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                    <button type=" submit" class="btn btn-success"
+                                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
+                                        class=" fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                                  </div>
+
+
+                                </div>
+
+
+
+
+                              </div>
+                            </div>
+                            <br><br>
+
+                            <div class="card"
+                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                              <div class="card-body">
+
+                                <div class="row mt-2 mb-3">
+                                  <div class="  text-center fw-bold title text-light">
+                                    <h5>Supplier Payment Inner Table</h5>
+                                  </div>
+                                </div>
+                                <div class="row mt-2 mb-3">
+                                  <table class="table table-hover" id="itemInnerTable">
+                                    <thead class="table-dark">
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Material</th>
+                                        <th scope="col">Material Qty</th>
+                                        <th scope="col">Modify</th>
+
+                                      </tr>
+                                    </thead>
+                                    <tbody id="tableInnerItemBody">
+
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+
+
+                                    </tbody>
+                                  </table>
+
+                                </div>
+
+
+
+                              </div>
+                            </div>
+
+
+
+
+                          </div>
+                        </div>
+
+
+
+                      </div>
+
+
+                    </div>
+
+                    <div class="row mt-2">
+
+                      <div class="col-3 text-start">
+                        <button type="reset" class="btn btn-info" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">Clear</button>
+
+
+                      </div>
+                      <div class="col-9 text-end" id="buttonContainer">
+                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                          onclick="buttonSupplierPaymentUpdate()" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">Update</button>
+
+                        <button type="submit" class="btn btn-success" id="buttonSubmit" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" onclick="buttonSupplierPaymentSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                      </div>
+
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  </div>
+
+  <!-- model view/print -->
+  <div class="modal " id="modalSupplierPaymentView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalSupplierPaymentView">Print Supplier Payment Table</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="card">
+            <div class="card-body form-area">
+              <table class="table table-hover table-striped" id="tableSupplierView">
+
+
+                <tr>
+                  <th>Bill No</th>
+                  <td id="tdBillNo"></td>
+
+                </tr>
+                <tr>
+                  <th>GRN No</th>
+                  <td id="tdGRNNo"></td>
+                </tr>
+                <tr>
+                  <th>Supplier Name</th>
+                  <td id="tdSupplierName"></td>
+                </tr>
+                <tr>
+                  <th>Total Price</th>
+                  <td id="tdTotalPrice"></td>
+                </tr>
+
+                <tr>
+                  <th>Payment Status</th>
+                  <td id="tdPaymentStatus"></td>
+                </tr>
+                <tr>
+                  <th>Payment Method </th>
+                  <td id="tdPaymentMethod"></td>
+                </tr>
+
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" onclick="printSupplerPaymentRow()">Print</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="row mt-2 text-center ">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+      <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+        <div class="row mt-2 mb-3">
+          <h5><i class="fa-solid fa-table"></i> <b> Supplier Payment Table</b></h5>
+        </div>
+        <div class="row mt-2 mb-3">
+          <table class="table table-hover" id="payementTable">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bill No</th>
+                <th scope="col">GRN No</th>
+                <th scope="col">Supplier Name</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Payment Status</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Modify</th>
+
+
+              </tr>
+            </thead>
+            <tbody id="tablePaymentBody">
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/script/commonValidationFunctions.js"></script>
+  <script src="/uicontroller/supplierPayment.js"></script>
+
+
+</body>
+
+</html>

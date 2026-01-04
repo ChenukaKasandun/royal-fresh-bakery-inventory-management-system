@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/employee.css">
+    <!-- Vanilla Tilt.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <link rel="stylesheet" href="/css/dashboard2.css">
+    <link rel="stylesheet" href="/css/tiltFunction.css">
+
+</head>
+
+
+
+<body>
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+    <div class="card"
+        style="background-image: url(/images/newwallpaperlogin2.jpg); background-size: cover;">
+
+        <!-- As a heading -->
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light">
+                <h4><i class="fa-solid fa-user-tie"></i> Administration Center</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+        <div class="row">
+
+            <div class="col">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <a href="/employee" style="text-decoration: none;">
+                                <div class="card tilt-card uniform-card" data-tilt data-tilt-max="15"
+                                    data-tilt-speed="400" style="width: 300px;">
+
+                                    <div class="card-body text-center" style="color: brown;">
+                                        <h5 class="card-title fw-bold">Employee</h5>
+                                        <img src="/images/hand.png" alt="Delivery" class="img-fluid">
+
+                                    </div>
+                                </div>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <a href="/user" style="text-decoration: none;">
+                                <div class="card tilt-card uniform-card" style="width: 300px;" data-tilt
+                                    data-tilt-max="15" data-tilt-speed="400">
+
+                                    <div class="card-body text-center" style="color: brown;">
+                                        <h5 class="card-title fw-bold">User</h5>
+                                        <img src="/images/bussiness-man.png" alt="User" class="img-fluid">
+
+                                    </div>
+                                </div>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="col">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <a href="/privilege" style="text-decoration: none;">
+                                <div class="card tilt-card uniform-card" style="width: 300px;" data-tilt
+                                    data-tilt-max="15" data-tilt-speed="400">
+
+                                    <div class="card-body text-center" style="color: brown;">
+                                        <h5 class="card-title fw-bold">Privilege</h5>
+                                        <img src="/images/privilege.png" alt="Privilege" class="img-fluid">
+                                    </div>
+                                </div>
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- JavaScript for tilt effect -->
+        <script>
+            VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                max: 50,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.8
+
+            });
+        </script>
+
+
+
+
+
+
+
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

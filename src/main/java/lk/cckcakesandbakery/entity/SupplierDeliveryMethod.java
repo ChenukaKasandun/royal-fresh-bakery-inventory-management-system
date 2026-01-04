@@ -1,0 +1,26 @@
+package lk.cckcakesandbakery.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity // this class generate as an entity
+@Table(name = "supplier_delivery_method") // table mapping
+
+@Data // setter and getters, toString
+@AllArgsConstructor // All Argument constructor
+@NoArgsConstructor // Default constructor
+public class SupplierDeliveryMethod {
+
+    @Id // PK
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AI
+    private Integer id;
+
+    private String name;
+
+}

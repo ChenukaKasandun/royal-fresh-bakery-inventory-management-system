@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/supplier.css">
+</head>
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+    <div class="container-fluid">
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">
+                <h4><i class="fa-solid fa-truck-droplet"></i> Supplier Management</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+
+
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-dark col-3" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" data-bs-toggle="modal" data-bs-target="#supplierModal"><i class="fa-solid fa-plus"></i>
+                <b>Add a Supplier</b>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="supplierModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                            <form onsubmit="return false" id="supplierForm">
+
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtSupplierName" class="form-label"><b>Supplier Name:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtSupplierName"
+                                                   onkeyup="textValidator(this,'^([A-Z][a-z]{1,10}[ ])+([a-z]{2}[ ])?([A-Z][a-z]{1,10})$', 'supplier', 'supplier_name')"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                                   placeholder="Ex: Kamal Perera"
+                                                   data-bs-custom-class="custom-tooltip"
+                                                   title="Please enter a valid Supplier Name..!">
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="selectSupplierStatus" class="form-label"><b>Supplier Status :<span
+                                                class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectSupplierStatus"
+                                                onchange="dynamicElementValidator(this,'supplier','supplier_registration_status_id')"></select>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="row mt-2 mb-3">
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtSupplierAddress" class="form-label"><b>Supplier Address:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtSupplierAddress"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                                   data-bs-custom-class="custom-tooltip"
+                                                   placeholder="Ex: 23/B,Kandy Road,Kadawatha"
+                                                   title="Please enter a correct supplier address ....!"
+                                                   onkeyup="textValidator(this,'^([a-zA-Z0-9\\/\\-\\.\\,]{1,20}[\\s])+([a-zA-Z0-9\\-]{1,20}$)','supplier','supplier_address')">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtContactNo" class="form-label"><b>Supplier Contact No:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtContactNo"
+                                                   onkeyup="textValidator(this,'^([0][7][01245678][0-9]{7})$','supplier','supplier_contact')"
+                                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                                   data-bs-custom-class="custom-tooltip"
+                                                   placeholder="Please Enter a valid Contact No..!"
+                                                   title="Please enter a contactable  mobile no..!" ;>
+
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-2 mb-3">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label for="txtEmail" class="form-label"><b>Supplier Email:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtEmail"
+                                                onkeyup="textValidator(this,'[a-z|A-Z|0-9]{6,20}[@][a-z]{3,7}[.][a-z]{2,3}$','supplier','supplier_email')"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                   placeholder="Ex:kamalperera123@gmail.com"
+                                                title="Please enter a valid email address..!">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <label class="form-label fw-bold">Supplier Items : </label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <label for="selectAllItem" class="form-label fw-bold"> All Items</label>
+                                                <select name="allitem" id="selectAllItem" class="form-select" multiple></select>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="row mt-1 col-12 text-center">
+                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addSingleItem()" type = "button"> > </button>
+                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addMultipleItem()" type = "button"> >> </button>
+                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeSingleItem()" type = "button"> < </button>
+                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeMultipleItem()" type = "button"> << </button>
+                                                </div>
+                                                <div class="row mt-1 col-12 text-center"></div>
+                                                <div class="row mt-1 col-12 text-center"></div>
+                                                <div class="row mt-1 col-12 text-center"></div>
+                                            </div>
+                                            <div class="col-5">
+                                                <label for="selectSelectedItem" class="form-label fw-bold">Selected Items</label>
+                                                <select name="selectedItem" id="selectSelectedItem" class="form-select" multiple></select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2 mb-3">
+
+
+                                    <!-- Validation for account is needed -->
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtAccountNo" class="form-label"><b>Supplier Acccount No:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtAccountNo"
+                                                onkeyup="textValidator(this,'^([0][7][01245678][0-9]{7})$','supplier','account_no')"
+                                                   placeholder="Ex:12345678"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                data-bs-custom-class="custom-tooltip"
+                                                title="Please enter a valid account no..!">
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtHolderName" class="form-label"><b>Holder Name:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtHolderName"
+                                                onkeyup="textValidator(this,'^([A-Z][a-z]{1,10}[ ])+([a-z]{2}[ ])?([A-Z][a-z]{1,10})$','supplier','holder_name')"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                   placeholder="Ex:Kamal Perera"
+                                                data-bs-custom-class="custom-tooltip" title="Please select bank..!">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+
+                                <div class="row mt-2 mb-3">
+
+                                    <div class="col">
+                                        <label for="selectBank" class="form-label"><b>Account Bank :<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectBank"
+                                            onchange="dynamicElementValidator(this,'supplier','bank_id')"></select>
+
+                                    </div>
+
+
+
+
+                                    <div class="col">
+                                        <div class="col">
+                                            <label for="selectBranch" class="form-label"><b>Branch Of The Account
+                                                    :<span class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectBranch"
+                                                onchange="dynamicElementValidator(this,'supplier','branch_id')"></select>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="selectDeliveryStatus" class="form-label"><b>Delivery Status :<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectDeliveryStatus"
+                                            placeholder="Select Delivery Status...!"
+                                            onchange="dynamicElementValidator(this,'supplier','supplier_delivery_method_id')"></select>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+
+                                    <label for="textNote" class="form-label fw-bold">Note :</label>
+                                    <textarea class="form-control " id="textNote" rows="3"></textarea>
+
+                                </div>
+
+                                <div class="row mt-2">
+
+                                    <div class="col-3 text-start">
+                                        <button type="reset" class="btn btn-info" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                                                  0, 0.901);">Clear</button>
+
+
+                                    </div>
+                                    <div class="col-9 text-end" id="buttonContainer">
+                                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" onclick="buttonSupplierUpdate();">Update</button>
+
+                                        <button type="submit" onclick="buttonSupplySubmit();" id="buttonSubmit"
+                                            class="btn btn-success" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);"><i class="fa-solid fa-plus"></i>Add</button>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+
+
+
+                            </form>
+
+
+
+
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- model view/print -->
+            <div class="modal " id="modalSupplierView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalSupplierView">Print Supplier Table</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="card">
+                                <div class="card-body form-area">
+                                    <table class="table table-hover table-striped" id="tableSupplierView">
+
+
+                                        <tr>
+                                            <th>Supplier Name</th>
+                                            <td id="tdSupplierName"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Material</th>
+                                            <td id="tdMaterial"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Supplier Status</th>
+                                            <td id="tdSupplierStatus"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Supplier Address</th>
+                                            <td id="tdSupplierAddress"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Supplier Contact No</th>
+                                            <td id="tdSupplierContact"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Supplier Email </th>
+                                            <td id="tdEmail"></td>
+                                        </tr>
+
+
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary" onclick="printSupplerRow()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-2 text-center ">
+
+        <div class="col-1"></div>
+        <div class="col-10">
+
+            <div class="card card-body"
+                style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                <div class="row mt-2 mb-3">
+                    <h5><i class="fa-solid fa-table"></i> <b>Supplier Management Table</b></h>
+                </div>
+                <div class="row mt-2 mb-3">
+                    <table class="table table-hover" id="supplyTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Material</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Contact No</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Modify</th>
+
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableSupplyBody">
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <script src="/script/commonFunctions.js"></script>
+    <script src="/script/commonValidationFunctions.js"></script>
+    <script src="/uicontroller/supplier.js"></script>
+
+
+</body>
+
+</html>

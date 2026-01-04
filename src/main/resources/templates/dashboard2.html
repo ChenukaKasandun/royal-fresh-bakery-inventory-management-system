@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/employee.css">
+    <!-- Vanilla Tilt.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <link rel="stylesheet" href="/css/tiltFunction.css">
+    <link rel="stylesheet" href="/css/dashboard2.css">
+
+
+</head>
+
+
+
+<body>
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="card" style="background-color: rgba(240, 248, 255, 0.025);">
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/customercenter" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Customer Center</h5>
+                                                            <img src="/images/customer-behavior (3).png"
+                                                                alt="Customer Behavior" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/suppliercenter" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Supplier Center</h5>
+                                                            <img src="/images/supplier.png" alt="Supplier Center"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/stockcenter" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Stock Center</h5>
+                                                            <img src="\images\packages.png" alt="Supplier Center"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/itemprice" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Price List</h5>
+                                                            <img src="\images\price-list.png" alt="Price List"
+                                                                class="img-fluid">
+
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/deliverycenter" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Delivery Center</h5>
+                                                            <img src="\images\fast-shipping.png" alt="Supplier Center"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/administrationcenter" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Administration Center</h5>
+                                                            <img src="\images\administrator.png"
+                                                                alt="Administration Center" class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+
+
+
+                            <!-- JavaScript for tilt effect -->
+                            <script>
+                                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                                    max: 50,
+                                    speed: 400,
+                                    glare: true,
+                                    "max-glare": 0.8
+
+                                });
+                            </script>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="carousel-item">
+
+                <div class="card" style="background-color: rgba(240, 248, 255, 0.025);">
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/rawmaterial" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Raw Material Registration
+                                                            </h5>
+                                                            <img src="/images/wheat.png" alt="Raw Material"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/item" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Item Registration</h5>
+                                                            <img src="/images/burger.png" alt="Item Registration"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/productionorder" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Production Order</h5>
+                                                            <img src="/images/order.png" alt="Production Order"
+                                                                class="img-fluid">
+
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+
+
+                                <div class="col-4">
+                                    <div class="container mt-5">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-4 d-flex justify-content-center">
+                                                <a href="/production" style="text-decoration: none;">
+                                                    <div class="card tilt-card uniform-card" data-tilt
+                                                        data-tilt-max="15" data-tilt-speed="400">
+                                                        <div class="card-body text-center" style="color: brown;">
+                                                            <h5 class="card-title fw-bold">Production</h5>
+                                                            <img src="/images/baker.png" alt="Production"
+                                                                class="img-fluid">
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+                            <!-- JavaScript for tilt effect -->
+                            <script>
+                                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                                    max: 50,
+                                    speed: 400,
+                                    glare: true,
+                                    "max-glare": 0.8
+
+                                });
+                            </script>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

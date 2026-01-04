@@ -1,0 +1,23 @@
+body {
+    background-image: url(/images/Brown\ Simple\ Cute\ Sweet\ Bread\ Dessert\ Phone\ Wallpaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+
+}
+
+
+/* .article {
+
+    width: 500px;
+    height: 100vh;
+
+
+
+} */

@@ -1,0 +1,853 @@
+<html lang="en">
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/customerPayment.css">
+
+</head>
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+    <div class="container-fluid">
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">
+                <h4><i class="fa-solid fa-credit-card"></i> Customer Payment Management</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+
+
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-dark col-3" style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901); " data-bs-toggle="modal" data-bs-target="#customerPaymentForm">
+                <h6><b><i class="fa-solid fa-plus"></i>Add a customer</b></h6>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="customerPaymentForm" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+
+                            <!-- Tabs -->
+                            <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="tabIndividual" data-bs-toggle="pill"
+                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                        aria-selected="true" data-type="Individual">Individual
+                                        Customer Payment</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link " id="tabShop" data-bs-toggle="pill"
+                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                        data-bs-target="#pills-profile" type="button" role="tab"
+                                        aria-controls="pills-profile" aria-selected="false" data-type="Shop">Shop
+                                        Customer Payment</button>
+                                </li>
+
+                            </ul>
+
+
+
+                            <!-- Tab contents -->
+                            <div class="tab-content" id="pills-tabContent">
+                                <!-- Tab contents -> Individual Customer Payment -->
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                    aria-labelledby="pills-home-tab">
+                                    <div class="card"
+                                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="card"
+                                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                                    <div class="card-body">
+
+                                                        <form onsubmit="return false " id="formIndividual">
+
+
+                                                            <div class="row mt-2 mb-3">
+
+                                                                <div class="col">
+                                                                    <label for="selectCustomerName1"
+                                                                        class="form-label"><b>Customer
+                                                                            Name :<span
+                                                                                class="text-danger">*</span></b></label>
+                                                                    <select class="form-select" id="selectCustomerName1"
+                                                                        onchange="dynamicElementValidator(this,'customerorder','customer_id');"></select>
+                                                                </div>
+
+                                                                <div class="col">
+                                                                    <label for="selectInvoiceNo1"
+                                                                        class="form-label"><b>Invoice
+                                                                            No :<span
+                                                                                class="text-danger">*</span></b></label>
+                                                                    <select class="form-select" id="selectInvoiceNo1"
+                                                                        onchange="dynamicElementValidator(this,'customerorder','invoice_id');"></select>
+                                                                </div>
+
+
+
+                                                            </div>
+
+                                                            <div class=" row mt-2 mb-3">
+
+
+
+                                                                <div class="col">
+                                                                    <div class="mb-3">
+                                                                        <label for="datePaymentDate1"
+                                                                            class="form-label"><b>Payment
+                                                                                Date:<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <input type="date" class="form-control"
+                                                                            onchange="customerPayment.payment_date = this.value"
+                                                                            id="datePaymentDate1">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col">
+                                                                    <div class="mb-3">
+                                                                        <label for="txtTotalPrice1"
+                                                                            class="form-label"><b>Total
+                                                                                Price<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="txtTotalPrice1"
+                                                                            onkeyup="customerPayment.totalPrice = this.value">
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <div class="row">
+
+                                                                <div class="col">
+                                                                    <div class="mb-3">
+                                                                        <label for="txtAdvancdAmount1"
+                                                                            class="form-label"><b>Advanced Amount<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="txtAdvancdAmount1">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="mb-3">
+                                                                        <label for="txtDueAmount1"
+                                                                            class="form-label"><b>Due Amount<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="txtDueAmount1">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="row">
+
+                                                                <!-- Payment Method Radio Buttons -->
+                                                                <div class="col">
+                                                                    <label class="form-label"><b>Payment Method:<span
+                                                                                class="text-danger">*</span></b></label>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            onchange="radioElementValidator()"
+                                                                            name="paymentMethod" id="cashRadio"
+                                                                            value="cash">
+                                                                        <label class="form-check-label"
+                                                                            for="cashRadio">Cash</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="radio"
+                                                                            name="paymentMethod" id="cardRadio"
+                                                                            value="card"
+                                                                            onchange="radioElementValidator()">
+                                                                        <label class="form-check-label"
+                                                                            for="cardRadio">Card</label>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- Collapse Section -->
+                                                                <div class="collapse mt-3" id="paymentDetailsCollapse">
+                                                                    <div class="card card-body"
+                                                                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    <label for="textPaidAmount"
+                                                                                        class="form-label"><b>Paid
+                                                                                            Amount:<span
+                                                                                                class="text-danger">*</span></b></label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="textPaidAmount"
+                                                                                        onkeyup="customerPayment.paid_amount = this.value">
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    <label for="textBalanceAmount"
+                                                                                        class="form-label"><b>Balance
+                                                                                            Amount:<span
+                                                                                                class="text-danger">*</span></b></label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="textBalanceAmount"
+                                                                                        onkeyup="customerPayment.balance_amount = this.value">
+                                                                                </div>
+
+                                                                            </div>
+
+
+
+                                                                        </div>
+
+
+
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                            <div class="row mb-3">
+
+                                                                <label for="textNote1"
+                                                                    class="form-label fw-bold">Note:</label>
+                                                                <textarea class="form-control" id="textNote1"
+                                                                    rows="3"></textarea>
+                                                            </div>
+
+                                                            <div class="row mt-2">
+
+                                                                <div class="col-3 text-start">
+                                                                    <button type="reset" class="btn btn-info"
+                                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
+
+
+                                                                </div>
+                                                                <div class="col-9 text-end" id="buttonContainer">
+                                                                    <button type="submit" class="btn btn-warning me-2"
+                                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                                                        id="buttonUpdate1"
+                                                                        onclick="buttonCustomerPaymentUpdate1()"
+                                                                        ;>Update</button>
+
+                                                                    <button type="submit" class="btn btn-success"
+                                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                                                        id="buttonSubmit1"
+                                                                        onclick="buttonCustomerPaymentSubmit1();"><i
+                                                                            class="fa-solid fa-plus"></i>Add</button>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </form>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Tab contents -> Shop Customer Payment -->
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                    aria-labelledby="pills-profile-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="card"
+                                                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                                        <div class="card-body">
+                                                            <form onsubmit="return false " id="formShopPayment">
+
+
+                                                                <div class="row mt-2 mb-3">
+
+                                                                    <div class="col">
+                                                                        <label for="selectCustomerName2"
+                                                                            class="form-label"><b>Customer
+                                                                                Name :<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <select class="form-select"
+                                                                            onchange="dynamicElementValidator(this,'customerorder','customer_id');"
+                                                                            id="selectCustomerName2"></select>
+                                                                    </div>
+
+                                                                    <div class="col">
+                                                                        <label for="selectInvoiceNo2"
+                                                                            class="form-label"><b>Invoice
+                                                                                No :<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <select class="form-select"
+                                                                            onchange="dynamicElementValidator(this,'customerorder','invoice_id');"
+                                                                            id="selectInvoiceNo2"></select>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div class="row mt-2 mb-3">
+
+                                                                    <div class="col">
+                                                                        <div class="mb-3">
+                                                                            <label for="txtTotalPrice2"
+                                                                                class="form-label"><b>Total Price:<span
+                                                                                        class="text-danger">*</span></b></label>
+                                                                            <input type="text" class="form-control"
+                                                                                onkeyup="customerPayment.totalPrice = this.value"
+                                                                                id="txtTotalPrice2">
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+
+                                                                    <div class="col">
+                                                                        <div class="mb-3">
+                                                                            <label for="txtReturnedItemList2"
+                                                                                class="form-label"><b>Returned Item
+                                                                                    List:<span
+                                                                                        class="text-danger">*</span></b></label>
+                                                                            <input type="text" class="form-control"
+                                                                                onkeyup="customerPayment.returned_item_list = this.value"
+                                                                                id="txtReturnedItemList2">
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+
+
+
+                                                                </div>
+
+                                                                <div class="row mt-2 mb-3">
+
+
+                                                                    <div class="col">
+                                                                        <div class="mb-3">
+                                                                            <label for="txtReturnedItemPrice2"
+                                                                                class="form-label"><b>Returned Item
+                                                                                    Price:<span
+                                                                                        class="text-danger">*</span></b></label>
+                                                                            <input type="text" class="form-control"
+                                                                                onkeyup="customerPayment.returned_item_list = this.value"
+                                                                                id="txtReturnedItemPrice2">
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                    <div class="col-6">
+                                                                        <div class="mb-3">
+                                                                            <label for="txtFinalPrice2"
+                                                                                class="form-label"><b>Final Price:<span
+                                                                                        class="text-danger">*</span></b></label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="txtFinalPrice2">
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+
+
+
+                                                                </div>
+
+
+
+
+                                                                <div class="row">
+
+                                                                    <!-- Payment Method Radio Buttons -->
+                                                                    <div class="col">
+                                                                        <label class="form-label"><b>Payment
+                                                                                Method:<span
+                                                                                    class="text-danger">*</span></b></label>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio"
+                                                                                name="paymentMethod" id="cashRadio2"
+                                                                                onchange="radioElementValidator()"
+                                                                                value="cash">
+                                                                            <label class="form-check-label"
+                                                                                for="cashRadio2">Cash</label>
+                                                                        </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio"
+                                                                                onchange="radioElementValidator()"
+                                                                                name="paymentMethod" id="cardRadio2"
+                                                                                value="card">
+                                                                            <label class="form-check-label"
+                                                                                for="cardRadio2">Card</label>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <!-- Collapse Section -->
+                                                                    <div class="collapse mt-3"
+                                                                        id="paymentDetailsCollapse2">
+                                                                        <div class="card card-body"
+                                                                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="textPaidAmount"
+                                                                                            class="form-label"><b>Paid
+                                                                                                Amount:<span
+                                                                                                    class="text-danger">*</span></b></label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            onkeyup="customerPayment.paid_amount = this.value"
+                                                                                            id="textPaidAmount2">
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div class="col">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="textBalanceAmount2"
+                                                                                            class="form-label"><b>Balance
+                                                                                                Amount:<span
+                                                                                                    class="text-danger">*</span></b></label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            onkeyup="customerPayment.balance_amount = this.value"
+                                                                                            id="textBalanceAmount2">
+                                                                                    </div>
+
+                                                                                </div>
+
+
+
+                                                                            </div>
+
+
+
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+
+
+
+
+
+                                                                <div class=" row mb-3">
+
+                                                                    <label for="textNote_tab2"
+                                                                        class="form-label fw-bold">Note :</label>
+                                                                    <textarea class="form-control " id="textNote_tab2"
+                                                                        rows="3"></textarea>
+
+                                                                </div>
+
+
+
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="card"
+                                                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div
+                                                                            class="  text-center fw-bold title text-light">
+                                                                            <h5>Customer Payment Inner Form</h5>
+                                                                        </div>
+
+                                                                        <div class="row"></div>
+                                                                        <div class="row"></div>
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            <div class="mb-3">
+                                                                                <label for="txtItemName"
+                                                                                    class="form-label"><b>Item
+                                                                                        Name:<span
+                                                                                            class="text-danger">*</span></b></label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="txtItemName"
+                                                                                    placeholder="Ex: Enter Item Name">
+                                                                                <div class="valid-feedback">
+                                                                                    Looks good!
+                                                                                </div>
+                                                                                <div class="invalid-feedback">
+                                                                                    Looks not good!
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col">
+
+                                                                            <div class="mb-3">
+                                                                                <label for="txtItemQuantity"
+                                                                                    class="form-label"><b>Item
+                                                                                        Quantity:<span
+                                                                                            class="text-danger">*</span></b></label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="txtItemQuantity"
+                                                                                    placeholder="Ex: Enter Item Quantity">
+                                                                                <div class="valid-feedback">
+                                                                                    Looks good!
+                                                                                </div>
+                                                                                <div class="invalid-feedback">
+                                                                                    Looks not good!
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+
+
+                                                                    <div class="row mt-2">
+
+                                                                        <div class="col-3 text-start">
+                                                                        </div>
+                                                                        <div class="col-9 text-end">
+                                                                            <button type="reset" class="btn btn-info"
+                                                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
+
+                                                                            <button type="submit"
+                                                                                class="btn btn-success"
+                                                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"><i
+                                                                                    class="fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                                                                        </div>
+
+
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            </div>
+                                                            <br><br>
+
+                                                            <div class="card">
+                                                                <div class="card-body"
+                                                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                                                    <div class="row mt-2 mb-3">
+                                                                        <div
+                                                                            class="  text-center fw-bold title text-light">
+                                                                            <h5>Customer Paayment Inner Table</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mt-2 mb-3">
+                                                                        <table class="table table-hover"
+                                                                            id="customerInnerTable">
+                                                                            <thead class="table-dark">
+                                                                                <tr>
+                                                                                    <th scope="col">#</th>
+                                                                                    <th scope="col">Item Name</th>
+                                                                                    <th scope="col">Item Quantity</th>
+                                                                                    <th scope="col">Session</th>
+                                                                                    <th scope="col">Modify</th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id="tableInnerCustomerBody">
+
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mt-2">
+
+                                                <div class="col-3 text-start">
+                                                    <button type="reset" class="btn btn-info"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
+
+
+                                                </div>
+                                                <div class="col-9 text-end" id="buttonContainer">
+                                                    <button type="submit" class="btn btn-warning me-2"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                                        id="buttonUpdate2" form="formShop"
+                                                        onclick="buttonCustomerPaymentUpdate2();">Update</button>
+
+                                                    <button type="submit" class="btn btn-success"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                                        id="buttonSubmit2" form="formShop"
+                                                        onclick=" buttonCustomerPaymentSubmit2();"><i
+                                                            class=" fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <!-- model view/print -->
+        <div class="modal " id="modalCustomerPaymentView" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCustomerPaymentView">Print Customer Payment Table</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="card">
+                            <div class="card-body form-area">
+                                <table class="table table-hover table-striped" id="tableCustomerPaymentView">
+
+
+                                    <tr>
+                                        <th>Invoice No </th>
+                                        <td id="tdInvoiceNo"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Customer Name</th>
+                                        <td id="tdCustomerName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Customer Type</th>
+                                        <td id="tdCustomerType"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Price</th>
+                                        <td id="tdTotalPrice"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Paid Amount</th>
+                                        <td id="tdPaidAmount"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Balance Amount </th>
+                                        <td id="tdBalanceAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Payment Method</th>
+                                        <td id="tdPaymentMethod"></td>
+                                    </tr>
+
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" onclick="printCustomerPaymentRow()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row mt-2 text-center ">
+
+            <div class="col-1"></div>
+            <div class="col-10">
+
+                <div class="card card-body"
+                    style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                    <div class="row mt-2 mb-3">
+                        <h5><i class="fa-solid fa-table"></i> <b> Customer Payment Table</b></h5>
+                    </div>
+                    <div class="row mt-2 mb-3">
+                        <table class="table table-hover" id="customerPaymentTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Invoice No</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Customer Type</th>
+                                    <th scope="col">Total Price</th>
+                                    <th scope="col">Paid Amount</th>
+                                    <th scope="col">Balance Amount</th>
+                                    <th scope="col">Payment Method</th>
+                                    <th scope="col">Modify</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableCustomerPaymentBody">
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <script src="/script/commonFunctions.js"></script>
+    <script src="/script/commonValidationFunctions.js"></script>
+    <script src="/uicontroller/customerPayment.js"></script>
+
+
+</body>
+
+</html>

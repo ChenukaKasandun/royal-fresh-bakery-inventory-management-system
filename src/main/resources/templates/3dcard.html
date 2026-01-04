@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="3dCard.css">
+
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+    <article>
+        <div class="item-wrapper">
+            <figure>
+                <div class="image"
+                    style="background-image:url(/Resources/images/240_F_136964338_Az2F3j6oJh2FZTU4Jm9niL7cO4QkTwgT.jpg);">
+                </div>
+                <div class="lighting"></div>
+            </figure>
+            <div class="item-content">
+                <h1>First Article Title</h1>
+                <p>Lorem ipsum dolor sit amet consectetuer adipiscing elit</p>
+                <div class="author">Jordan Quinn</div>
+            </div>
+        </div>
+    </article>
+    <article>
+        <div class="item-wrapper">
+            <figure>
+                <div class="image"
+                    style="background-image:url(/Resources/images/240_F_203003071_x63luCSjOjue9uquPHQejMZiJFgjI5r6.jpg);">
+                </div>
+                <div class="lighting"></div>
+            </figure>
+            <div class="item-content">
+                <h1>Second Article Title</h1>
+                <p>Donec pede justo fringilla vel aliquet nec vulputate eget arcu</p>
+                <div class="author">Edna Hardy</div>
+            </div>
+        </div>
+    </article>
+    <article>
+        <div class="item-wrapper">
+            <figure>
+                <div class="image"
+                    style="background-image:url(/Resources/images/240_F_265163404_NgdxNLlDxt1jvJloQduez7Cq5RPCWXKk.jpg);">
+                </div>
+                <div class="lighting"></div>
+            </figure>
+            <div class="item-content">
+                <h1>Third Article Title</h1>
+                <p>In enim justo rhoncus ut imperdiet a venenatis vitae justo</p>
+                <div class="author">Kayla Beck</div>
+            </div>
+        </div>
+    </article>
+    <script>
+        var articles = $('article > .item-wrapper'),
+            lightingRgb = '255,255,255';
+
+        articles.mousemove(function (e) {
+            var current = $(this),
+                x = current.width() - e.offsetX * 2,
+                y = current.height() - e.offsetY * 2,
+                rx = -x / 30,
+                ry = y / 24,
+                deg = Math.atan2(y, x) * (180 / Math.PI) + 45;
+            current.css({ "transform": "scale(1.05) rotateY(" + rx + "deg) rotateX(" + ry + "deg)" });
+            $('figure > .lighting', this).css('background', 'linear-gradient(' + deg + 'deg, rgba(' + lightingRgb + ',0.32) 0%, rgba(' + lightingRgb + ',0) 100%)');
+        });
+
+        articles.on({
+            'mouseenter': function () {
+                var current = $(this);
+                current.addClass('enter ease').removeClass("leave");
+                setTimeout(function () {
+                    current.removeClass('ease');
+                }, 280);
+            },
+            'mouseleave': function () {
+                var current = $(this);
+                current.css({ "transform": "rotate(0)" });
+                current.removeClass('enter').addClass("leave");
+                $('figure > .lighting', this).removeAttr('style');
+            }
+        }
+        );
+    </script>
+
+</body>
+
+</html>

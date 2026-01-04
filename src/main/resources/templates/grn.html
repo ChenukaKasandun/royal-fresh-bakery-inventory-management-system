@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/grn.css">
+
+</head>
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+    <div class="container-fluid">
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">
+                <h4><i class="fa-regular fa-file"></i> GRN Management</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+
+
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+            <!-- Button trigger modal -->
+            <button type="button" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" class="btn btn-dark col-3" data-bs-toggle="modal" data-bs-target="#grnForm">
+                <h6><i class="fa-solid fa-plus"></i>
+                    <b>Add GRN</b>
+                </h6>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="grnForm" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+
+
+
+                            <form onsubmit="return false " id="grnForm">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtSupplierBillNo" class="form-label"><b>Supplier Bill No:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtSupplierBillNo"
+                                                onkeyup="grn.bill_no = this.value">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtReceivedDate" class="form-label"><b>Received
+                                                    Date:</b></label>
+                                            <input type="date" class="form-control" id="txtReceivedDate"
+                                                onchange="grn.received_date = this.value">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="row mt-2 mb-3">
+
+                                    <div class="col">
+                                        <label for="selectSupplierName" class="form-label"><b>Supplier Name :<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectSupplierName"
+                                            onchange="dynamicElementValidator(this,'grn','supplier_id');"
+                                            required></select>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="selectPoNumber" class="form-label"><b>PO Number:<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectPoNumber" required
+                                            onchange="dynamicElementValidator(this,'grn','purchase_order_id');"></select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2 mb-3">
+                                    <div class="col-6">
+                                        <label for="selectMaterial" class="form-label"><b>Material :<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectMaterial"
+                                            onchange="dynamicElementValidator(this,'grn','material_id');"
+                                            required></select>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtMaterialQty" class="form-label"><b>Material Qty:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control" id="txtMaterialQty"
+                                                onkeyup="grn.qty =  this.value">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="selectGrnStatus" class="form-label"><b>GRN Status :<span
+                                                    class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectGrnStatus" required
+                                            onchange="dynamicElementValidator(this,'grn','grn_status_id');"></select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+
+                                    <label for="textNote" class="form-label fw-bold">Note :</label>
+                                    <textarea name="form-control " id="textNote" rows="3"></textarea>
+
+                                </div>
+
+                                <div class="row mt-2">
+
+                                    <div class="col-3 text-start">
+                                        <button type="reset" class="btn btn-info"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                                    </div>
+                                    <div class="col-9 text-end" id="buttonContainer">
+                                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            onclick="buttonGrnUpdate()">Update</button>
+
+                                        <button type="submit" class="btn btn-success " id="buttonSubmit"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            onclick="buttonGrnSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- model view/print -->
+            <div class="modal " id="modalGrnView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalGrnView">Print GRN Table</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="card">
+                                <div class="card-body form-area">
+                                    <table class="table table-hover table-striped" id="tableGrnView">
+
+
+                                        <tr>
+                                            <th>Received Date</th>
+                                            <td id="tdReceivedDate"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Supplier Name</th>
+                                            <td id="tdSupplierName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Purchase Order No</th>
+                                            <td id="tdPONumber"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Bill No</th>
+                                            <td id="tdBillNo"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Item List</th>
+                                            <td id="tdItemList"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>GRN Status</th>
+                                            <td id="tdGRNStatus"></td>
+                                        </tr>
+
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary" onclick="printGrnRow()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+    <!-- Purchase Order Table -->
+    <div class="row mt-2 text-center ">
+
+        <div class="col-1"></div>
+        <div class="col-10">
+
+            <div class="card card-body"
+                style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                <div class="row mt-2 mb-3">
+                    <h5><i class="fa-solid fa-table"></i> <b>GRN Table</b></h5>
+                </div>
+                <div class="row mt-2 mb-3">
+                    <table class="table table-hover" id="grnTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Bill No</th>
+                                <th scope="col">GRN No</th>
+                                <th scope="col">Received Date</th>
+                                <th scope="col">Supplier Name</th>
+                                <th scope="col">Purchase Order No</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Modify</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="grnTableBody" class="text-start">
+
+
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script src="/script/commonFunctions.js"></script>
+    <script src="/uicontroller/grn.js"></script>
+
+</body>
+
+</html>

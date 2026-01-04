@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/stock.css">
+</head>
+
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+
+    <div class="container-fluid">
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);">
+                <h4><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Raw Material Stock Management</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+
+
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-dark col-3" style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901)" data-bs-toggle="modal" data-bs-target="#materialStockForm">
+                <h6><i class="fa-solid fa-plus"></i>
+                    <b> Add Raw material to the Stock</b>
+                </h6>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="materialStockForm" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                            <div class="card2  ">
+                                <form onsubmit="return false " id="materialStockForm">
+
+
+                                    <div class="row mt-2 mb-3">
+                                        <div class="col">
+                                            <div class="col">
+                                                <label for="selectRawMaterial" class="form-label"><b>Raw Material:<span
+                                                            class="text-danger">*</span></b></label>
+                                                <select class="form-select" id="selectRawMaterial"
+                                                    onchange="dynamicElementValidator(this,'stock','material_id');"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="selectGRN" class="form-label"><b>GRN No:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectGRN"
+                                                onchange="dynamicElementValidator(this,'stock','grn_id');"></select>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <label for="selectSupplier" class="form-label"><b>Supplier Name:<span
+                                                        class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectSupplier"
+                                                onchange="dynamicElementValidator(this,'stock','supplier_id');"></select>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textReceivedDate" class="form-label"><b>Received
+                                                        Date:<span class="text-danger">*</span></b></label>
+                                                <input type="date" class="form-control" id="textReceivedDate"
+                                                    onchange="stock.receivedDate = this.value">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+                                    <div class="row mt-2 mb-3">
+
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textManufactureDate" class="form-label"><b>Manufacture
+                                                        Date:<span class="text-danger">*</span></b></label>
+                                                <input type="date" class="form-control" id="textManufactureDate"
+                                                    onchange="stock.manufacture_date = this.value">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textExpiryDate" class="form-label"><b>Expiry Date:<span
+                                                            class="text-danger">*</span></b></label>
+                                                <input type="date" class="form-control" id="textExpiryDate"
+                                                    onchange="stock.exp_date = this.value">
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textTotalQty" class="form-label"><b>Total Qty:<span
+                                                            class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textTotalQty"
+                                                    placeholder="Enter Total Quantity"
+                                                    onkeyup="stock.total_qty = this.value">
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textUsableQty" class="form-label"><b>Usable Qty:<span
+                                                            class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textUsableQty"
+                                                    placeholder="Enter Usable Quantity"
+                                                    onchange="stock.usable_qty = this.value">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="textNotUsableQty" class="form-label"><b>Not Usable Qty:<span
+                                                            class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textNotUsableQty"
+                                                    onkeyup="stock.not_usable_qty = this.value"
+                                                    placeholder="Enter Not Usable Quantity">
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+
+                                    <div class="row mb-3">
+
+
+
+                                        <label for="textNote" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control " id="textNote" rows="3"></textarea>
+
+                                    </div>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-3 text-start">
+                                            <button type="reset" class="btn btn-info"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                                        </div>
+                                        <div class="col-9 text-end" id="buttonContainer">
+                                            <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                onclick="buttonStockUpdate()">Update</button>
+
+                                            <button type="submit" class="btn btn-success " id="buttonSubmit"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                onclick="buttonStockSubmit()"><i
+                                                    class="fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </form>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- model view/print -->
+            <div class="modal " id="modalStockView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalStockView">Print Material Stock Table</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="card">
+                                <div class="card-body form-area">
+                                    <table class="table table-hover table-striped" id="tableRawStockView">
+
+                                        <tr>
+                                            <th>Material </th>
+                                            <td id="tdMaterial"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>GRN No </th>
+                                            <td id="tdGRNNo"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Supplier Name </th>
+                                            <td id="tdSupplierName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Qty </th>
+                                            <td id="tdTotalQty"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Usable Qty</th>
+                                            <td id="tdUsableQty"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Not Usable Qty</th>
+                                            <td id="tdNotUsableQty"></td>
+                                        </tr>
+
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary"
+                                onclick="printMaterialStockRow()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row mt-2 text-center ">
+
+            <div class="col-1"></div>
+            <div class="col-10">
+
+                <div class="card card-body"
+                    style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                    <div class="row mt-2 mb-3">
+                        <h5><i class="fa-solid fa-table"></i> <b>Raw Material Stock Management Table</b></h5>
+                    </div>
+                    <div class="row mt-2 mb-3">
+                        <table class="table table-hover" id="rawMaterialStockTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Material</th>
+                                    <th scope="col">GRN No</th>
+                                    <th scope="col">Supplier Name</th>
+                                    <th scope="col">Manufacture Date</th>
+                                    <th scope="col">Expiry Date</th>
+                                    <th scope="col">Total Qty</th>
+                                    <th scope="col">Usable Qty</th>
+                                    <th scope="col">Not Usable Qty</th>
+                                    <th scope="col">Modify</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableStockBody">
+
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script src="/script/commonValidationFunctions.js"></script>
+    <script src="/script/commonFunctions.js"></script>
+    <script src="/uicontroller/stock.js"></script>
+
+
+
+</body>
+
+
+
+
+</html>

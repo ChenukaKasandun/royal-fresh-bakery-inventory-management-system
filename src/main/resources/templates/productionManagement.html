@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/production.css">
+
+</head>
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+  <div class="container-fluid">
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-5">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+        <h4><i class="fa-solid fa-hands-holding-circle"></i> Production Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-8"></div>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3"
+        style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-toggle="modal"
+        data-bs-target="#productionForm">
+        <h6><i class="fa-solid fa-plus"></i>
+          <b>Add Production </b>
+        </h6>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="productionForm" data-bs-backdrop=" static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+              <div class="card2  ">
+                <form onsubmit="return false " id="productionForm">
+
+
+
+                  <div class="raw">
+
+                    <div class="col-6">
+                      <label for="selectProductionOrderNo" class="form-label"><b>Production Order No :<span
+                            class="text-danger">*</span></b></label>
+                      <select class="form-select" id="selectProductionOrderNo"
+                        placeholder="Select Production Order No..!"
+                        onchange="dynamicElementValidator(this,'production','item_production_order_id');"></select>
+                    </div>
+
+                  </div>
+                  <div class="row mt-2 mb-3">
+
+
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="dateProductionDate" class="form-label"><b>Production Date:<span
+                              class="text-danger">*</span></b></label>
+                        <input type="date" class="form-control" id="dateProductionDate"
+                          placeholder="Enter Production Date..!"
+                          onchange="production.production_date= this.value; dateProductionDate.classList.add('is-valid');">
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <label for="selectItemName" class="form-label"><b>Item Name :<span
+                            class="text-danger">*</span></b></label>
+                      <select class="form-select" id="selectItemName" placeholder="Select Item Name..!"
+                        onchange="dynamicElementValidator(this,'production','item_id');"></select>
+                    </div>
+
+
+                  </div>
+
+                  <div class="row mt-2 mb-3">
+
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label for="txtQuantity" class="form-label"><b>Quantity:<span
+                              class="text-danger">*</span></b></label>
+                        <input type="text" class="form-control" id="txtQuantity" placeholder="Enter Quantity"
+                          onkeyup="production.quantity= this.value;">
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <label for="selectProductionSession" class="form-label"><b>Production Session :<span
+                            class="text-danger">*</span></b></label>
+                      <select class="form-select" id="selectProductionSession"
+                        placeholder="Select Production Session..!"
+                        onchange="dynamicElementValidator(this,'production','production_session_id');"></select>
+
+
+                    </div>
+
+
+                    <div class="row mb-3">
+
+
+
+                      <label for="textNote" class="form-label fw-bold">Note :</label>
+                      <textarea class="form-control" id="textNote" rows="3"></textarea>
+
+                    </div>
+
+                    <div class="row mt-2">
+
+                      <div class="col-3 text-start">
+                        <button type="reset" class="btn btn-info"
+                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                      </div>
+                      <div class="col-9 text-end" id="buttonContainer">
+                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                          onclick="buttonProductionUpdate();">Update</button>
+
+                        <button type="submit" class="btn btn-success" id="buttonSubmit"
+                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                          onclick="buttonProductionSubmit();">Submit</button>
+
+
+
+
+                      </div>
+
+
+                    </div>
+
+
+
+
+
+
+
+
+                </form>
+
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- model view/print -->
+    <div class="modal" id="modalProductionView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalProductionViewTitle">Print Production Table</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="card">
+              <div class="card-body form-area">
+                <table class="table table-hover table-striped" id="tableProductionView">
+
+                  <tr>
+                    <th>Production Date </th>
+                    <td id="tdProductionDate"></td>
+                  </tr>
+                  <tr>
+                    <th>Production Order No </th>
+                    <td id="tdProductionOrderNo"></td>
+                  </tr>
+                  <tr>
+                    <th>Item Name </th>
+                    <td id="tdItemName"></td>
+                  </tr>
+                  <tr>
+                    <th>Item Quantity </th>
+                    <td id="tdItemQty"></td>
+                  </tr>
+                  <tr>
+                    <th>Production Session</th>
+                    <td id="tdProductionSession"></td>
+                  </tr>
+
+
+
+
+                </table>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-primary" onclick="printProductionRow()">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="row mt-2 text-center ">
+
+    <div class="col-1"></div>
+    <div class="col-10">
+
+      <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+        <div class="row mt-2 mb-3">
+          <h5><i class="fa-solid fa-table"></i> <b>Production Management Table</b></h5>
+        </div>
+        <div class="row mt-2 mb-3">
+          <table class="table table-hover" id="productionTable">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Production Date</th>
+                <th scope="col">Production Order No</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Production Session</th>
+                <th scope="col">Modify</th>
+
+              </tr>
+            </thead>
+            <tbody id="tableProductionBody">
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+
+
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/uicontroller/production.js"></script>
+
+</body>
+
+</html>

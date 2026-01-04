@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/invoice.css">
+
+</head>
+
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+  <div class="container-fluid">
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-5">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+        <h4><i class=" fa-solid fa-file-lines"></i> Invoice Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+
+
+
+
+    <div class="row mt-2">
+      <div class="col-8"></div>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3"
+        style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-toggle="modal"
+        data-bs-target="#modalInvoiceForm"><i class="fa-solid fa-plus"></i>
+        <b> Add Invoice</b>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="modalInvoiceForm" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="card"
+                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                        <div class="card-body">
+                          <form onsubmit="return false " id="modalInvoiceForm">
+
+                            <div class="row">
+                              <div class="col-6">
+
+
+                                <div class="col">
+                                  <div class="mb-3">
+                                    <label for="txtDate" class="form-label"><b>Date:<span
+                                          class="text-danger">*</span></b></label>
+                                    <input type="date" class="form-control" id="txtDate"
+                                      onchange="invoice.date = this.value; txtDate.classList.add('is-valid')">
+                                  </div>
+                                </div>
+
+                              </div>
+
+
+                              <div class="col">
+                                <label for="selectCustomerName" class="form-label"><b>Customer Name:<span
+                                      class="text-danger">*</span></b></label>
+                                <select class="form-select" id="selectCustomerName"
+                                  onchange="dynamicElementValidator(this,'invoice','customer_id');"></select>
+                              </div>
+
+
+
+
+
+                            </div>
+
+                            <div class="row mt-2 mb-3">
+
+
+                              <div class="col-6">
+                                <label for="selectOrderNo" class="form-label"><b> Order No:<span
+                                      class="text-danger">*</span></b></label>
+                                <select class="form-select" id="selectOrderNo"
+                                  onchange="dynamicElementValidator(this,'invoice','customer_order_id');"></select>
+                              </div>
+
+
+                              <div class="col">
+                                <div class="mb-3">
+                                  <label for="txtTotalPrice" class="form-label"><b>Total Price:</b></label>
+                                  <input type="text" class="form-control" id="txtTotalPrice" placeholder=" Total Price"
+                                    onkeyup="invoice.totalPrice = this.value">
+                                </div>
+                              </div>
+
+
+
+                            </div>
+
+
+                            <div class="row mt-2 mb-3">
+
+                              <div class="col-6">
+                                <div class="mb-3">
+                                  <label for="txtDiscountedPrice" class="form-label"><b>Discounted Price:</b></label>
+                                  <input type="text" class="form-control" id="txtDiscountedPrice"
+                                    placeholder=" Discounted Price">
+                                </div>
+                              </div>
+
+                              <div class="col-6">
+                                <label for="selectStatus" class="form-label"><b> Status:<span
+                                      class="text-danger">*</span></b></label>
+                                <select class="form-select" id="selectStatus"
+                                  onchange="dynamicElementValidator(this,'invoice','invoice_status_id');"></select>
+                              </div>
+
+
+
+                            </div>
+
+
+                            <div class="row mb-3">
+
+
+
+                              <label for="textNote" class="form-label fw-bold">Note :</label>
+                              <textarea class="form-control " id="textNote" rows="3"></textarea>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+                          </form>
+
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="col-6">
+                      <div class="card">
+                        <div class="cad-body">
+                          <div class="card"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                            <div class="card-body">
+
+                              <div class="row">
+                                <div class="  text-center fw-bold title text-light">
+                                  <h5>Invoice Inner Form</h5>
+                                </div>
+
+                                <div class="row"></div>
+                                <div class="row"></div>
+                                <div class="row"></div>
+
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="mb-3">
+                                    <label for="txtItemName" class="form-label"><b>Item Name:<span
+                                          class="text-danger">*</span></b></label>
+                                    <input type="text" class="form-control" id="txtItemName"
+                                      placeholder="Ex: Enter Item Name">
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                      Looks not good!
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col">
+
+                                  <div class="mb-3">
+                                    <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
+                                          class="text-danger">*</span></b></label>
+                                    <input type="text" class="form-control" id="txtItemQuantity"
+                                      placeholder="Ex: Enter Item Quantity">
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                      Looks not good!
+                                    </div>
+                                  </div>
+
+                                </div>
+
+
+                              </div>
+
+
+
+
+                              <div class="row mt-2">
+
+                                <div class="col-3 text-start">
+                                </div>
+                                <div class="col-9 text-end">
+                                  <button type="reset" class="btn btn-info"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                  <button type="submit" class="btn btn-success"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
+                                      class="fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                                </div>
+
+
+                              </div>
+
+
+
+
+                            </div>
+                          </div>
+
+
+                          <br><br>
+                          <div class="card"
+                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                            <div class="card-body">
+
+                              <div class="row mt-2 mb-3">
+                                <div class="  text-center fw-bold title text-light">
+                                  <h5>Invoice Inner Table</h5>
+                                </div>
+                              </div>
+                              <div class="row mt-2 mb-3">
+                                <table class="table table-hover" id="invoiceInnerTable">
+                                  <thead class="table-dark">
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Item Name</th>
+                                      <th scope="col">Item Quantity</th>
+                                      <th scope="col">Modify</th>
+
+                                    </tr>
+                                  </thead>
+                                  <tbody id="tableInnerInvoiceBody">
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                  </tbody>
+                                </table>
+
+                              </div>
+
+
+
+                            </div>
+                          </div>
+
+
+
+                        </div>
+                      </div>
+
+
+
+
+                    </div>
+
+
+
+                  </div>
+
+                  <div class="row mt-2">
+
+                    <div class="col-3 text-start">
+                      <button type="reset" class="btn btn-info"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                    </div>
+                    <div class="col-9 text-end" id="buttonContainer">
+                      <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                        onclick="buttonInvoiceUpdate()">Update</button>
+
+                      <button type="submit" class="btn btn-success " id="buttonSubmit"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                        onclick=" buttonInvoiceSubmit()">Submit</button>
+
+
+
+
+                    </div>
+
+
+                  </div>
+
+
+
+
+                </div>
+              </div>
+
+
+
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- model view/print -->
+      <div class="modal " id="modalInvoice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalInvoice">Print Invoice Table</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="card">
+                <div class="card-body form-area">
+                  <table class="table table-hover table-striped" id="tableInvoiceView">
+
+
+                    <tr>
+                      <th>Invoice No </th>
+                      <td id="tdInvoiceNo"></td>
+
+                    </tr>
+                    <tr>
+                      <th>Invoice Date</th>
+                      <td id="tdInvoiceDate"></td>
+                    </tr>
+                    <tr>
+                      <th>Customer Name</th>
+                      <td id="tdCustomerName"></td>
+                    </tr>
+
+                    <tr>
+                      <th>Order No</th>
+                      <td id="tdOrderNo"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Price </th>
+                      <td id="tdTotalPrice"></td>
+                    </tr>
+                    <tr>
+                      <th>Discounted Price</th>
+                      <td id="tdDiscountedPrice"></td>
+                    </tr>
+
+                    <tr>
+                      <th>Invoice Status</th>
+                      <td id="tdInvoiceStatus"></td>
+                    </tr>
+
+
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-primary" onclick="printInvoiceRow()">Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-2 text-center ">
+
+      <div class="col-1"></div>
+      <div class="col-10">
+
+        <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+          <div class="row mt-2 mb-3">
+            <h5><i class="fa-solid fa-table"></i> <b>Invoice Table</b></h>
+          </div>
+          <div class="row mt-2 mb-3">
+            <table class="table table-hover" id="invoiceTable">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Invoice No</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Order No</th>
+                  <th scope="col">Total Price</th>
+                  <th scope="col">Discounted Price</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Modify</th>
+
+                </tr>
+              </thead>
+              <tbody id="tableInvoiceBody">
+
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/script/commonValidationFunctions.js"></script>
+  <script src="/uicontroller/invoice.js"></script>
+
+</body>
+
+</html>

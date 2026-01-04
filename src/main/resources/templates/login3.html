@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Fresh Bakery</title>
+    <link rel="icon" href="/images\Classic Vintage Cake and Bakery Store Logo.png" type="image/gif" sizes="16*16">
+
+    <!-- link bs5 css file  -->
+    <link rel="stylesheet" href="/bootstrap-5.2.3/css/bootstrap.min.css">
+    <!-- link bs5 js file -->
+    <script src="/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Link fa css file -->
+    <link rel="stylesheet" href="/fontawesome-free-6.6.0-web/fontawesome-free-6.6.0-web/css/all.css">
+
+    <!-- External css file -->
+    <link rel="stylesheet" href="\css\login3.css">
+</head>
+
+<body>
+
+
+
+    <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center ">
+
+            <div class="col-7"></div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body ">
+                        <!-- Logo and Domain name -->
+                        <div class="row mb-0">
+                            <div class="text-center">
+                                <img src="/images/newlogo1.png" style="width: 100px;"
+                                     alt="logo">
+                                <h4 class="mt-1 mb-5 pb-1 mt-2"
+                                    style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Royal
+                                    Fresh Bakery</h4>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row text-danger" th:if="${param.error}">
+                            <div class="col text-center">
+                                <h6 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Login Failed..!Username or Password is incorrect..!</h6>
+                            </div>
+                            <!--th:if="${param.error}"  -> this is a Thymeleaf function which can catch any parameter in the url ex- error  -->
+
+                        </div>
+
+
+                        <!-- Login form -->
+                        <form action="/login" method="post">
+                            <p style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Please login
+                                to your account...!</p>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="text" id="txtUserName" class="form-control" required name="username">
+                                <label class="form-label" for="txtUserName"
+                                       style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Username</label>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="password" id="textPasword" class="form-control" required name="password" />
+                                <label class="form-label" for="textPasword"
+                                       style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Password</label>
+                            </div>
+
+
+
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-warning" type="submit"><a
+                                        style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Login</a></button>
+
+                            </div>
+
+
+
+
+                        </form>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <div class="col-1"></div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

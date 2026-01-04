@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/rawMaterial.css">
+</head>
+
+
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+  <div class="container-fluid">
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-5">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light">
+        <h4><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Raw Material Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+
+
+
+
+    <div class="row mt-2">
+      <div class="col-8"></div>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3"
+        style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-toggle="modal"
+        data-bs-target="#materialFormModal">
+        <h6><i class="fa-solid fa-plus"></i>
+          <b> Add a Raw material</b>
+        </h6>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="materialFormModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey; opacity: 1.5">
+              <div class="card2">
+                <form onsubmit="return false " id="materialForm">
+
+
+                  <div class="row mt-2 mb-3">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="txtMaterialName" class="form-label"><b>Material Name:<span
+                              class="text-danger">*</span></b></label>
+                        <input type="text" class="form-control" id="txtMaterialName"
+                          placeholder="Enter Raw material Name...!" onkeyup="material.material_name = this.value">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="selectSIunit" class="form-label"><b>SI Unit :<span
+                            class="text-danger">*</span></b></label>
+                      <select class="form-select" id="selectSIunit"
+                        onchange="material.unit_type_id= JSON.parse(this.value)"></select>
+                    </div>
+
+
+
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="textPurchasingUnit" class="form-label"><b>Purchasing Unit:<span
+                              class="text-danger">*</span></b></label>
+                        <input type="text" class="form-control" id="textPurchasingUnit"
+                          onkeyup="material.purchasing_unit = this.value;" placeholder="Enter Purchasing Unit..! ">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="mb-3">
+                        <label for="textUsingUnit" class="form-label"><b>Using Unit:<span
+                              class="text-danger">*</span></b></label>
+                        <input type="text" class="form-control" id="textUsingUnit"
+                          onkeyup="material.measuring_unit = this.value" placeholder="Enter Using Measuring Unit..!">
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                  <div class="row mt-2 mb-3">
+
+
+                    <div class="col">
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="textROP" class="form-label"><b>ROP:<span class="text-danger">*</span></b></label>
+                          <input type="text" class="form-control" id="textROP" placeholder="Enter Reorder Point"
+                            onkeyup="material.rop = this.value">
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col">
+                      <div class="col">
+                        <div class="mb-3">
+                          <label for="textROQ" class="form-label"><b>ROQ:<span class="text-danger">*</span></b></label>
+                          <input type="text" class="form-control" id="textROQ" placeholder="Enter Reorder Quantity"
+                            onkeyup="material.roq = this.value">
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+
+
+                  </div>
+
+
+
+                  <div class="row mb-3">
+
+
+
+                    <label for="textNote" class="form-label fw-bold">Note :</label>
+                    <textarea class="form-control" id="textNote" rows="3"></textarea>
+
+                  </div>
+
+                  <div class="row mt-2">
+
+                    <div class="col-3">
+                    </div>
+                    <div class="col-9 text-end" id="buttonContainer">
+                        <button type="reset" class="btn btn-info me-2"
+                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                        onclick="buttonRawMaterialUpdate()">Update</button>
+
+                      <button type="submit" class="btn btn-success" id="buttonSubmit"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="buttonRawMaterialSubmit()"><i
+                          class="fa-solid fa-plus"></i>Add</button>
+
+
+
+
+                    </div>
+
+
+                  </div>
+
+
+
+
+
+
+
+
+                </form>
+
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- model view/print -->
+      <div class="modal " id="modalRawView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalUserView">Print Raw Material Table</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="card">
+                <div class="card-body form-area">
+                  <table class="table table-hover table-striped" id="tableRawView">
+
+                    <tr>
+                      <th>Material </th>
+                      <td id="tdMaterial"></td>
+                    </tr>
+
+                    <tr>
+                      <th>SI Unit </th>
+                      <td id="tdSIunit"></td>
+                    </tr>
+                    <tr>
+                      <th>Measuring Unit </th>
+                      <td id="tdMeasuringUnit"></td>
+                    </tr>
+                    <tr>
+                      <th>Purchasing Unit </th>
+                      <td id="tdPurchasingUnit"></td>
+                    </tr>
+
+                    <tr>
+                      <th>ROP</th>
+                      <td id="tdROP"></td>
+                    </tr>
+
+                    <tr>
+                      <th>ROQ</th>
+                      <td id="tdROQ"></td>
+                    </tr>
+
+
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-primary" onclick="printRawMaterialRow()">Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-2 text-center ">
+
+      <div class="col-1"></div>
+      <div class="col-10">
+
+        <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+          <div class="row mt-2 mb-3">
+            <h5><i class="fa-solid fa-table"></i> <b>Raw Material Table</b></h5>
+          </div>
+          <div class="row mt-2 mb-3">
+            <table class="table table-hover" id="rawMaterialTable">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Material</th>
+                  <th scope="col">SI Unit</th>
+                  <th scope="col">Purchasing Unit</th>
+                  <th scope="col">Using Unit</th>
+                  <th scope="col">ROP</th>
+                  <th scope="col">ROQ</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Modify</th>
+
+
+                </tr>
+              </thead>
+              <tbody id="tableRawMaterialBody">
+
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+
+
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+  <script src="/script/commonValidationFunctions.js"></script>
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/uicontroller/rawMaterial.js"></script>
+
+</body>
+
+</html>

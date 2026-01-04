@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/itemprice.css">
+
+</head>
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+    <div class="container-fluid">
+        <div class="row mt-2 mb-3"></div>
+        <div class="row mt-2 mb-5">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light"
+                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                <h4><i class="fa-solid fa-hands-holding-circle"></i> Item Price Management</h4>
+            </div>
+            <div class="col-3"></div>
+
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-dark col-3"
+                style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-toggle="modal"
+                data-bs-target="#itemPriceForm">
+                <h6><i class="fa-solid fa-plus"></i>
+                    <b>Add Price to an item </b>
+                </h6>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="itemPriceForm" data-bs-backdrop=" static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card2"
+                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                <form onsubmit="return false " id="itemPriceForm">
+
+
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <label for="selectItem" class="form-label"><b>Item Name
+                                                    :<span class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectItem"
+                                                onchange="dynamicElementValidator(this,'itemPrice','item_id');"
+                                                placeholder="Select Item..!"></select>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="txtRawMaterialCost" class="form-label"><b>Raw Material
+                                                        Cost:<span class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="txtRawMaterialCost"
+                                                    placeholder="Enter Raw Material Cost..!"
+                                                    onchange="generateTotalProductionCost();">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                    <div class="row mt-2 mb-3">
+
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="txtTotalProductionCost" class="form-label"><b>Total
+                                                        Production
+                                                        Cost :</b></label>
+                                                <input type="text" class="form-control" id="txtTotalProductionCost">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="txtProfitRatio" class="form-label"><b>Profit Ratio
+                                                        :</b></label>
+                                                <input type="text" class="form-control" id="txtProfitRatio"
+                                                    onkeyup="itemPrice.profit_ratio = this.value; generateSellingPrice();"
+                                                    placeholder="Enter Profit Ratio..!">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="txtSellingPrice" class="form-label"><b>Selling Price
+                                                        :</label>
+                                                <input type="text" class="form-control" id="txtSellingPrice">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label class="form-label">Returning Status:</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="returningStatus"
+                                                    onchange="returningStatusValidator()" id="returningRadio"
+                                                    value="returning">
+                                                <label class="form-check-label" for="returningRadio">Returning</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="returningStatus"
+                                                    onchange="returningStatusValidator()" id="notReturningRadio"
+                                                    value="notReturning">
+                                                <label class="form-check-label" for="notReturningRadio">Not
+                                                    Returning</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Collapse Section -->
+                                    <div class="collapse mt-3" id="returnDetails">
+                                        <div class="card card-body" style="background-color: darkgrey;">
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="txtReturningPrice" class="form-label">Return
+                                                            Price:</label>
+                                                        <input type="text" class="form-control" id="txtReturningPrice"
+                                                            onkeyup="itemPrice.returned_price = this.value"
+                                                            placeholder="Enter Returning Price">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mb-3 col-6">
+
+
+
+                                        <label for="textNote" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control" id="textNote" rows="3"></textarea>
+
+                                    </div>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-3 text-start">
+                                            <button type="reset" class="btn btn-info"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                                        </div>
+                                        <div class="col-9 text-end" id="buttonContainer">
+                                            <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                onclick="buttonItemPriceUpdate();">Update</button>
+
+                                            <button type="submit" class="btn btn-success" id="buttonSubmit"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                onclick="buttonItemPriceSubmit();">Submit</button>
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </form>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- model view/print -->
+        <div class="modal" id="modalItemPriceView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalItemPriceViewTitle">Print ItemPrice List</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="card">
+                            <div class="card-body form-area">
+                                <table class="table table-hover table-striped" id="tableItemPriceView">
+
+                                    <tr>
+                                        <th>Item Name </th>
+                                        <td id="tdItemName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Production Cost</th>
+                                        <td id="tdTotalProductionCost"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Selling Price</th>
+                                        <td id="tdSelllingPrice"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Returning Price</th>
+                                        <td id="tdReturningPrice"></td>
+                                    </tr>
+
+
+
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" onclick="printItemPriceRow()">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="row mt-2 text-center ">
+
+        <div class="col-1"></div>
+        <div class="col-10">
+
+            <div class="card card-body"
+                style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                <div class="row mt-2 mb-3">
+                    <h5><i class="fa-solid fa-table"></i> <b>Item Price Table</b></h5>
+                </div>
+                <div class="row mt-2 mb-3">
+                    <table class="table table-hover" id="itemPriceTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Total Production Cost</th>
+                                <th scope="col">Profit Ratio</th>
+                                <th scope="col">Selling Price</th>
+                                <th scope="col">Returning Price</th>
+                                <th scope="col">Modify</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="itemPriceTableBody">
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <script src="/script/commonFunctions.js"></script>
+    <script src="/script/commonValidationFunctions.js"></script>
+    <script src="/uicontroller/itemprice.js"></script>
+
+</body>
+
+</html>

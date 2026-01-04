@@ -1,0 +1,47 @@
+.title {
+
+    background-color: rgba(165, 52, 42, 0.815);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+body {
+    background-image: url(/images/newwallpaperlogin2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+
+.card {
+
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    /* aligns buttons to the right */
+    padding: 10px;
+}
+
+.form-control {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);
+}
+
+.form-select {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);
+}
+
+#rawMaterialStockTable tbody tr:hover {
+    background-color: rgba(165, 108, 42, 0.512);
+    /* light lavender */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

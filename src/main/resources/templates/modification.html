@@ -1,0 +1,38 @@
+<!-- Generate radio buttons by js for calling name -->
+
+<script>
+    //tableCustomerBody.children[index].style.backgroundColor = "orange";
+
+    txtEmployeeName.value = ob.fullname
+
+    let employeeDbNameValue = ob.fullname;
+
+    //Splitting the employee name into parts to fill the calling name dropdown  => to refill the calling name
+    let employeeDbNameParts = employeeDbNameValue.split(" ");
+    txtEmployeeCallingName.innerHTML = " ";
+
+
+    employeeDbNameParts.forEach(namePart => {
+        let div = document.createElement("div");
+        div.className = ""
+        let input = document.createElement("input");
+        input.type = "radio";
+        input.name = "callingname";
+        input.className = "form-check-input";
+        if (employee.callingname == namepart) {
+            input.checked = true;
+
+        }
+        input.onchange = () => {
+            employee.callingname = namepart;
+        }
+
+        option.innerText = namePart;
+
+        txtEmployeeCallingName.appendChild(option);
+    });
+
+    //changing the input 
+
+
+</script>

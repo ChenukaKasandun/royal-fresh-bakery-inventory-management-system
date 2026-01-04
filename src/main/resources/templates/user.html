@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/user.css">
+</head>
+
+
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+
+
+  <div class="container-fluid">
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-3">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+        <h4><i class="fa-solid fa-user-plus"></i> User Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+
+    <br /><br />
+
+
+
+
+    <div class="row mt-2">
+      <div class="col-8"></div>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3"
+        style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-toggle="modal"
+        data-bs-target="#userForm"><i class="fa-solid fa-plus"></i>
+        <b>Add User</b>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="userForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+              <form method="post" onsubmit="return false " id="userForm">
+
+
+                <div class="row mt-2 mb-3">
+                  <!-- Employee Name -->
+                  <div class="col">
+                    <label for="selectEmployeeName" class="form-label"><b>Employee Name
+                        :<span class="text-danger">*</span></b></label>
+                    <select class="form-select" id="selectEmployeeName" required
+                      onchange="dynamicElementValidator(this,'user','employee_id');"></select>
+                  </div>
+
+                  <!-- User Name -->
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="txtUserName" class="form-label"><b>User Name:<span
+                            class="text-danger">*</span></b></label>
+                      <input type="text" class="form-control" id="txtUserName" placeholder="Enter your user name"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        onkeyup="textValidator(this,'^([A-Za-z0-9]{3,20})$','user','username')"
+                        title="Please enter a valid user name..!">
+
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Looks not good!
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+
+
+
+
+                <div class="row mt-2 mb-3">
+
+                  <!-- Email Address -->
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="txtEmailAddress" class="form-label"><b>Email address:</b></label>
+                      <input type="email" class="form-control" id="txtEmailAddress" required ;
+                        placeholder="Enter a valid email address" data-bs-toggle="tooltip" data-bs-placement="top"
+                        onkeyup="textValidator(this,'[a-z|A-Z|0-9]{6,20}[@][a-z]{3,7}[.][a-z]{2,3}$','user','email');"
+                        data-bs-custom-class="custom-tooltip" title="Please enter a valid email address..!">
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Looks not good!
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="txtPassword" class="form-label"><b>Password:<span
+                            class="text-danger">*</span></b></label>
+                      <input type="password" class="form-control" id="txtPassword" name="password"
+                        onkeyup="textValidator(this,'^([A-Za-z0-9@]{5,20})$','user','password')"
+                        placeholder="Enter a strong password with min 8 characters">
+                    </div>
+
+                  </div>
+
+
+                </div>
+
+
+                <!-- Roles -->
+                <div class="row mt-2 mb-3">
+
+                  <!-- Confirm Password -->
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="txtConfPassword" class="form-label"><b>Confirmed Password:<span
+                            class="text-danger">*</span></b></label>
+                      <input type="password" class="form-control" id="txtConfPassword" onkeyup="passwordValidator()"
+                        placeholder="Re enter your password">
+                    </div>
+                  </div>
+
+                  <!-- User Roles generated from the backend -->
+                  <div class="col" id="divRole">
+
+                  </div>
+
+
+                  <div class="row mt-2"></div>
+                  <div class="row mt-2"></div>
+                  <div class="row mt-2"></div>
+
+
+                  <!-- User Status -->
+                  <div class="row mb-5">
+                    <div class="col-6">
+                      <label class="form-label" id="labelUserStatus"><b>User Status:<span
+                            class="text-danger">*</span></b></label>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="checkUserStatus" value="Active" onchange="if (this.checked) { 
+                            user.status = true;
+                             labelUserStatusLabel.innerText = 'Account is Active'; 
+                             } else {
+                               user.status = false; 
+                               labelUserStatusLabel.innerText = 'Account is Inactive'; }" checked="checked">
+                        <label class="form-check-label" id="labelUserStatusLabel">Account is
+                          Active</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="row mb-3">
+
+
+                    <!-- Note -->
+                    <label for="textNote" class="form-label fw-bold">Note :</label>
+                    <textarea class="form-control " id="textNote" rows="3"
+                      onkeyup="textValidator(this,'^([a-zA-Z0-9\\/\\-\\.\\,]{1,20}[\\s]?)+?([a-zA-Z0-9\\-]{0,20}$)','user','note')"></textarea>
+
+                  </div>
+
+                  <div class="row mt-2">
+
+                    <div class="col-3 text-start">
+                      <button type="reset" class="btn btn-info" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                        onclick="clearUserForm()">Clear</button>
+
+
+                    </div>
+                    <div class="col-9 text-end" id="buttonContainer">
+                      <button type="submit" class="btn btn-warning me-2"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="userUpdate()"
+                        id="buttonUpdate">Update</button>
+
+                      <button type="submit" class="btn btn-success" id="buttonSubmit"
+                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                        onclick="buttonUserSubmit()">Submit</button>
+
+
+                    </div>
+
+
+                  </div>
+
+
+
+
+                </div>
+
+
+
+              </form>
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- model view/print -->
+      <div class="modal " id="modalUserView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalUserView">Print User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="card">
+                <div class="card-body form-area">
+                  <table class="table table-hover table-striped" id="tableUserView">
+
+                    <tr>
+                      <th>User Name </th>
+                      <td id="tdUserName"></td>
+                    </tr>
+                    <!-- <tr>
+                      <th>Calling Name </th>
+                      <td id="tdCallingName"></td>
+                    </tr> -->
+                    <tr>
+                      <th>Email </th>
+                      <td id="tdEmail"></td>
+                    </tr>
+
+                    <tr>
+                      <th>Status </th>
+                      <td id="tdStatus"></td>
+                    </tr>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-primary" onclick="printUserRow()">Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row mt-2 text-center ">
+
+      <div class="col-1"></div>
+      <div class="col-10">
+
+        <!-- User Table -->
+        <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+          <div class="row mt-2 mb-3">
+            <h5><i class="fa-solid fa-table"></i> <b>User Table</b></h>
+          </div>
+          <div class="row mt-2 mb-3">
+            <table class="table table-hover" id="userTable">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Employee</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Modify</th>
+
+                </tr>
+              </thead>
+              <tbody id="tableUserBody" class="text-start">
+
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="col-1"></div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+  <script src="/script/commonValidationFunctions.js"></script>
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/uicontroller/user.js"></script>
+
+
+
+</body>
+
+</html>

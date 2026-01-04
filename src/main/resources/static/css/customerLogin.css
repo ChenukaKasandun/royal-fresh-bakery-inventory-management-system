@@ -1,0 +1,21 @@
+body {
+    background-image: url(/images/newbackround4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+
+}
+
+.card {
+    width: 600px;
+    height: 550px;
+    padding: 20px;
+    box-shadow: 0 25px 25px rgba(0, 0, 0, 0.471);
+    border-radius: 10px;
+}

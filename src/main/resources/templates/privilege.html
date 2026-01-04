@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html lang="en">
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+  <!-- link external css file -->
+  <link rel="stylesheet" href="/css/privilege.css">
+
+</head>
+
+<body>
+
+  <!-- nav bar -->
+  <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+
+
+  <div class="container-fluid">
+    <!-- Title Area -->
+    <div class="row mt-2 mb-3"></div>
+    <div class="row mt-2 mb-3">
+      <div class="col-3"></div>
+      <div class=" col-6 text-center fw-bold title text-light" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+        <h4><i class="fa-solid fa-handshake-angle"></i> Privilege Management</h4>
+      </div>
+      <div class="col-3"></div>
+
+    </div>
+    <!-- Title Area -->
+
+
+    <br /><br />
+
+    <div class="row mt-2 ">
+      <div class="col-8"></div>
+
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark col-3" data-bs-toggle="modal"
+        style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" data-bs-target="#userForm">
+        <h6><b><i class="fa-solid fa-plus"></i>Add Privilege</b></h6>
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade modal-xl" id="userForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+              <form onsubmit="return false" id="formPrivilege">
+
+                <div class="row mt-2 ">
+                  <div class="col-6">
+                    <label for="selectRole" class="col-2 form-label fw-bold">Role :
+                      <span class="text-danger">*</span></label>
+
+                    <select required
+                      onchange="JSON.parse(this.value); dynamicElementValidator(this,'privilege','role_id');"
+                      class="form-select" id="selectRole"></select>
+
+
+
+
+                  </div>
+                  <div class="col-6">
+                    <label for="selectModule" class=" col-2 form-label fw-bold">Module :
+                      <span class="text-danger">*</span></label>
+                    <select required class="form-select"
+                      onchange="JSON.parse(this.value); dynamicElementValidator(this,'privilege','module_id');"
+                      id="selectModule"></select>
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="row  mt-2 col-12 ">
+                  <div class="row col">
+                    <label class="form-label fw-bold col-2">Select : <span class="text-danger">*</span></label>
+                    <div class="form-check form-check-inline col-5">
+                      <input class="form-check-input" type="checkbox" id="checkSelect" value="select" onchange="if (this.checked) {
+                          privilege.privi_select = true;
+                          labelSelect.innerText = 'Select Privilege Granted';
+  
+                          
+                        } else {
+                          privilege.privi_select = false;
+                          labelSelect.innerText = 'Select Privilege Not Granted';
+                          
+                        }">
+                      <label class="form-check-label" for="checkSelect" id="labelSelect">Select Privilege
+                        Granted</label>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row  mt-2 col-12 ">
+                  <div class="row col">
+                    <label class="form-label fw-bold col-2"> Insert : <span class="text-danger">*</span></label>
+                    <div class="form-check form-check-inline col-5">
+                      <input class="form-check-input" type="checkbox" id="checkInsert" value="insert" onchange="if (this.checked) {
+                          privilege.privi_insert = true;
+                          labelInsert.innerText = 'Insert Privilege Granted';
+  
+                          
+                        } else {
+                          privilege.privi_insert= false;
+                          labelInsert.innerText = 'Insert Privilege Not Granted';
+                          
+                        }">
+                      <label class="form-check-label" for="checkInsert" id="labelInsert">Insert Privilege
+                        Granted</label>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row  mt-2 col-12 ">
+                  <div class="row col">
+                    <label class="form-label fw-bold col-2">Update : <span class="text-danger">*</span></label>
+                    <div class="form-check form-check-inline col-5">
+                      <input class="form-check-input" type="checkbox" id="checkUpdate" value="update" onchange="if (this.checked) {
+                          privilege.privi_update = true;
+                          labelUpdate.innerText = 'Update Privilege Granted';
+  
+                          
+                        } else {checkInsert
+                          privilege.privi_update= false;
+                          labelUpdate.innerText = 'Update Privilege Not Granted';
+                          
+                        }">
+                      <label class="form-check-label" for="checkUpdate" id="labelUpdate">Update Privilege
+                        Granted</label>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row  mt-2 col-12 ">
+                  <div class="row col">
+                    <label class="form-label fw-bold col-2">Delete : <span class="text-danger">*</span></label>
+                    <div class="form-check form-check-inline col-5">
+                      <input class="form-check-input" type="checkbox" id="checkDelete" value="delete" onchange="if (this.checked) {
+                          privilege. privi_delete = true;
+                          labelDelete.innerText = 'Delete Privilege Granted';
+  
+                          
+                        } else {checkInsert
+                          privilege. privi_delete= false;
+                          labelDelete.innerText = 'Delete Privilege Not Granted';
+                          
+                        }">
+                      <label class="form-check-label" for="checkDelete" id="labelDelete">Delete Privilege
+                        Granted</label>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mt-2">
+
+                  <div class="col-3 text-start">
+                    <button type="reset" class="btn btn-info"
+                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+
+                  </div>
+                  <div class="col-9 text-end">
+                    <button type="submit" class="btn btn-warning me-2"
+                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                      onclick=" buttonPrivilegeUpdate() ">Update</button>
+
+                    <button type="submit" class="btn btn-success" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                      onclick=" buttonPrivilegeSubmit() ">Submit</button>
+
+
+
+
+                  </div>
+
+
+                </div>
+
+
+              </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-1"></div>
+
+
+
+
+
+
+    </div>
+
+    <!-- modal view/print -->
+    <div class="modal " id="modalPrivilegeView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalUserView">Print Privilege </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="card">
+              <div class="card-body form-area">
+                <table class="table table-hover table-striped" id="tablePrivilegeView">
+
+                  <tr>
+                    <th>Role : </th>
+                    <td id="tdRole"></td>
+                  </tr>
+                  <tr>
+                    <th>Module : </th>
+                    <td id="tdModule"></td>
+                  </tr>
+                  <tr>
+                    <th>Select : </th>
+                    <td id="tdSelect"></td>
+                  </tr>
+                  <tr>
+                    <th>Insert : </th>
+                    <td id="tdInsert"></td>
+                  </tr>
+                  <tr>
+                    <th>Update : </th>
+                    <td id="tdUpdate"></td>
+                  </tr>
+                  <tr>
+                    <th>Delete : </th>
+                    <td id="tdDelete"></td>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-primary" onclick="printPrivilegeRow()">Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="row mt-2 text-center">
+      <div class="col-1"></div>
+      <div class="col-10">
+
+        <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+          <div class="row mt-2 mb-3 ">
+            <h5><b><i class="fa-solid fa-table"></i> Privilege Table</b></h5>
+          </div>
+          <div class="row mt-2 mb-3">
+            <table class="table table-hover" id="tablePrivilege">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Module</th>
+                  <th scope="col">Select</th>
+                  <th scope="col">Insert</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
+                  <th scope="col">Modify</th>
+
+
+                </tr>
+              </thead>
+              <tbody id="tablePrivilegeBody" class="text-start">
+
+
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-1"></div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+  <script src="/script/commonFunctions.js"></script>
+  <script src="/uicontroller/privilege2.js"></script>
+
+</body>
+
+</html>
