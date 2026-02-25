@@ -1,7 +1,8 @@
 body {
-    background-image: url(/images/newbackround4.jpg);
+    background-image: url(/images/variety-bread-wooden-table-old-wooden-background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+
 
     display: flex;
     justify-content: center;
@@ -13,9 +14,10 @@ body {
 }
 
 .card {
-    width: 600px;
+    width: 400px;
     height: 550px;
     padding: 20px;
     box-shadow: 0 25px 25px rgba(0, 0, 0, 0.471);
     border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
 }

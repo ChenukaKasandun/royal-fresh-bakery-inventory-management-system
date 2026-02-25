@@ -1,0 +1,12 @@
+body {
+    background-image: url(/images/newwww.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.card-body2{
+    height: 600px; /* or any size */
+    background-size: cover;
+    background-position: center;
+}

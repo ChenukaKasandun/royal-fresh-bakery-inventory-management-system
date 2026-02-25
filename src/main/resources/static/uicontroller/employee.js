@@ -117,10 +117,7 @@ const dateValidator = (dateElement, object, property) => {
         dateElement.classList.add("is-invalid");
         employee.dob = null;
 
-
     }
-
-
 }
 
 
@@ -429,10 +426,10 @@ const employeeFormRefill = (ob, index) => {
 
     //old employee object vs new employee object(for update function)
 
-    //what actually happened=> actually when object or array is saved in the memmory
-    //it saved in the heap not in the RAM.In the RAM,only a reffrerence will be saved.
+    //what actually happened=> actually when object or array is saved in the memory
+    //it saved in the heap not in the RAM.In the RAM,only a reference will be saved.
     //when the object or array is changed in to a string, then it is saved in the RAM.
-    //Then the new and old saved objects are different..
+    //Then the new and old saved objects are different.
 
 
     $("#modalEmployeeForm").modal("show");

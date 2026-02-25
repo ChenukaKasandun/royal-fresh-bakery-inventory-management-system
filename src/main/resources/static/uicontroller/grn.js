@@ -1,6 +1,6 @@
 
 
-
+// window onload event
 window.addEventListener('load', () => {
 
     refreshGRNTable();
@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
 
 
 })
+
 
 //Validation Of Dynamic dropdown  
 const dynamicElementValidator = (element, object, property) => {
@@ -28,49 +29,22 @@ const refreshForm = () => {
     grn = new Object();
 
 
+    // Introducing Array for linking association table
+    grn.grnHasMaterialList = new Array();
 
-    //Clean the atrributes
-    txtSupplierBillNo.value = "";
-    txtReceivedDate.value = "";
-    selectSupplierName.value = "";
-    selectPoNumber.value = "";
-    selectMaterial.value = "";
-    txtMaterialQty.value = "";
-    selectGrnStatus.value = "";
-    textNote.value = "";
+    // Cleaning the attributes
+    grnForm.reset();
 
-
-
-    txtSupplierBillNo.classList.remove("is-invalid");
-    txtSupplierBillNo.classList.remove("is-valid");
-
-    txtReceivedDate.classList.remove("is-invalid");
-    txtReceivedDate.classList.remove("is-valid");
-
-    selectSupplierName.classList.remove("is-invalid");
-    selectSupplierName.classList.remove("is-valid");
-
-    selectPoNumber.classList.remove("is-invalid");
-    selectPoNumber.classList.remove("is-valid");
-
-    selectMaterial.classList.remove("is-invalid");
-    selectMaterial.classList.remove("is-valid");
-
-    txtMaterialQty.classList.remove("is-invalid");
-    txtMaterialQty.classList.remove("is-valid");
-
-    selectGrnStatus.classList.remove("is-invalid");
-    selectGrnStatus.classList.remove("is-valid");
-
-    textNote.classList.remove("is-invalid");
-    textNote.classList.remove("is-valid");
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([txtSupplierBillNo,
+        txtReceivedDate,
+        selectSupplierName,
+        selectPoNumber,
+        selectGrnStatus,
+        txtTotalPrice,
+        textNote]);
 
 
-
-    //Define Supplier Name
-    let supplierName = getServiceRequest("/supplier/alldata");
-    //Calling function fill data into select
-    fillDataIntoSelect(selectSupplierName, "Please select Supplier Name", supplierName, "supplier_name");
 
 
     //Define PO No
@@ -78,16 +52,11 @@ const refreshForm = () => {
     //Calling function fill data into select
     fillDataIntoSelect(selectPoNumber, "Please select Purchase Order No", poNumber, "order_no");
 
+
     //Define GRNstatus
     let grnStatus = getServiceRequest("/grnstatus/alldata");
     //Calling function fill data into select
     fillDataIntoSelect(selectGrnStatus, "Please select Purchase Order No", grnStatus, "status");
-
-    //Define Material
-    let material = getServiceRequest("/rawmaterial/alldata");
-    //Calling function fill data into select
-    fillDataIntoSelect(selectMaterial, "Please select Material", material, "material_name");
-
 
     //Update button getsdissapeared when refreshForm executed
     buttonSubmit.style.display = "block";
@@ -95,9 +64,21 @@ const refreshForm = () => {
 
 
 
+//     Refreshing Inner Form and inner table
+    refreshInnerFormAndTable();
 }
 
 
+
+// filter suppliername according to the PO No
+
+const filterSupplierName = () =>{
+
+    let supplierName = getServiceRequest("/supplier/getsuppliernamebypono/"+JSON.parse(selectPoNumber.value).id);
+    //Calling function fill data into select
+    fillDataIntoSelect(selectSupplierName, "Please select Supplier Name", supplierName, "supplier_name");
+
+}
 
 const refreshGRNTable = () => {
 
@@ -168,15 +149,6 @@ const checkFormError = () => {
 
     }
 
-    if (grn.material_id == null) {
-        errors = errors + "Please Enter the material..!\n";
-
-    }
-
-    if (grn.qty == null) {
-        errors = errors + "Please Enter the Material Quantity ...!\n";
-
-    }
 
 
     if (grn.grn_status_id == null) {
@@ -209,8 +181,7 @@ const buttonGrnSubmit = () => {
             "\n Item Received Date :" + grn.received_date +
             "\n Supplier Name:" + grn.supplier_id.supplier_name +
             "\n Purchase Order No:" + grn.purchase_order_id.order_no +
-            "\n Material Name:" + grn.material_id.material_name +
-            "\n Material Quantity:" + grn.qty +
+            "\n Total Price:" + grn.total_price+
             "\n GRN Status:" + grn.grn_status_id.status;
 
 
@@ -233,7 +204,7 @@ const buttonGrnSubmit = () => {
                     refreshGRNTable();
                     refreshForm();
 
-                    $("#grnForm").modal("hide");
+                    $("#modalGrnForm").modal("hide");
 
 
 
@@ -244,11 +215,6 @@ const buttonGrnSubmit = () => {
 
 
             }
-
-
-
-
-
         })
 
 
@@ -274,8 +240,7 @@ const grnFormRefill = (dataOb, index) => {
     txtReceivedDate.value = dataOb.received_date;
     selectSupplierName.value = JSON.stringify(dataOb.supplier_id);
     selectPoNumber.value = JSON.stringify(dataOb.purchase_order_id);
-    selectMaterial.value = JSON.stringify(dataOb.material_id);
-    txtMaterialQty.value = dataOb.qty;
+    txtTotalPrice.value = dataOb.total_price;
     selectGrnStatus.value = JSON.stringify(dataOb.grn_status_id);
 
 
@@ -302,7 +267,7 @@ const grnFormRefill = (dataOb, index) => {
 
 
 
-    $("#grnForm").modal("show");
+    $("#modalGrnForm").modal("show");
 
 
 
@@ -346,19 +311,6 @@ const checkFormUpdate = () => {
         }
 
 
-        if (grn.material_id.material_name != oldGrn.material_id.material_name) {
-
-            updates = updates + "Material has changed..!\n";
-
-        }
-
-        if (grn.qty != oldGrn.qty) {
-
-            updates = updates + "Received Qty has changed..!\n";
-
-        }
-
-
         if (grn.grn_status_id.status != oldGrn.grn_status_id.status) {
 
             updates = updates + "GRN Status has changed..!\n";
@@ -376,15 +328,6 @@ const checkFormUpdate = () => {
 
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 //Update button
@@ -420,7 +363,7 @@ const buttonGrnUpdate = () => {
 
                         refreshGRNTable();
                         refreshForm();
-                        $("##grnForm").modal("hide");
+                        $("#modalGrnForm").modal("hide");
 
                     } else {
                         swal("Failed to Update..! \n" + putResponce);
@@ -434,8 +377,6 @@ const buttonGrnUpdate = () => {
             });
 
     }
-
-
 
 
 }
@@ -456,7 +397,6 @@ const buttongrnDelete = (dataOb, index) => {
         "\n Received Date:" + dataOb.received_date +
         "\n Supplier Name:" + dataOb.supplier_id.supplier_name +
         "\n PO No:" + dataOb.purchase_order_id.order_no +
-        "\n Item List:" + dataOb.received_item_list +
         "\n GRN Status:" + dataOb.grn_status_id.status;
 
 
@@ -512,8 +452,8 @@ const grnView = (dataOb, index) => {
     tdReceivedDate.innerText = dataOb.received_date;
     tdSupplierName.innerText = dataOb.supplier_id.supplier_name;
     tdPONumber.innerText = dataOb.purchase_order_id.order_no;
+    tdTotalPrice.innerText = dataOb.total_price;
     tdBillNo.innerText = dataOb.bill_no;
-    tdItemList.innerText = dataOb.received_item_list;
     tdGRNStatus.innerText = dataOb.grn_status_id.status;
 
 
@@ -553,10 +493,119 @@ const printGrnRow = () => {
 }
 
 
+// Refresh Inner Form and Inner  Table
+const refreshInnerFormAndTable = () =>{
+
+//     Clean the attributes
+    grnInnerForm.reset();
+
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([selectMaterial,
+        txtItemQuantity,
+        txtUnitPrice,
+        txtLinePrice]);
+
+
+    // Creating a new object for data binding at front end
+    grnHasMaterial = new Object();
+
+    //Filling Dropdowns
+
+    let material = getServiceRequest("/rawmaterial/alldata");
+
+    //Filling data into dropdowns
+    fillDataIntoSelect(selectMaterial, "Please select Material.!", material, "material_name");
+
+    //Filling  inner Table
+
+    let innerColumns = [{ propertyName: getMaterial, dataType: "function" },
+        { propertyName: "unit_price", dataType: "string" },
+        { propertyName: "qty" , dataType: "string" },
+        { propertyName: "line_price" , dataType: "decimal" }];
+
+// Calling common function to fill data into table
+    fillDataIntoInnerTable(tableInnerGrnBody, grn.grnHasMaterialList, innerColumns, buttonInnerGrnRefill, buttonInnerGrnDelete, true);
+
+}
+
+
+// Function to get material
+const getMaterial = (dataOb) =>{
+    return dataOb?.material_id?.material_name;
+
+}
+
+
+const buttonInnerGrnRefill= () =>{
+
+}
+
+const buttonInnerGrnDelete = () =>{
+
+}
+
+
+// function for generation of Line Price
+const itemQty = document.querySelector("#txtItemQuantity");
+const unitPrice = document.querySelector("#txtUnitPrice");
+const txtLinePrice = document.querySelector("#txtLinePrice");
+
+const generateLinePrice = () => {
+    // Always parse the full current values
+    const qty = parseFloat(itemQty.value) || 0;
+    const price = parseFloat(unitPrice.value) || 0;
+
+    // Recalculate line price fresh each time
+    const linePrice = qty * price;
+
+    txtLinePrice.value = linePrice.toFixed(2); // keep 2 decimals
+    grnHasMaterial.line_price = txtLinePrice.value;
+    txtLinePrice.classList.add("is-valid");
+};
+
+// Update dynamically as user types if either of the fields do not have onchange functions
+// [itemQty, unitPrice].forEach(input => {
+//     input.addEventListener("input", generateLinePrice);
+// });
+
+//  Function For Generating Total Price
+const totalPriceGenerator = () =>{
+
+    let totalPrice = 0;
+    grn.grnHasMaterialList.forEach(material =>{
+        totalPrice += parseFloat(material.line_price);
+    });
+
+    txtTotalPrice.value = totalPrice;
+    grn.total_price = txtTotalPrice.value;
+    txtTotalPrice.classList.add("is-valid");
+}
+
+
+const innerFormSubmit = () =>{
+
+
+    console.log(grn);
+    console.log(grnHasMaterial);
+
+    //Adding inner form data into the association table and to the whole object
+    grn.grnHasMaterialList.push(grnHasMaterial);
+
+    refreshInnerFormAndTable();
+    totalPriceGenerator();
+
+}
 
 
 
+//Validation Of Dynamic dropdown
+const dynamicElementValidator1 = (element, object, property) => {
+
+    const dynamicElement = element.value;
+
+    grnHasMaterial[property] = JSON.parse(dynamicElement);
+
+    element.classList.add("is-valid");
 
 
-
-
+}

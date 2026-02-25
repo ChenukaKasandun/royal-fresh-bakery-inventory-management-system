@@ -32,8 +32,6 @@
         </div>
 
 
-
-
         <div class="row mt-2">
             <div class="col-8"></div>
 
@@ -55,170 +53,159 @@
 
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                        <div class="modal-body" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="card"
-                                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                                <div class="card-body">
-                                                    <form onsubmit="return false " id="deliveryForm">
-                                                        <div class="row">
+                            <div class="row">
+                                <div class="col-6">
+                                    <!--                                                   Delivery Form Starts-->
+                                    <form onsubmit="return false " id="deliveryForm">
+                                        <div class="row">
 
-                                                            <div class="col">
-                                                                <div class="col">
-                                                                    <label for="selectCustomerName"
-                                                                        class="form-label"><b>Customer Name:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <select class="form-select" id="selectCustomerName"
-                                                                        onchange=" dynamicElementValidator(this,'delivery','customer_id');"
-                                                                        required></select>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="col">
-                                                                    <label for="selectInvoiceNo"
-                                                                        class="form-label"><b>Invoice No:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <select class="form-select" id="selectInvoiceNo"
-                                                                        onchange=" dynamicElementValidator(this,'delivery','invoice_id');"
-                                                                        required></select>
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="col">
-                                                                    <label for="selectOrderNo"
-                                                                        class="form-label"><b>Order No:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <select class="form-select" id="selectOrderNo"
-                                                                        onchange=" dynamicElementValidator(this,'delivery','customer_order_id');"
-                                                                        required></select>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="col">
-                                                                <div class="mb-3">
-                                                                    <label for="txtDeliveryDate"
-                                                                        class="form-label"><b>Delivery date:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="date" class="form-control"
-                                                                        onkeydown="return false" id="txtDeliveryDate"
-                                                                        onchange="delivery.delivery_date = this.value">
-                                                                </div>
-                                                            </div>
-
-
-
-                                                        </div>
-
-                                                        <div class="row mt-2 mb-3">
-
-
-                                                            <div class="col">
-                                                                <div class="mb-3">
-                                                                    <label for="txtDeliveryTime"
-                                                                        class="form-label"><b>Delivery Time:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="time" class="form-control"
-                                                                        onchange="delivery.delivery_time = this.value"
-                                                                        placeholder="Enter  Delivery Time...!"
-                                                                        id="txtDeliveryTime">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col">
-                                                                <div class="mb-3">
-                                                                    <label for="txtDeliveryAddress"
-                                                                        class="form-label"><b>Delivery Address:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="text" class="form-control"
-                                                                        onkeyup="delivery.delivery_address =  this.value"
-                                                                        placeholder="Enter Delivery Address...!"
-                                                                        id="txtDeliveryAddress">
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row mt-2 mb-3">
-
-                                                            <div class="col">
-                                                                <label for="selectDeliveryRoute"
-                                                                    class="form-label"><b>Delivery Vehicle :<span
-                                                                            class="text-danger">*</span></b></label>
-                                                                <select class="form-select" id="selectDeliveryVehicle"
-                                                                    onchange=" dynamicElementValidator(this,'delivery','vehicle_id');"
-                                                                    required></select>
-                                                            </div>
-
-
-                                                            <div class="col">
-                                                                <label for="selectDeliveryStatus"
-                                                                    class="form-label"><b>Delivery Status :<span
-                                                                            class="text-danger">*</span></b></label>
-                                                                <select class="form-select" id="selectDeliveryStatus"
-                                                                    onchange=" dynamicElementValidator(this,'delivery','delivery_status_id');"
-                                                                    required></select>
-                                                            </div>
-
-
-                                                        </div>
-
-                                                        <div class="row mt-2 mb-3">
-
-
-
-                                                            <div class="col">
-                                                                <label for="textNote" class="form-label fw-bold">Note
-                                                                    :</label>
-                                                                <textarea class="form-control" id="textNote"
-                                                                    rows="2"></textarea>
-
-
-
-                                                            </div>
-
-
-
-                                                        </div>
-
-
-
-
-
-
-
-                                                    </form>
-
-
+                                            <div class="col">
+                                                <div class="col">
+                                                    <label for="selectCustomerName"
+                                                           class="form-label"><b>Customer Name:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <select class="form-select" id="selectCustomerName"
+                                                            onchange=" dynamicElementValidator(this,'delivery','customer_id');"
+                                                            required></select>
                                                 </div>
+
                                             </div>
+                                            <div class="col">
+                                                <div class="col">
+                                                    <label for="selectInvoiceNo"
+                                                           class="form-label"><b>Invoice No:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <select class="form-select" id="selectInvoiceNo"
+                                                            onchange=" dynamicElementValidator(this,'delivery','invoice_id');"
+                                                            required></select>
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
-                                        <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="col">
+                                                    <label for="selectOrderNo"
+                                                           class="form-label"><b>Order No:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <select class="form-select" id="selectOrderNo"
+                                                            onchange=" dynamicElementValidator(this,'delivery','customer_order_id');"
+                                                            required></select>
+                                                </div>
 
-                                            <div class="card"
-                                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                                <div class="card-body">
-                                                    <div class="row mt-2 text-center ">
+                                            </div>
 
-                                                        <div class="row mt-2 mb-3">
-                                                            <h6> <b>Delivery Inner Table</b></h6>
-                                                        </div>
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="txtDeliveryDate"
+                                                           class="form-label"><b>Delivery date:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="date" class="form-control"
+                                                           onkeydown="return false" id="txtDeliveryDate"
+                                                           onchange="delivery.delivery_date = this.value">
+                                                </div>
+                                            </div>
 
 
-                                                        <div class="row mt-2 mb-3">
-                                                            <table class="table table-hover " id="itemInnerTable">
-                                                                <thead>
+
+                                        </div>
+
+                                        <div class="row mt-2 mb-3">
+
+
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="txtDeliveryTime"
+                                                           class="form-label"><b>Delivery Time:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="time" class="form-control"
+                                                           onchange="delivery.delivery_time = this.value"
+                                                           placeholder="Enter  Delivery Time...!"
+                                                           id="txtDeliveryTime">
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="txtDeliveryAddress"
+                                                           class="form-label"><b>Delivery Address:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="text" class="form-control"
+                                                           onkeyup="delivery.delivery_address =  this.value"
+                                                           placeholder="Enter Delivery Address...!"
+                                                           id="txtDeliveryAddress">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+
+                                            <div class="col">
+                                                <label for="selectDeliveryVehicle"
+                                                       class="form-label"><b>Delivery Vehicle :<span
+                                                        class="text-danger">*</span></b></label>
+                                                <select class="form-select" id="selectDeliveryVehicle"
+                                                        onchange=" dynamicElementValidator(this,'delivery','vehicle_id');"
+                                                        required></select>
+                                            </div>
+
+
+                                            <div class="col">
+                                                <label for="selectDeliveryStatus"
+                                                       class="form-label"><b>Delivery Status :<span
+                                                        class="text-danger">*</span></b></label>
+                                                <select class="form-select" id="selectDeliveryStatus"
+                                                        onchange=" dynamicElementValidator(this,'delivery','delivery_status_id');"
+                                                        required></select>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row mt-2 mb-3">
+
+
+
+                                            <div class="col">
+                                                <label for="textNote" class="form-label fw-bold">Note
+                                                    :</label>
+                                                <textarea class="form-control" id="textNote"
+                                                          rows="2"></textarea>
+
+                                            </div>
+
+
+
+                                        </div>
+
+
+
+
+
+
+
+                                    </form>
+
+                                </div>
+
+                                <div class="col-6">
+                                               <!--                                    Delivery Inner Table Starts-->
+                                                <div class="card"
+                                                     style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                                    <div class="card-body">
+                                                        <div class="row mt-2 text-center ">
+
+                                                            <div class="row mt-2 mb-3" >
+                                                                <h6 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645"><b>Delivery Inner Table</b></h6>
+                                                            </div>
+
+                                                            <div class="row mt-2 mb-3">
+                                                                <table class="table table-hover " id="itemInnerTable">
+                                                                    <thead class="table-light">
                                                                     <tr>
                                                                         <th scope="col">#</th>
                                                                         <th scope="col">Item Name</th>
@@ -226,8 +213,8 @@
                                                                         <th scope="col">Modify</th>
 
                                                                     </tr>
-                                                                </thead>
-                                                                <tbody id="itemInnerTableBody">
+                                                                    </thead>
+                                                                    <tbody id="itemInnerTableBody">
 
 
                                                                     <td></td>
@@ -235,69 +222,49 @@
                                                                     <td></td>
                                                                     <td></td>
 
-                                                                </tbody>
-                                                            </table>
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+                                                            <div class="col-1"></div>
 
                                                         </div>
 
-
-
-
-
-                                                        <div class="col-1"></div>
-
-
-
-
-
-
-
-
-
                                                     </div>
-
                                                 </div>
-                                            </div>
-
-
-                                        </div>
-
-
-                                        <div class="row mt-2">
-
-                                            <div class="col-3 text-start">
-                                                <button type="reset" class="btn btn-info">Clear</button>
-
-
-                                            </div>
-                                            <div class="col-9 text-end" id="buttonContainer">
-                                                <button type="submit" class="btn btn-warning me-2"
-                                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                                    id="buttonUpdate" onclick=" buttonDeliveryUpdate()">Update</button>
-
-                                                <button type="submit" class="btn btn-success"
-                                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                                    id="buttonSubmit" onclick=" buttonDeliverySubmit()"><i
-                                                        class="fa-solid fa-plus"></i>Add</button>
-
-                                            </div>
-
-
-                                        </div>
-
-                                    </div>
-
                                 </div>
                             </div>
 
+                            <!--                            Buttons-->
+                            <div class="row mt-2">
+                                <div class="text-end" id="buttonContainer">
+                                    <button type="reset" class="btn btn-info me-2"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                                    <button type="submit" class="btn btn-warning me-2"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            id="buttonUpdate" onclick=" buttonDeliveryUpdate()">Update</button>
+
+                                    <button type="submit" class="btn btn-success"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            id="buttonSubmit" onclick=" buttonDeliverySubmit()"><i
+                                            class="fa-solid fa-plus"></i>Add</button>
+                                </div>
+                            </div>
 
                         </div>
-
 
                     </div>
 
                 </div>
+
+
             </div>
+
+
+        </div>
+
+    </div>
+
 
             <!-- model view/print -->
             <div class="modal " id="modalDeliveryView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -305,7 +272,7 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalDeliveryView">Print Delivery Table</h5>
+                            <h5 class="modal-title" id="modalDeliveryViewHeader">Print Delivery Table</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -359,8 +326,6 @@
             </div>
 
         </div>
-
-
 
 
     </div>
@@ -417,26 +382,6 @@
 
         </div>
         <div class="col-1"></div>
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
 
     </div>
 

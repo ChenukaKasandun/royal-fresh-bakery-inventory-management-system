@@ -1,6 +1,5 @@
-<nav class="navbar navbar-light " th:fragment="topNavbarFragment" style="background-color: #fffaf0ce;
-    color: #8B0000" ;>
-
+<nav class="navbar navbar-light" th:fragment="topNavbarFragment" style="background-color: #fffaf0ce;
+    color: #8B0000">
     <!-- CSS to get colors -->
     <style>
         .offcanvas-body .nav-item:hover {
@@ -15,9 +14,11 @@
             transition: background-color 0.2s ease-in-out;
         }
 
-        /* Offcanvas Sidebar background color*/
+        /* Offcanvas Sidebar background image*/
         .offcanvas {
-            background-color: rgba(240, 248, 255, 0.85);
+            background-image: url("/images/newwww.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
 
         }
 
@@ -27,13 +28,14 @@
 
         }
 
-
-        /* Offcanvas drop doown menu background color */
+        /* Offcanvas drop doown menu background image */
         .offcanvas .dropdown-menu {
-            background-color: rgba(240, 248, 255, 0.85);
+
+            background-image: url("/images/newwww.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
 
         }
-
         .nav-item {
             margin-right: 2px;
             /* Adds horizontal space between items */
@@ -110,12 +112,12 @@
                 </li>
                 <!-- Item -->
                 <li class="nav-item mb-3">
-                    <a class="nav-link" href="/itemform">Item Form</a>
+                    <a class="nav-link" href="/item">Item </a>
                 </li>
 
-                <!-- Item -->
+                <!-- Item Stock -->
                 <li class="nav-item mb-3">
-                    <a class="nav-link" href="/itemtable">Item Table</a>
+                    <a class="nav-link" href="/itemstock">Item Stock </a>
                 </li>
 
                 <!-- Item Price -->
@@ -142,16 +144,21 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <li><a class="dropdown-item" href="/returnitems">Return Items</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="/customerpayment">Customer Payment</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/walkingcustomer">Walking Customer</a></li>
+                        <li><a class="dropdown-item" href="/walkingcustomerpayment">Walking Customer Payment</a></li>
+
                     </ul>
                 </li>
 
 
-                <!-- Suppplier -->
+                <!-- Supplier -->
                 <li class="nav-item dropdown mb-3">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -166,12 +173,15 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
+                        <!-- GRN -->
+                        <li>
+                            <a  class="dropdown-item" href="/grn">GRN</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="/supplierpayment">Supplier Payment</a></li>
                     </ul>
-                </li>
-                <!-- GRN -->
-                <li class="nav-item mb-3">
-                    <a class="nav-link" href="/grn">GRN</a>
                 </li>
                 <!-- Raw material Stock -->
                 <li class="nav-item mb-3">

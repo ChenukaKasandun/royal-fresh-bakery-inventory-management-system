@@ -39,7 +39,7 @@
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-dark col-3" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
-                0, 0.901);" data-bs-toggle="modal" data-bs-target="#walkingCustomerForm"><i
+                0, 0.901);" data-bs-toggle="modal" data-bs-target="#modalWalkingCustomerForm"><i
                     class="fa-solid fa-plus"></i>
                 <b>Walking Customer Form</b>
             </button>
@@ -47,7 +47,7 @@
 
 
             <!-- Modal -->
-            <div class="modal fade modal-xl" id="walkingCustomerForm" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade modal-xl" id="modalWalkingCustomerForm" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -56,282 +56,220 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="card"
-                                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                                <div class="card-body">
-                                                    <form onsubmit="return false " id="walkingCustomerForm">
+                             style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <!--                                                    Waking Customer Form Starts-->
+                                    <form onsubmit="return false " id="walkingCustomerForm">
+
+                                        <div class="row mt-2 mb-3">
+
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="dateDate"
+                                                           class="form-label"><b>Date:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="date" class="form-control"
+                                                           onchange=" walkingCustomer.date = this.value"
+                                                           id="dateDate">
+                                                </div>
+                                            </div>
 
 
-                                                        <div class="row mt-2 mb-3">
-                                                            <div class="col">
-                                                                <div class="mb-3">
-                                                                    <label for="dateDate"
-                                                                        class="form-label"><b>Date:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="date" class="form-control"
-                                                                        onchange=" walkingCustomer.date = this.value"
-                                                                        id="dateDate">
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col">
-                                                                <div class="mb-3">
-                                                                    <label for="txtTotalItemsSold"
-                                                                        class="form-label"><b>Total Items Sold:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="text" class="form-control"
-                                                                        onkeyup=" walkingCustomer.total_items_sold = this.value"
-                                                                        id="txtTotalItemsSold"
-                                                                        placeholder="Enter Total Items Sold..!">
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-
-
-                                                        <div class="row mt-2 mb-3">
-
-                                                            <div class="col-6">
-                                                                <div class="mb-3">
-                                                                    <label for="txtTotalIncome"
-                                                                        class="form-label"><b>Total Income:<span
-                                                                                class="text-danger">*</span></b></label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="txtTotalIncome"
-                                                                        onkeyup="walkingCustomer.total_price =this.value"
-                                                                        placeholder="Enter Today's Total Income..!">
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-
-
-
-
-
-
-
-
-
-                                                        <div class="row mt-2"></div>
-                                                        <div class="row mt-2"></div>
-                                                        <div class="row mt-2"></div>
-
-
-
-
-                                                        <div class="row mb-3">
-
-
-
-                                                            <label for="textNote" class="form-label fw-bold">Note
-                                                                :</label>
-                                                            <textarea class="form-control" id="textNote"
-                                                                rows="2"></textarea>
-
-                                                        </div>
-
-
-                                                    </form>
-
-
+                                            <div class="col-6">
+                                                <div class="mb-3">
+                                                    <label for="txtTotalIncome"
+                                                           class="form-label"><b>Total Income:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtTotalIncome"
+                                                           onkeyup="walkingCustomer.total_price =this.value"
+                                                           placeholder="Enter Today's Total Income..!">
                                                 </div>
 
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mt-2 mb-3">
+
+                                            <div class="col-6">
+
+                                                <label for="textNote" class="form-label fw-bold">Note
+                                                    :</label>
+                                                <textarea class="form-control" id="textNote"
+                                                          rows="2"></textarea>
 
                                             </div>
 
 
                                         </div>
 
-                                        <div class="col-6">
+                                    </form>
 
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="card"
-                                                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                                        <div class="card-body">
+                                    <!--                                                    Walking customer form ends-->
 
-                                                            <div class="row">
-                                                                <div class="  text-center fw-bold title text-light">
-                                                                    <h5>Item Inner Form</h5>
-                                                                </div>
-
-                                                                <div class="row"></div>
-                                                                <div class="row"></div>
-
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="mb-3">
-                                                                        <label for="txtItem" class="form-label"><b>Item
-                                                                                Name:<span
-                                                                                    class="text-danger">*</span></b></label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="txtItem"
-                                                                            placeholder="Ex: Enter Item Name">
-                                                                        <div class="valid-feedback">
-                                                                            Looks good!
-                                                                        </div>
-                                                                        <div class="invalid-feedback">
-                                                                            Looks not good!
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col">
-
-                                                                    <div class="mb-3">
-                                                                        <label for="txtItemQuantity"
-                                                                            class="form-label"><b>Item
-                                                                                Quantity:<span
-                                                                                    class="text-danger">*</span></b></label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="txtItemQuantity"
-                                                                            placeholder="Ex: Enter Item Quantity">
-                                                                        <div class="valid-feedback">
-                                                                            Looks good!
-                                                                        </div>
-                                                                        <div class="invalid-feedback">
-                                                                            Looks not good!
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-
-                                                            </div>
-
-
-
-
-                                                            <div class="row mt-2">
-
-                                                                <div class="col-3 text-start">
-                                                                </div>
-                                                                <div class="col-9 text-end">
-                                                                    <button type="reset" class="btn btn-info"
-                                                                        style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-                                                                    <button type="submit" class="btn btn-success"
-                                                                        style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                                                            class="fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                                                </div>
-
-
-                                                            </div>
-
-
-
-
-                                                        </div>
-                                                    </div>
-
-                                                    <br><br>
-
-                                                    <div class="card"
-                                                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                                        <div class="card-body">
-
-                                                            <div class="row mt-2 mb-3">
-                                                                <div class="  text-center fw-bold title text-light">
-                                                                    <h5>Item Inner Table</h5>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row mt-2 mb-3">
-                                                                <table class="table table-hover" id="itemInnerTable">
-                                                                    <thead class="table-dark">
-                                                                        <tr>
-                                                                            <th scope="col">#</th>
-                                                                            <th scope="col">Item</th>
-                                                                            <th scope="col">Item Qty</th>
-                                                                            <th scope="col">Modify</th>
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody id="tableInnerItemBody">
-
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-                                                                        <td></td>
-
-
-                                                                    </tbody>
-                                                                </table>
-
-                                                            </div>
-
-
-
-                                                        </div>
-                                                    </div>
-
-
-
-
+                                </div>
+                                <!--                            Inner walking customer Form and Inner Table Starts-->
+                                <div class="col-6">
+                                    <div class="card" style="background-image:url('/images/newwww.jpg'); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="  text-center fw-bold title text-light"
+                                                     style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                    <h5>Walking Customer Inner Form</h5>
                                                 </div>
                                             </div>
 
+                                            <form id="walkingCustomerInnerForm">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="selectItem" class="form-label"><b>Item :<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <select class="form-select" id="selectItem"
+                                                                onchange="dynamicElementValidator2(this,'walkingInnerCustomer','item_id');"></select>
+                                                    </div>
 
+                                                    <div class="col">
+
+                                                        <div class="mb-3">
+                                                            <label for="txtUnitPrice" class="form-label"><b>Unit Price:<span
+                                                                    class="text-danger">*</span></b></label>
+                                                            <input type="text" class="form-control" id="txtUnitPrice"
+                                                            onkeyup="generateLinePrice();">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Looks not good!
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                    <div class="row">
+                                                        <div class="col">
+
+                                                            <div class="mb-3">
+                                                                <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
+                                                                        class="text-danger">*</span></b></label>
+                                                                <input type="text" class="form-control" id="txtItemQuantity"
+                                                                       onkeyup="textValidator(this,'^([0-9]{1,100})$','walkingInnerCustomer','qty'),
+                                                                        generateLinePrice();"
+                                                                       placeholder="Ex: Enter Item Quantity">
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    Looks not good!
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col">
+
+                                                            <div class="mb-3">
+                                                                <label for="txtLinePrice" class="form-label"><b>Line Price:<span
+                                                                        class="text-danger">*</span></b></label>
+                                                                <input type="text" class="form-control" id="txtLinePrice">
+                                                                <div class="valid-feedback">
+                                                                    Looks good!
+                                                                </div>
+                                                                <div class="invalid-feedback">
+                                                                    Looks not good!
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                            </form>
+
+                                            <div class="row mt-2">
+
+                                                <div class="col-3 text-start">
+                                                </div>
+                                                <div class="col-9 text-end">
+                                                    <button type="reset" class="btn btn-info"
+                                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                                    <button type="submit" class="btn btn-success"
+                                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                            onclick="buttonInnerFormSubmit();"><i
+                                                            class=" fa-solid fa-plus"></i>Add</button>
+                                                </div>
+                                            </div>
+
+                                            <hr><hr>
+
+                                            <div class="row mt-2 mb-3">
+                                                <div class="  text-center fw-bold title text-light"
+                                                     style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                    <h5>Walking Customer Inner Table</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2 mb-3">
+                                                <table class="table table-hover" id="walkingCustomerInnerTable">
+                                                    <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Item Name</th>
+                                                        <th scope="col">Item Quantity</th>
+                                                        <th scope="col">Line Price</th>
+                                                        <th scope="col">Modify</th>
+
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="walkingCustomerInnerTableBody" style="background-color: white">
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
 
                                         </div>
-
                                     </div>
-
-                                    <div class="row">
-
-                                        <div class="text-start col-3">
-                                            <button type="reset" class="btn btn-info"
-                                                style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                                onclick="refreshForm()">Clear</button>
-                                        </div>
-
-                                        <div class="text-end col-9" id="buttonContainer">
-                                            <button type="submit" class="btn btn-warning me-2"
-                                                style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                                onclick="buttonWalkingCustomerUpdate()" id="buttonUpdate"
-                                                form="itemForm">Update</button>
-
-                                            <button type="submit" class="btn btn-success "
-                                                onclick="buttonWalkingCustomerSubmit()" id="buttonSubmit"
-                                                style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                                form="itemForm"><i class="fa-solid fa-plus"></i>Add</button>
-                                        </div>
-                                    </div>
-
 
 
                                 </div>
+
                             </div>
 
+<!--                            Buttons-->
+                            <div class="row">
 
+                                <div class="text-end" id="buttonContainer">
 
-                        </div>
+                                    <button type="reset" class="btn btn-info me-2"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    >Clear</button>
+                                    <button type="submit" class="btn btn-warning me-2"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            onclick="buttonWalkingCustomerUpdate()" id="buttonUpdate"
+                                            form="walkingCustomerForm">Update</button>
+
+                                    <button type="submit" class="btn btn-success "
+                                            onclick="buttonWalkingCustomerSubmit()" id="buttonSubmit"
+                                            style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            form="walkingCustomerForm"><i class="fa-solid fa-plus"></i>Add</button>
+                                </div>
+                            </div>
 
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
 
             <!-- model view/print -->
             <div class="modal " id="modalWalkingCustomerView" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -339,7 +277,7 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalWalkingCustomerView">Walking Customer Income View</h5>
+                            <h5 class="modal-title" id="modalWalkingCustomerViewHeader">Walking Customer Income View</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -363,11 +301,6 @@
                                             <th>TotalIncome </th>
                                             <td id="tdTotalIncome"></td>
                                         </tr>
-                                        <tr>
-
-
-
-
 
                                     </table>
 
@@ -383,26 +316,10 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--        Walking Customer Table-->
         <div class="row mt-2 text-center ">
 
             <div class="col-1"></div>
@@ -411,30 +328,26 @@
                 <div class="card card-body"
                     style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
                     <div class="row mt-2 mb-3">
-                        <h5><i class="fa-solid fa-table"></i> <b>Walking Customer Table</b></h>
+                        <h5><i class="fa-solid fa-table"></i> <b>Walking Customer Table</b></h5>
                     </div>
                     <div class="row mt-2 mb-3">
                         <table class="table table-hover" id="walkingCustomerTable">
-                            <thead class="table-dark">
+                            <thead class="table-dark text-center">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Total Items Sold</th>
                                     <th scope="col">Total Income</th>
                                     <th scope="col">Modify</th>
 
                                 </tr>
                             </thead>
-                            <tbody id="walkingCustomerTableBody" class="text-start">
-
-
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-
-
+                            <tbody id="walkingCustomerTableBody" class="text-center">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -446,35 +359,14 @@
 
             </div>
             <div class="col-1"></div>
-
-
-
-
-
-
-
-
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 
     <script src="/script/commonFunctions.js"></script>
     <script src="/script/commonValidationFunctions.js"></script>
     <script src="/uicontroller/walkingcustomer.js"></script>
-
+</div>
 </body>
 
 </html>

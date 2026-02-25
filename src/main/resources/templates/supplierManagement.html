@@ -52,8 +52,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                             style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
+<!--                            Supplier Form Starts-->
                             <form onsubmit="return false" id="supplierForm">
 
                                 <div class="row mt-2">
@@ -78,10 +79,7 @@
 
                                     </div>
 
-
                                 </div>
-
-
 
                                 <div class="row mt-2 mb-3">
 
@@ -101,7 +99,6 @@
                                             <div class="invalid-feedback">
                                                 Looks not good!
                                             </div>
-
 
                                         </div>
                                     </div>
@@ -163,10 +160,10 @@
                                             </div>
                                             <div class="col-2">
                                                 <div class="row mt-1 col-12 text-center">
-                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addSingleItem()" type = "button"> > </button>
-                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addMultipleItem()" type = "button"> >> </button>
-                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeSingleItem()" type = "button"> < </button>
-                                                    <button class="btn fw-bold mb-1" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeMultipleItem()" type = "button"> << </button>
+                                                    <button class="btn fw-bold mb-1" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addSingleItem()" type = "button"> > </button>
+                                                    <button class="btn fw-bold mb-1" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="addMultipleItem()" type = "button"> >> </button>
+                                                    <button class="btn fw-bold mb-1" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeSingleItem()" type = "button"> < </button>
+                                                    <button class="btn fw-bold mb-1" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="removeMultipleItem()" type = "button"> << </button>
                                                 </div>
                                                 <div class="row mt-1 col-12 text-center"></div>
                                                 <div class="row mt-1 col-12 text-center"></div>
@@ -183,7 +180,6 @@
                                 </div>
 
                                 <div class="row mt-2 mb-3">
-
 
                                     <!-- Validation for account is needed -->
                                     <div class="col">
@@ -211,14 +207,9 @@
                                         </div>
                                     </div>
 
-
-
-
-
                                 </div>
 
                                 <div class="row mt-2 mb-3">
-
                                     <div class="col">
                                         <label for="selectBank" class="form-label"><b>Account Bank :<span
                                                     class="text-danger">*</span></b></label>
@@ -226,9 +217,6 @@
                                             onchange="dynamicElementValidator(this,'supplier','bank_id')"></select>
 
                                     </div>
-
-
-
 
                                     <div class="col">
                                         <div class="col">
@@ -241,7 +229,6 @@
 
                                     </div>
 
-
                                 </div>
 
                                 <div class="row">
@@ -253,26 +240,22 @@
                                             onchange="dynamicElementValidator(this,'supplier','supplier_delivery_method_id')"></select>
 
                                     </div>
-                                </div>
 
+                                    <div class="col-6">
 
-
-                                <div class="row mb-3">
-
-                                    <label for="textNote" class="form-label fw-bold">Note :</label>
-                                    <textarea class="form-control " id="textNote" rows="3"></textarea>
-
-                                </div>
-
-                                <div class="row mt-2">
-
-                                    <div class="col-3 text-start">
-                                        <button type="reset" class="btn btn-info" style=" box-shadow: 0px 4px 6px rgba(0, 0,
-                                                  0, 0.901);">Clear</button>
-
+                                        <label for="textNote" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control " id="textNote" rows="3"></textarea>
 
                                     </div>
-                                    <div class="col-9 text-end" id="buttonContainer">
+                                </div>
+
+
+<!--                                Buttons -->
+                                <div class="row mt-2">
+                                    <div class="text-end" id="buttonContainer">
+
+                                        <button type="reset" class="btn btn-info me-2" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                                                  0, 0.901);">Clear</button>
                                         <button type="submit" class="btn btn-warning me-2" id="buttonUpdate" style=" box-shadow: 0px 4px 6px rgba(0, 0,
                 0, 0.901);" onclick="buttonSupplierUpdate();">Update</button>
 
@@ -285,31 +268,10 @@
 
                                 </div>
 
-
-
-
-
-
-
-
                             </form>
 
 
-
-
-
-
-
                         </div>
-
-
-
-
-
-
-
-
-
 
                     </div>
 
@@ -322,7 +284,7 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalSupplierView">Print Supplier Table</h5>
+                            <h5 class="modal-title" id="modalSupplierViewHeader">Print Supplier Table</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -377,30 +339,13 @@
                 </div>
             </div>
 
-
-
-
         </div>
-
-
-
 
     </div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<!--    Suplier Table starts-->
     <div class="row mt-2 text-center ">
 
         <div class="col-1"></div>
@@ -418,14 +363,11 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Supplier Name</th>
                                 <th scope="col">Material</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Contact No</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Modify</th>
-
-
-
 
                             </tr>
                         </thead>
@@ -440,45 +382,22 @@
                             <td></td>
                             <td></td>
 
-
                         </tbody>
                     </table>
 
                 </div>
             </div>
 
-
-
         </div>
         <div class="col-1"></div>
 
-
-
-
-
-
-
-
-
     </div>
 
-
-
-
-
-
-
-
-
-
-
     </div>
-
 
     <script src="/script/commonFunctions.js"></script>
     <script src="/script/commonValidationFunctions.js"></script>
     <script src="/uicontroller/supplier.js"></script>
-
 
 </body>
 

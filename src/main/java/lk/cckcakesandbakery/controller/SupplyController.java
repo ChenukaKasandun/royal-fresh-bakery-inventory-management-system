@@ -4,17 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.dao.SupplierStatuSDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import lk.cckcakesandbakery.dao.SupplierDao;
@@ -35,6 +30,9 @@ public class SupplyController {
     @Autowired
     private UserPrivilegeController userPrivilegeController;
 
+    @Autowired
+    private SupplierStatuSDao supplierStatuSDao;
+
     // request mapping for load supply ui[URL --->/supply]
     @RequestMapping(value = "/supplier")
     public ModelAndView loadSupplyUI() {
@@ -50,9 +48,16 @@ public class SupplyController {
         return supplyUI;
     }
 
+//    Requesting Supplier object relevant to given purchase order id
+@GetMapping(value = "/supplier/getsuppliernamebypono/{poId}" , produces = "application/json")
+public List<Supplier> getSupplierNameByPoNo(@PathVariable ("poId")  Integer poId) {
+        return supplierDao.getSupplierByPoId(poId);
+}
+
+
     // .............CRUD.............................
 
-    // 1...................Select....................
+    // 1...................Select................... .
     // request mapping for get supplier all data [URL --->//supplier/alldata]
     @GetMapping(value = "/supplier/alldata", produces = "application/json")
     public List<lk.cckcakesandbakery.entity.Supplier> findAllData() {
@@ -160,8 +165,9 @@ public class SupplyController {
                 // Set auto added data
                 extSupplierById.setDelete_date_time(LocalDateTime.now());
                 extSupplierById.setDelete_user_id(loggedUser.getId());
+                extSupplierById.setSupplier_registration_status_id(supplierStatuSDao.getReferenceById(3));
 
-                supplierDao.delete(extSupplierById);
+                supplierDao.save(extSupplierById);
 
                 // Dependancy
 

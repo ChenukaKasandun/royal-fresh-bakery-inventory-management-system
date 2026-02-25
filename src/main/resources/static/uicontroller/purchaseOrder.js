@@ -1,15 +1,16 @@
 //Onload event
 window.addEventListener('load', () => {
 
-
     //unable tooltip
     $('[data-bs-toggle="tooltip" ]').tooltip();
-    refreshPurchaseOrderTable();
+
     refreshForm();
+    refreshPurchaseOrderTable();
+
+    refreshInnerFormAndInnerTable();
 
 
 })
-
 
 
 //Validation Of Dynamic dropdown  
@@ -21,25 +22,21 @@ const dynamicElementValidator = (element, object, property) => {
 
     element.classList.add("is-valid");
 
+}
+
+//Validation Of Dynamic dropdown   in the inner form
+const dynamicElementValidator2 = (element, object, property) => {
+
+    const dynamicElement = element.value;
+
+    purchaseOrderMaterial[property] = JSON.parse(dynamicElement);
+
+    element.classList.add("is-valid");
 
 }
 
 
-const PurchaseOrderStatusValidator = () => {
-
-    if (confirmRadio.checked) {
-        purchaseOrder.purchase_order_status_id = { id: 1, name: "Confirmed" }
-
-    }
-
-    if (cancelRadio.checked) {
-        purchaseOrder.purchase_order_status_id = { id: 1, name: "Cancelled" }
-
-    }
-}
-
-
-//Validation Of DOB
+//Validation Of required date
 const dateValidator = (dateElement, object, property) => {
 
     const dateElementValue = dateElement.value;
@@ -54,62 +51,26 @@ const dateValidator = (dateElement, object, property) => {
         dateElement.classList.add("is-invalid");
         purchaseOrder.required_date = null;
 
-
     }
-
 
 }
 
 
-
+//Refreshing Form
 const refreshForm = () => {
 
+    //Cleaning inner HTML of attributes
+    poForm.reset();
+
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([selectSupplier,txtTotal,txtRequiredDate,selectPoStatus]);
 
     //Defining purchaseOrder object for data binding at front end
     purchaseOrder = new Object();
 
 
-    //Cleaning inner HTML of attributes
-    selectMaterial.value = "";
-    selectSupplier.value = "";
-    txtUnit.value = "";
-    txtQty.value = "";
-    txtTotal.value = "";
-    txtRequiredDate.value = "";
-
-
-    //Radio buttons
-    confirmRadio.checked = false;
-    cancelRadio.checked = false;
-
-
-    //Removing validation
-    selectMaterial.classList.remove("is-invalid");
-    selectMaterial.classList.remove("is-valid");
-
-    selectSupplier.classList.remove("is-invalid");
-    selectSupplier.classList.remove("is-valid");
-
-    txtUnit.classList.remove("is-invalid");
-    txtUnit.classList.remove("is-valid");
-
-    txtQty.classList.remove("is-invalid");
-    txtQty.classList.remove("is-valid");
-
-    txtTotal.classList.remove("is-invalid");
-    txtTotal.classList.remove("is-valid");
-
-    txtRequiredDate.classList.remove("is-invalid");
-    txtRequiredDate.classList.remove("is-valid");
-
-
-
-
-    //rettrive data from the database by using a common function
-    let materials = getServiceRequest("/rawmaterial/alldata");
-
-    //Calling function fill data into select
-    fillDataIntoSelect(selectMaterial, "Please select Material..!", materials, "material_name");
+    //Creating a new array to push data from the inner form to the inner table and main form(association link)
+    purchaseOrder.purchaseOrderHasMaterialList = new Array();
 
     //rettrive data from the database by using a common function
     let supplierName = getServiceRequest("/supplier/alldata");
@@ -117,9 +78,14 @@ const refreshForm = () => {
     //Calling function fill data into select
     fillDataIntoSelect(selectSupplier, "Please select Supplier..!", supplierName, "supplier_name");
 
+    //rettrive purchaseorder status except "Delete"
+    let poStatus = getServiceRequest("/purchaseorder/statusexceptdelete");
+
+    //Calling function fill data into select
+    fillDataIntoSelect(selectPoStatus, "Please select Status..!", poStatus, "name");
 
 
-    //Update button getsdissapeared when Add new PO clicked
+    //Update button gets dissapeared when Add new PO clicked
     buttonSubmit.style.display = "block";
     buttonUpdate.style.display = "none";
 
@@ -127,81 +93,60 @@ const refreshForm = () => {
 
 
 
-
-
+///Refreshing Table
 const refreshPurchaseOrderTable = () => {
 
     //string => string/sate/number
     //function => object/array/boolean
     let propertyList = [{ propertyName: "order_no", dataType: "string" },
     { propertyName: getSupplierName, dataType: "function" },
-    { propertyName: getMaterialName, dataType: "function" },
-    { propertyName: "unit_price", dataType: "string" },
-    { propertyName: "order_qty", dataType: "string" },
     { propertyName: "total_price", dataType: "string" },
     { propertyName: "required_date", dataType: "string" },
     { propertyName: getPoStatus, dataType: "function" }];
 
 
-
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
+    //Retriving data from the database using ajax common function defined in the coomonFunctions.js
     let purchaseOrders = getServiceRequest("/purchaseorder/alldata");
-
 
     // Calling common function to fill data into table
     fillDataIntoTable1(tablePurchaseOrderBody, purchaseOrders, propertyList, buttonPurchaseOrderRefill, buttonPurchaseOrderDelete, buttonPurchaseOrderView, true);
 
-
+    //jQuery function
     $('#purchaseOrderTable').DataTable();
-
 
 
 }
 
-
+//Function for getting Supplier name
 const getSupplierName = (dataOb) => {
 
     return dataOb.supplier_id.supplier_name;
 }
 
 
-const getMaterialName = (dataOb) => {
-
-    return dataOb.material_id.material_name;
-}
-
-
+//Function for getting PO status
 const getPoStatus = (dataOb) => {
 
-    return dataOb.purchase_order_status_id?.name;
+    //This highlighted deleted PO in red
+    if (dataOb.purchase_order_status_id?.name != "Deleted"){
+        return dataOb.purchase_order_status_id?.name;
+    }else{
+        return `<P style='background-color:red'>${dataOb.purchase_order_status_id?.name}</P>`;
+    }
+
 }
 
 
 
-
-
+//Checking Form Error
 const checkFormError = () => {
 
     let errors = "";
-
-    if (purchaseOrder.material_id == null) {
-        errors += "\n Material is required...!";
-    }
 
     if (purchaseOrder.supplier_id == null) {
         errors += "\n Enter valid supplier name...!";
     }
 
-
-
-    if (purchaseOrder.unit_price == null) {
-        errors += "\n Enter valid unit price...!";
-    }
-
-    if (purchaseOrder.order_qty == null) {
-        errors += "\n Enter valid order quantity...!";
-    }
 
     if (purchaseOrder.total_price == null) {
         errors += "\n Enter valid total price...!";
@@ -216,7 +161,6 @@ const checkFormError = () => {
         errors += "\n Enter Purchase Order Status..!";
     }
 
-
     return errors;
 }
 
@@ -229,17 +173,13 @@ const buttonPurchaseOrderSubmit = () => {
     //Check form error for required element
     let errors = checkFormError();
 
+    console.log(purchaseOrder);
+
     if (errors == "") {
 
         let userConfirmMsg1 =
 
-
-            "\n Material Name:" + purchaseOrder.material_id.material_name +
             "\n Supplier Name :" + purchaseOrder.supplier_id.supplier_name +
-            "\n Unit Price :" + purchaseOrder.unit_price +
-            "\n Order Qty :" + purchaseOrder.order_qty +
-            "\n Unit Price:" + purchaseOrder.unit_price +
-            "\n Order Qty:" + purchaseOrder.order_qty +
             "\n Total Price:" + purchaseOrder.total_price +
             "\n Required Date:" + purchaseOrder.required_date +
             "\n Status:" + purchaseOrder.purchase_order_status_id.name;
@@ -261,72 +201,52 @@ const buttonPurchaseOrderSubmit = () => {
 
                     refreshPurchaseOrderTable();
                     refreshForm();
-                    $("#poForm").modal("hide");
-
-
+                    $("#modalPoForm").modal("hide");
 
                 } else {
                     swal("Failed to submit..! \n" + postResponce);
 
                 }
 
-
             }
 
-
-
-
-
         });
-
-
 
     } else {
 
         swal("Form has following errors...\n" + errors);
 
-
     }
 
     refreshPurchaseOrderTable();
-
 
 }
 
-//form Update event function 
+
+//form refill function
 const buttonPurchaseOrderRefill = (dataOb, index) => {
 
-    //Creating two objects to get reference in order to update
-    purchaseOrder = JSON.parse(JSON.stringify(dataOb));
-    oldpurchaseOrder = JSON.parse(JSON.stringify(dataOb));
+    if (dataOb.purchase_order_status_id.name != "Deleted"){
 
-    selectMaterial.value = JSON.stringify(dataOb.material_id);
-    selectSupplier.value = JSON.stringify(dataOb.supplier_id);
-    txtUnit.value = dataOb.unit_price;
-    txtQty.value = dataOb.order_qty;
-    txtTotal.value = dataOb.total_price;
-    txtRequiredDate.value = dataOb.required_date;
+        //Creating two objects to get reference in order to update
+        purchaseOrder = JSON.parse(JSON.stringify(dataOb));
+        oldpurchaseOrder = JSON.parse(JSON.stringify(dataOb));
 
-    //Refilling radio buttons ---> status
-    if (dataOb.purchase_order_status_id.name == "Confirmed") {
-        confirmRadio.checked = true;
+        selectSupplier.value = JSON.stringify(dataOb.supplier_id);
+        txtTotal.value = dataOb.total_price;
+        txtRequiredDate.value = dataOb.required_date;
+        selectPoStatus.value = JSON.stringify(dataOb.purchase_order_status_id);
+
+        //Submit button gets dissapeared when edit function executed
+        buttonUpdate.style.display = "block";
+        buttonSubmit.style.display = "none";
+
+
+        $("#modalPoForm").modal("show");
+
+        refreshPurchaseOrderTable();
+
     }
-
-    if (dataOb.purchase_order_status_id.name == "Cancelled") {
-        confirmRadio.checked = true;
-    }
-
-
-    //Submit button getsdissapeared when edit function executed
-    buttonUpdate.style.display = "block";
-    buttonSubmit.style.display = "none";
-
-
-    $("#poForm").modal("show");
-
-    refreshPurchaseOrderTable();
-
-
 
 
 }
@@ -336,20 +256,9 @@ const checkFormUpdate = () => {
     let updates = "";
 
     if (purchaseOrder != null && oldpurchaseOrder != null) {
-        if (purchaseOrder.material_id.material_name != oldpurchaseOrder.material_id.material_name) {
-            updates = updates + "Material has changed..! \n";
-        }
 
         if (purchaseOrder.supplier_id.supplier_name != oldpurchaseOrder.supplier_id.supplier_name) {
             updates = updates + "Supplier Name has changed..! \n";
-        }
-
-        if (purchaseOrder.unit_price != oldpurchaseOrder.unit_price) {
-            updates = updates + "Unit Price has changed..! \n";
-        }
-
-        if (purchaseOrder.order_qty != oldpurchaseOrder.order_qty) {
-            updates = updates + "Order Qty has changed..! \n";
         }
 
         if (purchaseOrder.total_price != oldpurchaseOrder.total_price) {
@@ -364,16 +273,10 @@ const checkFormUpdate = () => {
             updates = updates + "Status has changed..! \n";
         }
 
-
-
-
-
     }
 
     console.log(purchaseOrder);
     console.log(oldpurchaseOrder);
-
-
 
     return updates;
 
@@ -412,14 +315,9 @@ const buttonPurchaseOrderUpdate = () => {
                         if (putResponce == "OK") {
                             swal("Updated Successfully ....!");
 
-
-
-
                             refreshPurchaseOrderTable();
                             refreshForm();
-                            $("#poForm").modal("hide");
-
-
+                            $("#modalPoForm").modal("hide");
 
                         } else {
                             swal("Failed to Update..! \n" + putResponce);
@@ -429,12 +327,7 @@ const buttonPurchaseOrderUpdate = () => {
 
                     }
 
-
-
-
-
                 });
-
 
         }
 
@@ -442,36 +335,18 @@ const buttonPurchaseOrderUpdate = () => {
         swal("Form has following errors..!\n" + errors);
 
     }
-
-
     refreshPurchaseOrderTable();
 
-
-
-
 }
-
-
-
-
-
-
-
-
 
 
 //form delete event function 
 const buttonPurchaseOrderDelete = (dataOb, index) => {
 
-
-
     //need to get user confirmation
     let userConfirmMsg =
         "\n Purchase Order No :" + dataOb.order_no +
         "\n Supplier Name :" + dataOb.supplier_id.supplier_name +
-        "\n Material Name :" + dataOb.material_id.material_name +
-        "\n Unit Price:" + dataOb.unit_price +
-        "\n  Order Qty:" + dataOb.order_qty +
         "\n  Total Price:" + dataOb.total_price +
         "\n Required Date:" + dataOb.required_date +
         "\n Status:" + dataOb.purchase_order_status_id.name;
@@ -488,7 +363,6 @@ const buttonPurchaseOrderDelete = (dataOb, index) => {
         .then((userResponce) => {
             if (userResponce) {
 
-
                 let deleteResponce = getHTTPServiceRequest("/purchaseorder/delete", "DELETE", dataOb)
 
                 if (deleteResponce == "OK") {
@@ -499,8 +373,6 @@ const buttonPurchaseOrderDelete = (dataOb, index) => {
                     refreshPurchaseOrderTable();
                     refreshForm();
 
-
-
                 } else {
                     swal("Delete Not Sccessfull...!", {
                         icon: "error", text: deleteResponce
@@ -509,19 +381,9 @@ const buttonPurchaseOrderDelete = (dataOb, index) => {
                 }
 
             }
-
-
-
         });
 
-    refreshPurchaseOrderForm();
     refreshPurchaseOrderTable();
-
-
-
-
-
-
 
 }
 
@@ -530,13 +392,9 @@ const buttonPurchaseOrderDelete = (dataOb, index) => {
 const buttonPurchaseOrderView = (dataOb, index) => {
     console.log("View", dataOb, index);
 
-
     //filling data into modal
     tdOrderNo.innerText = dataOb.order_no;
     tdSupplierName.innerText = dataOb.supplier_id.supplier_name;
-    tdMaterial.innerText = dataOb.material_id.material_name;
-    tdUnitPrice.innerText = dataOb.unit_price;
-    tdOrderQty.innerText = dataOb.order_qty;
     tdTotalPrice.innerText = dataOb.total_price;
     tdRequiredDate.innerText = dataOb.required_date;
     tdStatus.innerText = dataOb.purchase_order_status_id.name;
@@ -546,18 +404,14 @@ const buttonPurchaseOrderView = (dataOb, index) => {
 
 
 }
-
-
+//Print command
 const printPoRow = () => {
 
     let newWindow = window.open();
     let printView = "<head> <title>print-purchase-order</title><link rel = 'stylesheet' href = '/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head> " +
         "<body>" + tablePoView.outerHTML + "</body>";
 
-
     newWindow.document.write(printView);
-
-
 
     //Print window
     setTimeout(() => {
@@ -568,17 +422,73 @@ const printPoRow = () => {
 
     }, 500)
 
-
     $("#modalPoView").modal("hide");
-
 
 }
 
 
 
+//.......................................Inner Form and Inner Table.............................................
 
 
 
+
+//Function to refresh both inner form and inner table
+const refreshInnerFormAndInnerTable = () =>{
+
+    //Cleaning attributes in the inner Form
+    materialInnerForm.reset();
+
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([selectMaterial,txtPurchasePrice,txtQuantity,txtLinePrice]);
+
+    //Creating an object for data binding
+    purchaseOrderMaterial = new Object();
+
+    let innerColumns = [{ propertyName: getMaterialName, dataType: "function" },
+        { propertyName: "purchase_price", dataType: "string" },
+        { propertyName: "quantity", dataType: "string" },
+        { propertyName: "line_price", dataType: "string" },
+    ];
+
+// Calling common function to fill data into table
+    fillDataIntoInnerTable(tableInnerMaterialBody, purchaseOrder.purchaseOrderHasMaterialList, innerColumns, buttonPoInnerRefill, buttonPoInnerDelete, true);
+
+
+    //retrive data from the database by using a common function
+    let material = getServiceRequest("/rawmaterial/alldata");
+
+    //Calling function fill data into select
+    fillDataIntoSelect(selectMaterial, "Please select Material..!", material, "material_name");
+}
+
+//Function for "getMaterialName"
+const getMaterialName = (dataOb) =>{
+
+    return dataOb?.material_id?.material_name;
+}
+
+
+//Function for "buttonPoInnerRefill"
+const buttonPoInnerRefill = (dataOb) =>{
+
+}
+
+
+//Function for "buttonPoInnerDelete"
+const buttonPoInnerDelete = (dataOb) =>{
+
+}
+
+const buttonInnerFormSubmit = () =>{
+
+    console.log(purchaseOrderMaterial);
+
+     purchaseOrder.purchaseOrderHasMaterialList.push(purchaseOrderMaterial);
+
+    refreshInnerFormAndInnerTable();
+
+}
 
 
 

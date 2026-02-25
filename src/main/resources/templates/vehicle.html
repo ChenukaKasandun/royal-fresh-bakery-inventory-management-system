@@ -53,7 +53,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                             style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
                             <form onsubmit=" return false " id="vehicleForm">
                                 <div class="row">
                                     <div class="col">
@@ -151,9 +151,6 @@
 
                                 </div>
 
-
-
-
                                 <div class="row mb-3">
 
                                     <label for="textNote" class="form-label fw-bold">Note :</label>
@@ -161,26 +158,20 @@
 
                                 </div>
 
+                                <!--                            Buttons-->
                                 <div class="row mt-2">
-
-                                    <div class="col-3 text-start">
-                                        <button type="reset" class="btn btn-info"
-                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-
-                                    </div>
-                                    <div class="col-9 text-end">
+                                    <div class="text-end" id="buttonContainer">
+                                        <button type="reset" class="btn btn-info me-2"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
                                         <button type="submit" class="btn btn-warning me-2"
-                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                            onclick="buttonVehicleUpdate()">Update</button>
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                id="buttonUpdate" onclick=" buttonVehicleUpdate()">Update</button>
 
                                         <button type="submit" class="btn btn-success"
-                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                                            onclick="buttonVehicleSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
-
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                id="buttonSubmit" onclick=" buttonVehicleSubmit()"><i
+                                                class="fa-solid fa-plus"></i>Add</button>
                                     </div>
-
-
                                 </div>
 
 

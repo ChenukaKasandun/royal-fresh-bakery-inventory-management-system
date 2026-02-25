@@ -9,14 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "item_return_status")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity // this class generate as an entity
+@Table(name = "item_return_status") // table mapping
+
+@Data // setter and getters, toString
+@AllArgsConstructor // All Argument constructor
+@NoArgsConstructor // Default constructor / empty constructor
 public class ItemReturnStatus {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // PK
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AI
     private Integer id;
 
     private String status;

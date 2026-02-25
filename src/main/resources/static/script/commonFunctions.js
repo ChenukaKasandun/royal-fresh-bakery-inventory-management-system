@@ -324,4 +324,234 @@ const fillDataIntoTable1 = (tableBodyId, dataList, propertyList, editFunction, d
 
 }
 
+//Common Function For Fill data onto table=> drop down architecture(tableBodyId,dataList,propertyList,editFunction,DeleteFunction,ViewFunction)
+const fillDataIntoTable2 = (tableBodyId, dataList, propertyList, deleteFunction, viewFunction, buttonVisibility) => {
+
+    tableBodyId.innerHTML = "";
+
+    dataList.forEach((dataOb, index) => {
+
+        let tr = document.createElement("tr");
+
+        let tdIndex = document.createElement("td");
+        tdIndex.innerText = parseInt(index) + 1;
+        tr.appendChild(tdIndex);
+
+        for (const property of propertyList) {
+
+            let td = document.createElement("td");
+
+            if (property.dataType == "string") {
+                td.innerText = dataOb[property.propertyName];
+            }
+
+            if (property.dataType == "function") {
+                td.innerHTML = property.propertyName(dataOb);
+            }
+
+            //Convert string to two decimal places
+            if (property.dataType == "decimal") {
+                td.innerHTML = parseFloat(dataOb[property.propertyName]).toFixed(2);
+            }
+
+            tr.appendChild(td);
+        }
+
+
+        // let tdStatus = document.createElement("td");
+        // tdStatus.innerText = dataOb.status;
+        // tr.appendChild(tdStatus);
+
+
+        let tdbuttons = document.createElement("td");
+
+        let div = document.createElement("div");
+        div.className = "dropdown";
+        tdbuttons.appendChild(div);
+
+
+        let dropdownButton = document.createElement("button");
+        dropdownButton.className = "btn ";
+        dropdownButton.setAttribute("data-bs-toggle", "dropdown");
+        dropdownButton.setAttribute("aria-expanded", "false");
+        dropdownButton.innerHTML = "<i class='fa-solid fa-bars fa-lg' style='color: #ff3d77;'></i>";
+
+        div.appendChild(dropdownButton);
+
+
+        let dropDownUl = document.createElement("ul");
+        dropDownUl.className = "dropdown-menu";
+        div.appendChild(dropDownUl);
+
+
+        //Delete
+        let liDelete = document.createElement("li");
+        liDelete.className = "dropdown-item";
+
+        let buttonDelete = document.createElement("button");
+        buttonDelete.className = "btn btn-outline-danger";
+        buttonDelete.innerText = "Delete";
+
+        buttonDelete.onclick = () => {
+            console.log("Edit", dataOb);
+            deleteFunction(dataOb, index);
+
+        }
+
+
+        liDelete.appendChild(buttonDelete);
+        dropDownUl.appendChild(liDelete);
+
+        //View
+
+        let liView = document.createElement("li");
+        liView.className = "dropdown-item";
+
+        let buttonView = document.createElement("button");
+        buttonView.className = "btn btn-outline-info";
+        buttonView.innerText = "View";
+
+
+        buttonView.onclick = () => {
+            console.log("Edit", dataOb);
+            viewFunction(dataOb, index);
+
+        }
+
+        liView.appendChild(buttonView);
+        dropDownUl.appendChild(liView);
+
+
+
+        //Visibility of buttons
+        if (buttonVisibility) {
+            tr.appendChild(tdbuttons);
+
+
+        } else {
+
+        }
+
+        tableBodyId.appendChild(tr);
+
+    });
+
+
+}
+
+
+
+
+//Common Function For Fill data onto inner table=> drop down architecture(tableBodyId,dataList,propertyList,editFunction,DeleteFunction)
+const fillDataIntoInnerTable = (tableBodyId, dataList, propertyList, editFunction, deleteFunction,buttonVisibility) => {
+
+    tableBodyId.innerHTML = "";
+
+    dataList.forEach((dataOb, index) => {
+
+        let tr = document.createElement("tr");
+
+        let tdIndex = document.createElement("td");
+        tdIndex.innerText = parseInt(index) + 1;
+        tr.appendChild(tdIndex);
+
+        for (const property of propertyList) {
+
+            let td = document.createElement("td");
+
+            if (property.dataType == "string") {
+                td.innerText = dataOb[property.propertyName];
+            }
+
+            if (property.dataType == "function") {
+                td.innerHTML = property.propertyName(dataOb);
+            }
+
+            //Convert string to two decimal places
+            if (property.dataType == "decimal") {
+                td.innerHTML = parseFloat(dataOb[property.propertyName]).toFixed(2);
+            }
+
+            tr.appendChild(td);
+        }
+
+
+        // let tdStatus = document.createElement("td");
+        // tdStatus.innerText = dataOb.status;
+        // tr.appendChild(tdStatus);
+
+
+        let tdbuttons = document.createElement("td");
+
+        let div = document.createElement("div");
+        div.className = "dropdown";
+        tdbuttons.appendChild(div);
+
+
+        let dropdownButton = document.createElement("button");
+        dropdownButton.className = "btn ";
+        dropdownButton.setAttribute("data-bs-toggle", "dropdown");
+        dropdownButton.setAttribute("aria-expanded", "false");
+        dropdownButton.innerHTML = "<i class='fa-solid fa-bars fa-lg' style='color: #ff3d77;'></i>";
+
+        div.appendChild(dropdownButton);
+
+
+        let dropDownUl = document.createElement("ul");
+        dropDownUl.className = "dropdown-menu";
+        div.appendChild(dropDownUl);
+
+
+        //Edit
+        let liEdit = document.createElement("li");
+        liEdit.className = "dropdown-item";
+
+        let buttonEdit = document.createElement("button");
+        buttonEdit.className = "btn btn-outline-warning";
+        buttonEdit.innerText = "Edit";
+
+        buttonEdit.onclick = () => {
+            console.log("Edit", dataOb);
+            editFunction(dataOb, index);
+
+        }
+
+        liEdit.appendChild(buttonEdit);
+        dropDownUl.appendChild(liEdit);
+
+
+
+        //Delete
+        let liDelete = document.createElement("li");
+        liDelete.className = "dropdown-item";
+
+        let buttonDelete = document.createElement("button");
+        buttonDelete.className = "btn btn-outline-danger";
+        buttonDelete.innerText = "Delete";
+
+        buttonDelete.onclick = () => {
+            console.log("Edit", dataOb);
+            deleteFunction(dataOb, index);
+
+        }
+
+
+        liDelete.appendChild(buttonDelete);
+        dropDownUl.appendChild(liDelete);
+
+        //Visibility of buttons
+        if (buttonVisibility) {
+            tr.appendChild(tdbuttons);
+
+
+        } else {
+
+        }
+
+        tableBodyId.appendChild(tr);
+
+    });
+
+
+}
 

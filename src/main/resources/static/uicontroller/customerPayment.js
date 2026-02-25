@@ -7,11 +7,10 @@ window.addEventListener('load', () => {
     refreshForm1();
     refreshForm2();
 
-
 })
 
-//JavaScript to toggle collapse  ---> Payment Method collapse (Individual Customer)
 
+//JavaScript to toggle collapse  ---> Payment Method collapse (Individual Customer)
 const cashRadio = document.getElementById('cashRadio');
 const cardRadio = document.getElementById('cardRadio');
 const collapseTarget = document.getElementById('paymentDetailsCollapse');
@@ -29,8 +28,8 @@ cardRadio.addEventListener('change', () => {
     }
 });
 
-//JavaScript to toggle collapse  ---> Payment Method collapse(Shop Customer)
 
+//JavaScript to toggle collapse  ---> Payment Method collapse(Shop Customer)
 const cashRadio2 = document.getElementById('cashRadio2');
 const cardRadio2 = document.getElementById('cardRadio2');
 const collapseTarget2 = document.getElementById('paymentDetailsCollapse2');
@@ -50,7 +49,6 @@ cardRadio2.addEventListener('change', () => {
 
 
 
-
 //Validation Of Dynamic dropdown  
 const dynamicElementValidator = (element, object, property) => {
 
@@ -59,7 +57,6 @@ const dynamicElementValidator = (element, object, property) => {
     customerPayment[property] = JSON.parse(dynamicElement);
 
     element.classList.add("is-valid");
-
 
 }
 
@@ -89,8 +86,7 @@ const radioElementValidator = () => {
 
 }
 
-
-//Function to auto select the invoice No when Customer Name get Selected
+//Function to auto select the invoice No when Customer Name get Selected ---> Individual Customer
 let customerNameElement1 = document.querySelector("#selectCustomerName1");
 customerNameElement1.addEventListener('change', () => {
 
@@ -98,103 +94,134 @@ customerNameElement1.addEventListener('change', () => {
 
     console.log(customerName);
 
+    let invoiceByCustomerId = getServiceRequest("/invoice/getinvoicebycustomerid?customerId=" + customerName.id);
 
-    let invoiceNoByCustomerName = getServiceRequest("/invoice/invoicenobycustomername?customerName=" + customerName.name);
-
-    // Convert ['INV001', 'INV002'] → [{invoice_no: 'INV001' }, { invoice_no: 'INV002' }]
-    let formattedInvoiceNumbers = invoiceNoByCustomerName.map(invoiceNo => ({ invoice_no: invoiceNo }));
-
-    fillDataIntoSelect(selectInvoiceNo1, "Please select Invoice No..!", formattedInvoiceNumbers, "invoice_no");
-
-
-
-
+    fillDataIntoSelect(selectInvoiceNo1, "Please select Invoice No..!", invoiceByCustomerId, "invoice_no");
 
 })
 
-//Function to auto select the Total Price when Invoice No get Selected
+
+//Function to autofill the Total Price,Discounted Price and Advanced Amount when Invoice No get Selected
 let invoiceNoElement = document.querySelector("#selectInvoiceNo1");
 invoiceNoElement.addEventListener('change', () => {
 
     let invoiceNo = JSON.parse(invoiceNoElement.value);
-
     console.log(invoiceNo);
 
-
-    let invoiceNoByCustomerName = getServiceRequest("/invoice/invoicenobycustomername?customerName=" + customerName.name);
-
-    // Convert ['INV001', 'INV002'] → [{invoice_no: 'INV001' }, { invoice_no: 'INV002' }]
-    let formattedInvoiceNumbers = invoiceNoByCustomerName.map(invoiceNo => ({ invoice_no: invoiceNo }));
-
-    fillDataIntoSelect(selectInvoiceNo1, "Please select Invoice No..!", formattedInvoiceNumbers, "invoice_no");
+    // Total Price
+    let totalPriceByInvoiceNo = getServiceRequest("/invoice/gettotalpricebyinvoiceno?invoiceno="+invoiceNo.invoice_no);
+    txtTotalPrice1.value = parseFloat(totalPriceByInvoiceNo).toFixed(2);
+    customerPayment.totalPrice = txtTotalPrice1.value;
+    txtTotalPrice1.classList.add("is-valid");
 
 
+    //Discounted Value
+    let discountedPriceByInvoiceNo = getServiceRequest("/getdiscountedpricebyinvoiceno?invoiceno="+invoiceNo.invoice_no);
+    txtDiscountedPrice1.value = parseFloat(discountedPriceByInvoiceNo).toFixed(2);
+    generateDueAmount();
+    customerPayment.discountedPrice = txtDiscountedPrice1.value;
+    txtDiscountedPrice1.classList.add("is-valid");
 
-
+    //Advanced Payment
+    let AdvancedPaymentByInvoiceNo = getServiceRequest("/customerorder/advancedpaymentbyinvoiceno?invoiceno="+invoiceNo.invoice_no);
+    txtAdvancdAmount1.value = parseFloat(AdvancedPaymentByInvoiceNo).toFixed(2);
+    generateDueAmount();
+    customerPayment.advancedPayment = txtAdvancdAmount1.value;
+    txtAdvancdAmount1.classList.add("is-valid");
 
 })
 
 
 
-//refresh Form
+// Function to autofill total price and total return price when invoice No get Selected ----> Shop Customer
+let invoiceNoElement2 = document.querySelector("#selectInvoiceNo2");
+invoiceNoElement2.addEventListener('change', () => {
+
+    let invoiceNo = JSON.parse(invoiceNoElement2.value);
+    console.log(invoiceNo);
+
+    // Total Price
+    let totalPriceByInvoiceNo = getServiceRequest("/customerorder/totalpricebyinvoiceno?invoiceno="+invoiceNo.invoice_no);
+    txtTotalPrice2.value = parseFloat(totalPriceByInvoiceNo).toFixed(2);
+    customerPayment.totalPrice = txtTotalPrice2.value;
+    txtTotalPrice2.classList.add("is-valid");
+
+    // Return Price
+    let returnPriceByInvoiceNo = getServiceRequest("/returnitems/totalreturningpricebyinvoiceid?invoiceid="+invoiceNo.id);
+    console.log("returnPriceByInvoiceNo");
+    console.log(returnPriceByInvoiceNo);
+
+    txtReturnedItemPrice2.value = parseFloat(returnPriceByInvoiceNo).toFixed(2);
+    txtReturnedItemPrice2.classList.add("is-valid");
+
+})
+
+
+
+// Generate Due Amount ..........................
+const generateDueAmount = () =>{
+
+    let discountValue = parseFloat(txtDiscountedPrice1.value);
+    let advancedValue = parseFloat(txtAdvancdAmount1.value);
+
+    console.log("---------------------")
+    console.log(discountValue);
+    console.log(advancedValue)
+
+    let dueAmount = (discountValue - advancedValue);
+
+    txtDueAmount1.value = dueAmount.toFixed(2);
+    txtDueAmount1.classList.add("is-valid");
+    generateBalanceAmount();
+
+    console.log(txtDueAmount1.value);
+}
+
+
+
+// Generate Balance amount
+const generateBalanceAmount = () =>{
+
+    let dueAmount = parseFloat(txtDueAmount1.value);
+    let paidAmount = parseFloat(textPaidAmount.value);
+
+    let balanceAmount = (paidAmount - dueAmount);
+
+    textBalanceAmount.value = balanceAmount.toFixed(2);
+    customerPayment.balance_amount = textBalanceAmount.value;
+    textBalanceAmount.classList.add("is-valid");
+
+}
+
+
+//refresh Form 1
 const refreshForm1 = () => {
 
-    customerPayment = new Object();
+    // Clean attributes of form
+    formIndividual.reset();
 
-    selectCustomerName1.value = "";
-    selectInvoiceNo1.value = "";
-    datePaymentDate1.value = "";
-    txtTotalPrice1.value = "";
-    textPaidAmount.value = "";
-    textBalanceAmount.value = "";
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([selectCustomerName1, selectInvoiceNo1, datePaymentDate1,txtTotalPrice1,
+        textPaidAmount,textBalanceAmount,]);
 
+
+    // Cleaning Radio Elements
     cashRadio.checked = false;
     cardRadio.checked = false;
 
-
-    selectCustomerName1.classList.remove("is-invalid");
-    selectCustomerName1.classList.remove("is-valid");
-
-    selectInvoiceNo1.classList.remove("is-invalid");
-    selectInvoiceNo1.classList.remove("is-valid");
-
-    datePaymentDate1.classList.remove("is-invalid");
-    datePaymentDate1.classList.remove("is-valid");
-
-    txtTotalPrice1.classList.remove("is-invalid");
-    txtTotalPrice1.classList.remove("is-valid");
-
-    textPaidAmount.classList.remove("is-invalid");
-    textPaidAmount.classList.remove("is-valid");
-
-    textBalanceAmount.classList.remove("is-invalid");
-    textBalanceAmount.classList.remove("is-valid");
+    // Creating a new object for data Binding at front end
+    customerPayment = new Object();
 
 
-
-
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
-    let customerName = getServiceRequest("/customer/alldataByCustomerTypeIndividual")
-
+    //Retriving data from the data base using ajax common function defined in the commonFunctions.js
+    let customerName = getServiceRequest("/customer/alldataByIndividualCustomerAndHaveInvoice")
 
     //filling data into dropdown
     fillDataIntoSelect(selectCustomerName1, "Please select Customer Name", customerName, "name");
 
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
-    let invoiceNo = getServiceRequest("/invoice/alldata")
-
-
-    //filling data into dropdown
-    fillDataIntoSelect(selectInvoiceNo1, "Please select Invoice No", invoiceNo, "invoice_no");
-
-
     //Update button getsdissapeared when Add Customer Payment clicked
     buttonSubmit1.style.display = "block";
     buttonUpdate1.style.display = "none";
-
-
 
 
 }
@@ -202,68 +229,46 @@ const refreshForm1 = () => {
 const refreshForm2 = () => {
 
     ///Cleaning innerHTML of attributes
-    selectCustomerName2.value = "";
-    selectInvoiceNo2.value = "";
-    txtReturnedItemList2.value = "";
-    txtTotalPrice2.value = "";
-    textPaidAmount2.value = "";
-    textBalanceAmount2.value = "";
-
+    formShopPayment.reset();
 
     //Radio buttons
     cashRadio2.checked = false;
     cardRadio2.checked = false;
 
-    selectCustomerName2.classList.remove("is-invalid");
-    selectCustomerName2.classList.remove("is-valid");
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([selectCustomerName2, selectInvoiceNo2, txtTotalPrice2,textPaidAmount2,
+        textBalanceAmount2]);
 
-    selectInvoiceNo2.classList.remove("is-invalid");
-    selectInvoiceNo2.classList.remove("is-valid");
-
-    txtReturnedItemList2.classList.remove("is-invalid");
-    txtReturnedItemList2.classList.remove("is-valid");
-
-    txtTotalPrice2.classList.remove("is-invalid");
-    txtTotalPrice2.classList.remove("is-valid");
-
-    textPaidAmount2.classList.remove("is-invalid");
-    textPaidAmount2.classList.remove("is-valid");
-
-    textBalanceAmount2.classList.remove("is-invalid");
-    textBalanceAmount2.classList.remove("is-valid");
-
-
-
-
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
-    let customerName = getServiceRequest("/customer/alldataByCustomerTypeShop")
-
+    //Retrieving data from the database using ajax common function defined in the commonFunctions.js
+    let customerName = getServiceRequest("/customer/alldataByShopCustomerAndHaveInvoice")
 
     //filling data into dropdown
     fillDataIntoSelect(selectCustomerName2, "Please select Customer Name", customerName, "name");
-
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
-    let invoiceNo = getServiceRequest("/invoice/alldata")
-
-
-    //filling data into dropdown
-    fillDataIntoSelect(selectInvoiceNo2, "Please select Invoice No", invoiceNo, "invoice_no");
 
     //Update button getsdissapeared when Add Customer Payment clicked
     buttonSubmit2.style.display = "block";
     buttonUpdate2.style.display = "none";
 
-
 }
 
+//Function to auto select the invoice No when Customer Name get Selected ---> Shop Customer
+let customerNameElement2 = document.querySelector("#selectCustomerName2");
+customerNameElement2.addEventListener('change', () => {
+
+    let customerName = JSON.parse(customerNameElement2.value);
+
+    console.log(customerName);
+
+    let invoiceByCustomerId = getServiceRequest("/invoice/getinvoicebycustomerid?customerId=" + customerName.id);
+
+    fillDataIntoSelect(selectInvoiceNo2, "Please select Invoice No..!", invoiceByCustomerId, "invoice_no");
+
+})
 
 
 
 //refresh customer table
 const refreshCustomerPaymentTable = () => {
-
 
     //string => string/sate/number
     //function => object/array/boolean
@@ -277,24 +282,20 @@ const refreshCustomerPaymentTable = () => {
 
     ];
 
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
+    //Retrieving data from the database using ajax common function defined in the coomonFunctions.js
     let customerPayments = getServiceRequest("/customerpayment/alldata");
 
 
     //Calling common function to fill data into table
     fillDataIntoTable1(tableCustomerPaymentBody, customerPayments, propertyList, paymentFormRefill, buttonCustomerPaymentDelete, buttonCustomerPaymentView, true);
 
-
-
-
     //Jquery function
     $('#customerPaymentTable').DataTable();
-
 
 }
 
 
-//defining functions to retrive data from the backend
+//defining functions to retrieve data from the backend
 const getInvoiceNo = (dataOb) => {
     return dataOb.invoice_id.invoice_no;
 }
@@ -316,11 +317,11 @@ const getPaymentMethod = (dataOb) => {
 }
 
 
+
+// Check form Error1
 const checkFormError1 = () => {
 
     let errors = "";
-
-
 
     if (customerPayment.payment_date == null) {
         errors = errors + "Please Enter a valid payment Date..! \n";
@@ -339,15 +340,7 @@ const checkFormError1 = () => {
     }
 
 
-    if (customerPayment.totalPrice == null) {
-        errors = errors + "Please Enter a valid Total Price....! \n";
-
-    }
-
-
-
     // radio buttons
-
     if (customerPayment.customer_payment_method_id == null) {
         errors = errors + "Please Enter a Payment Method...! \n";
 
@@ -362,43 +355,31 @@ const checkFormError1 = () => {
             errors = errors + "Please Enter a valid Balance Amount.! \n";
         }
 
-
     }
-
-
     return errors;
 
 }
 
+
+// Check form Error2
 const checkFormError2 = () => {
 
     let errors = "";
-
 
     if (customerPayment.invoice_id == null) {
         errors = errors + "Please Enter a invoice No..! \n";
 
     }
 
-
     if (customerPayment.customer_id == null) {
         errors = errors + "Please Enter a valid Customer Name..! \n";
 
     }
 
-
-    if (customerPayment.returned_item_list == null) {
-        errors = errors + "Please Enter Returned Item List..! \n";
-
-    }
-
-
     if (customerPayment.totalPrice == null) {
         errors = errors + "Please Enter a valid Total Price....! \n";
 
     }
-
-
 
     // radio buttons
 
@@ -416,9 +397,7 @@ const checkFormError2 = () => {
             errors = errors + "Please Enter a valid Balance Amount.! \n";
         }
 
-
     }
-
 
     return errors;
 
@@ -427,7 +406,6 @@ const checkFormError2 = () => {
 
 //form submit event function 
 const buttonCustomerPaymentSubmit1 = () => {
-
 
     console.log(customerPayment);
 
@@ -440,6 +418,8 @@ const buttonCustomerPaymentSubmit1 = () => {
             "\n Invoice No:" + customerPayment.invoice_id.invoice_no +
             "\n Customer Name:" + customerPayment.customer_id.name +
             "\n Total Price:" + customerPayment.totalPrice +
+            "\n Discounted Price:" + customerPayment.discountedPrice +
+            "\n Advanced Payment:" + customerPayment.advancedPayment +
             "\n Payment Method:" + customerPayment.customer_payment_method_id.name;
 
         if (cashRadio.checked) {
@@ -447,7 +427,6 @@ const buttonCustomerPaymentSubmit1 = () => {
                 "\n Paid Amount:" + customerPayment.paid_amount +
                 "\n Balance Amount:" + customerPayment.balance_amount;
         }
-
 
         swal({
             title: "Are you sure to Submit Following Details..?",
@@ -464,23 +443,15 @@ const buttonCustomerPaymentSubmit1 = () => {
                     if (postResponce == "OK") {
                         swal("Saved Successfully ....!");
 
-
                         refreshCustomerPaymentTable();
                         refreshForm1();
                         $("#customerPaymentForm").modal("hide");
-
-
-
                     } else {
                         swal("Failed to submit..! \n" + postResponce);
+                        console.log(postResponce)
 
                     }
-
-
                 }
-
-
-
 
 
             })
@@ -491,15 +462,12 @@ const buttonCustomerPaymentSubmit1 = () => {
         swal("Form has following errors...\n\n" + errors);
 
     }
-
-
-
 }
+
 
 
 //form submit event function 
 const buttonCustomerPaymentSubmit2 = () => {
-
 
     console.log(customerPayment);
 
@@ -510,7 +478,6 @@ const buttonCustomerPaymentSubmit2 = () => {
 
             "\n Invoice No:" + customerPayment.invoice_id.invoice_no +
             "\n Customer Name:" + customerPayment.customer_id.name +
-            "\n Returned Items:" + customerPayment.returned_item_list +
             "\n Total Price:" + customerPayment.totalPrice +
             "\n Payment Method:" + customerPayment.customer_payment_method_id.name;
 
@@ -519,7 +486,6 @@ const buttonCustomerPaymentSubmit2 = () => {
                 "\n Paid Amount:" + customerPayment.paid_amount +
                 "\n Balance Amount:" + customerPayment.balance_amount;
         }
-
 
         swal({
             title: "Are you sure to Submit Following Details..?",
@@ -541,8 +507,6 @@ const buttonCustomerPaymentSubmit2 = () => {
                         refreshForm2();
                         $("#customerPaymentForm").modal("hide");
 
-
-
                     } else {
                         swal("Failed to submit..! \n" + postResponce);
 
@@ -550,10 +514,6 @@ const buttonCustomerPaymentSubmit2 = () => {
 
 
                 }
-
-
-
-
 
             })
 
@@ -563,13 +523,11 @@ const buttonCustomerPaymentSubmit2 = () => {
 
     }
 
-
-
 }
 
 
 
-
+// Refill Function
 const paymentFormRefill = (dataOb, index) => {
     $("#customerPaymentForm").modal("show");
 
@@ -602,9 +560,7 @@ const paymentFormRefill = (dataOb, index) => {
         }
 
 
-
-        //Assigning values from database to the properties of front end object in order to avoid mismath
-
+        //Assigning values from database to the properties of front end object in order to avoid mismatch
 
         customerPayment.customer_id = dataOb.invoice_id.customer_order_id.customer_id;
         oldCustomerPayment.customer_id = dataOb.invoice_id.customer_order_id.customer_id;
@@ -621,9 +577,6 @@ const paymentFormRefill = (dataOb, index) => {
         buttonSubmit1.style.display = "none";
 
 
-
-
-
     }
 
 
@@ -638,7 +591,6 @@ const paymentFormRefill = (dataOb, index) => {
 
         selectCustomerName2.value = JSON.stringify(dataOb.invoice_id.customer_order_id.customer_id);
         selectInvoiceNo2.value = JSON.stringify(dataOb.invoice_id);
-        txtReturnedItemList2.value = dataOb.returned_item_list;
         txtTotalPrice2.value = dataOb.invoice_id.customer_order_id.total_price;
 
         if (dataOb.customer_payment_method_id.name == "Cash") {
@@ -668,13 +620,7 @@ const paymentFormRefill = (dataOb, index) => {
         buttonUpdate2.style.display = "block";
         buttonSubmit2.style.display = "none";
 
-
-
-
     }
-
-
-
 
 }
 
@@ -727,7 +673,6 @@ const checkFormUpdates1 = () => {
 
     }
 
-
     return updates;
 
 }
@@ -744,24 +689,15 @@ const checkFormUpdates2 = () => {
 
         }
 
-
         if (customerPayment.customer_id.name != oldCustomerPayment.customer_id.name) {
             updates = updates + "Customer Name has changed..!\n";
 
         }
 
-        if (customerPayment.returned_item_list != oldCustomerPayment.returned_item_list) {
-            updates = updates + "Returned Item List has changed..!\n";
-
-        }
-
-
         if (customerPayment.totalPrice != oldCustomerPayment.totalPrice) {
             updates = updates + "Total Price has changed..!\n";
 
         }
-
-
 
         if (customerPayment.paid_amount != oldCustomerPayment.paid_amount) {
             updates = updates + "Paid amount has changed..!\n";
@@ -778,9 +714,7 @@ const checkFormUpdates2 = () => {
 
         }
 
-
     }
-
 
     return updates;
 
@@ -816,22 +750,11 @@ const buttonCustomerPaymentUpdate1 = () => {
                             icon: "success",
                         });
 
-
                         refreshCustomerPaymentTable();
                         refreshForm1();
-
-
-
-
                     }
 
-
-
                 });
-
-
-
-
 
         }
 
@@ -839,10 +762,6 @@ const buttonCustomerPaymentUpdate1 = () => {
         swal("Form has following error..\n" + errors)
 
     }
-
-
-
-
 }
 
 
@@ -877,22 +796,12 @@ const buttonCustomerPaymentUpdate2 = () => {
                             icon: "success",
                         });
 
-
                         refreshCustomerPaymentTable();
                         refreshForm2();
 
-
-
-
                     }
 
-
-
                 });
-
-
-
-
 
         }
 
@@ -901,21 +810,7 @@ const buttonCustomerPaymentUpdate2 = () => {
 
     }
 
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 //form delete event function 
 const buttonCustomerPaymentDelete = (dataOb, index) => {
@@ -975,8 +870,6 @@ const buttonCustomerPaymentDelete = (dataOb, index) => {
 const buttonCustomerPaymentView = (dataOb, index) => {
     console.log("View", dataOb, index);
 
-
-
     tdInvoiceNo.innerText = dataOb.invoice_id.invoice_no;
     tdCustomerName.innerText = dataOb.invoice_id.customer_order_id.customer_id.name;
     tdCustomerType.innerText = dataOb.invoice_id.customer_order_id.customer_id.customer_type_id.type;
@@ -1001,8 +894,6 @@ const printCustomerPaymentRow = () => {
 
     newWindow.document.write(printView);
 
-
-
     //Print window
     setTimeout(() => {
 
@@ -1014,7 +905,6 @@ const printCustomerPaymentRow = () => {
 
 
     $("#modalCustomerPaymentView").modal("hide");
-
 
 }
 

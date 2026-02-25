@@ -51,279 +51,162 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
               <div class="row">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <div class="card"
-                          style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                          <div class="card-body">
-                            <form onsubmit="return false " id="supplierPaymentForm">
+
+                  <div class="col-6">
+
+                      <!--                              Supplier Payment form starts-->
+                      <form onsubmit="return false " id="supplierPaymentForm">
 
 
-                              <div class="row mt-2 mb-3">
-                                <div class="col">
-                                  <label for="selectSupplierBillNo" class="form-label"><b>Supplier Bill No :<span
-                                        class="text-danger">*</span></b></label>
-                                  <select class="form-select" id="selectSupplierBillNo"
-                                    onchange="dynamicElementValidator(this,'supplierPayment','bill_no');"></select>
-                                </div>
+                          <div class="row mt-2 mb-3">
 
-                                <div class="col">
-                                  <label for="selectGRNNo" class="form-label"><b>GRN No :<span
-                                        class="text-danger">*</span></b></label>
-                                  <select class="form-select" id="selectGRNNo"
-                                    onchange="dynamicElementValidator(this,'supplierPayment','grn_id');"></select>
-                                </div>
-
-                              </div>
-
-
-                              <div class="row mt-2 mb-3">
-                                <div class="col">
+                              <div class="col">
                                   <label for="selectSupplierName" class="form-label"><b>Supplier Name:<span
-                                        class="text-danger">*</span></b></label>
-                                  <select class="form-select" id="selectSupplierName"
-                                    onchange="dynamicElementValidator(this,'supplierPayment','supplier_id');"></select>
-                                </div>
-
-
-                                <div class="col">
-                                  <div class="mb-3">
-                                    <label for="txtTotalPrice" class="form-label"><b>Total Price:<span
                                           class="text-danger">*</span></b></label>
-                                    <input type="text" class="form-control" id="txtTotalPrice"
-                                      onkeyup="supplierPayment.total_price = this.value">
-                                  </div>
-
-                                </div>
-
-
-
-
+                                  <select class="form-select" id="selectSupplierName"
+                                          onchange="dynamicElementValidator(this,'supplierPayment','supplier_id');"></select>
                               </div>
 
-
-
-                              <div class="row">
-
-                                <!-- Payment Method Radio Buttons -->
-                                <div class="col">
-                                  <label class="form-label"><b>Payment Method:<span
-                                        class="text-danger">*</span></b></label>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashRadio"
-                                      onchange="paymentMethodValidator()" value="cash">
-                                    <label class="form-check-label" for="cashRadio">Cash</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardRadio"
-                                      onchange="paymentMethodValidator()" value="card">
-                                    <label class="form-check-label" for="cardRadio">Card</label>
-                                  </div>
-                                </div>
-
-
-                                <!-- Collapse Section -->
-                                <div class="collapse mt-3" id="paymentDetailsCollapse">
-                                  <div class="card card-body"
-                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="mb-3">
-                                          <label for="textPaidAmount" class="form-label"><b>Paid
-                                              Amount:<span class="text-danger">*</span></b></label>
-                                          <input type="text" class="form-control" id="textPaidAmount"
-                                            onkeyup="supplierPayment.paid_amount = this.value">
-                                        </div>
-
-                                      </div>
-
-                                      <div class="col">
-                                        <div class="mb-3">
-                                          <label for="textBalanceAmount" class="form-label"><b>Balance
-                                              Amount:<span class="text-danger">*</span></b></label>
-                                          <input type="text" class="form-control" id="textBalanceAmount"
-                                            onkeyup="supplierPayment.balance_amount = this.value">
-                                        </div>
-
-                                      </div>
-
-
-
-                                    </div>
-
-
-
-
-                                  </div>
-                                </div>
-
-
+                              <div class="col">
+                                  <label for="selectSupplierBillNo" class="form-label"><b>Supplier Bill No :<span
+                                          class="text-danger">*</span></b></label>
+                                  <select class="form-select" id="selectSupplierBillNo"
+                                          onchange="dynamicElementValidator(this,'supplierPayment','bill_no');"></select>
                               </div>
-
-                              <div class="row mt-3">
-                                <div class="col">
-                                  <label class="form-label"><b>Payment Status:<span
-                                        class="text-danger">*</span></b></label>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="paymentStatus" id="paidRadio"
-                                      onchange="paymentStatusValidator()" value="paid">
-                                    <label class="form-check-label" for="paidRadio">Paid</label>
-                                  </div>
-                                  <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="paymentStatus" id="notPaidRadio"
-                                      onchange="paymentStatusValidator()" value="notpaid">
-                                    <label class="form-check-label" for="notPaidRadio">Not Paid</label>
-                                  </div>
-                                </div>
-
-                              </div>
-
-
-
-
-
-
-
-
-
-                              <div class="row mt-2"></div>
-                              <div class="row mt-2"></div>
-                              <div class="row mt-2"></div>
-
-
-
-
-                              <div class="row mb-3">
-
-
-
-                                <label for="textNote" class="form-label fw-bold">Note :</label>
-                                <textarea class="form-control " id="textNote" rows="2"></textarea>
-
-                              </div>
-
-
-
-                            </form>
-
 
                           </div>
 
 
-                        </div>
+                          <div class="row mt-2 mb-3">
 
+                              <div class="col">
+                                  <label for="selectGRNNo" class="form-label"><b>GRN No :<span
+                                          class="text-danger">*</span></b></label>
+                                  <select class="form-select" id="selectGRNNo"
+                                          onchange="dynamicElementValidator(this,'supplierPayment','grn_id');"></select>
+                              </div>
 
-                      </div>
-
-                      <div class="col">
-
-                        <div class="card">
-                          <div class="card-body">
-                            <div class="card"
-                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                              <div class="card-body">
-
-                                <div class="row">
-                                  <div class="  text-center fw-bold title text-light">
-                                    <h5>Supplier Payment Inner Form</h5>
+                              <div class="col">
+                                  <div class="mb-3">
+                                      <label for="txtTotalPrice" class="form-label"><b>Total Price:<span
+                                              class="text-danger">*</span></b></label>
+                                      <input type="text" class="form-control" id="txtTotalPrice"
+                                             onkeyup="supplierPayment.total_price = this.value">
                                   </div>
-
-                                  <div class="row"></div>
-                                  <div class="row"></div>
-
-                                </div>
-                                <div class="row">
-                                  <div class="col">
-                                    <div class="mb-3">
-                                      <label for="txtMaterial" class="form-label"><b>Material Name:<span
-                                            class="text-danger">*</span></b></label>
-                                      <input type="text" class="form-control" id="txtMaterial"
-                                        placeholder="Ex: Enter Item Name">
-                                      <div class="valid-feedback">
-                                        Looks good!
-                                      </div>
-                                      <div class="invalid-feedback">
-                                        Looks not good!
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="col">
-
-                                    <div class="mb-3">
-                                      <label for="txtMaterialQuantity" class="form-label"><b>Material Quantity:<span
-                                            class="text-danger">*</span></b></label>
-                                      <input type="text" class="form-control" id="txtMaterialQuantity"
-                                        placeholder="Ex: Enter Item Quantity">
-                                      <div class="valid-feedback">
-                                        Looks good!
-                                      </div>
-                                      <div class="invalid-feedback">
-                                        Looks not good!
-                                      </div>
-                                    </div>
-
-                                  </div>
-
-
-                                </div>
-
-
-
-
-                                <div class="row mt-2">
-
-                                  <div class="col-3 text-start">
-                                  </div>
-                                  <div class="col-9 text-end">
-                                    <button type="reset" class="btn btn-info"
-                                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-                                    <button type=" submit" class="btn btn-success"
-                                      style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                        class=" fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                  </div>
-
-
-                                </div>
-
-
-
 
                               </div>
-                            </div>
-                            <br><br>
 
-                            <div class="card"
-                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                              <div class="card-body">
+                          </div>
 
-                                <div class="row mt-2 mb-3">
-                                  <div class="  text-center fw-bold title text-light">
-                                    <h5>Supplier Payment Inner Table</h5>
+                          <div class="row">
+
+                              <!-- Payment Method Radio Buttons -->
+                              <div class="col">
+                                  <label class="form-label"><b>Payment Method:<span
+                                          class="text-danger">*</span></b></label>
+                                  <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="paymentMethod" id="cashRadio"
+                                             onchange="paymentMethodValidator()" value="cash">
+                                      <label class="form-check-label" for="cashRadio">Cash</label>
                                   </div>
-                                </div>
-                                <div class="row mt-2 mb-3">
+                                  <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="paymentMethod" id="cardRadio"
+                                             onchange="paymentMethodValidator()" value="card">
+                                      <label class="form-check-label" for="cardRadio">Card</label>
+                                  </div>
+                              </div>
+
+
+                              <!-- Collapse Section -->
+                              <div class="collapse mt-3" id="paymentDetailsCollapse">
+                                  <div class="card card-body"
+                                       style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                      <div class="row">
+                                          <div class="col">
+                                              <div class="mb-3">
+                                                  <label for="textPaidAmount" class="form-label"><b>Paid
+                                                      Amount:<span class="text-danger">*</span></b></label>
+                                                  <input type="text" class="form-control" id="textPaidAmount"
+                                                         onkeyup="supplierPayment.paid_amount = this.value">
+                                              </div>
+
+                                          </div>
+
+                                          <div class="col">
+                                              <div class="mb-3">
+                                                  <label for="textBalanceAmount" class="form-label"><b>Balance
+                                                      Amount:<span class="text-danger">*</span></b></label>
+                                                  <input type="text" class="form-control" id="textBalanceAmount"
+                                                         onkeyup="supplierPayment.balance_amount = this.value">
+                                              </div>
+
+                                          </div>
+
+                                      </div>
+
+                                  </div>
+                              </div>
+
+
+                          </div>
+
+                          <div class="row mt-3">
+                              <div class="col">
+                                  <label class="form-label"><b>Payment Status:<span
+                                          class="text-danger">*</span></b></label>
+                                  <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="paymentStatus" id="paidRadio"
+                                             onchange="paymentStatusValidator()" value="paid">
+                                      <label class="form-check-label" for="paidRadio">Paid</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="paymentStatus" id="notPaidRadio"
+                                             onchange="paymentStatusValidator()" value="notpaid">
+                                      <label class="form-check-label" for="notPaidRadio">Not Paid</label>
+                                  </div>
+                              </div>
+
+                          </div>
+
+                          <div class="row mb-3 col-6">
+
+                              <label for="textNote" class="form-label fw-bold">Note :</label>
+                              <textarea class="form-control " id="textNote" rows="2"></textarea>
+
+                          </div>
+
+
+
+                      </form>
+                      <!--                              Supplier Payment Form Ends-->
+                  </div>
+
+                  <!--                Supplier Payment Inner inner Table Starts-->
+                  <div class="col-6">
+
+                      <div class="card" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                          <div class="card-body">
+                              <div class="row mt-2 mb-3">
+                                  <div class="  text-center fw-bold title text-light"
+                                       style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                      <h5>Supplier Payment Inner Table</h5>
+                                  </div>
+                              </div>
+                              <div class="row mt-2 mb-3">
                                   <table class="table table-hover" id="itemInnerTable">
-                                    <thead class="table-dark">
+                                      <thead class="table-light">
                                       <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Material</th>
-                                        <th scope="col">Material Qty</th>
-                                        <th scope="col">Modify</th>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Material</th>
+                                          <th scope="col">Material Qty</th>
+                                          <th scope="col">Modify</th>
 
                                       </tr>
-                                    </thead>
-                                    <tbody id="tableInnerItemBody">
+                                      </thead>
+                                      <tbody id="tableInnerItemBody">
 
                                       <td></td>
                                       <td></td>
@@ -331,62 +214,35 @@
                                       <td></td>
 
 
-                                    </tbody>
+                                      </tbody>
                                   </table>
 
-                                </div>
-
-
-
                               </div>
-                            </div>
-
-
-
 
                           </div>
-                        </div>
-
-
 
                       </div>
+"
 
+                  </div>
 
-                    </div>
+              </div>
 
-                    <div class="row mt-2">
+                <!--                                Buttons-->
+                <div class="row mt-2">
 
-                      <div class="col-3 text-start">
-                        <button type="reset" class="btn btn-info" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                    <div class="text-end" id="buttonContainer">
+
+                        <button type="reset" class="btn btn-info me-2" style=" box-shadow: 0px 4px 6px rgba(0, 0,
                 0, 0.901);">Clear</button>
-
-
-                      </div>
-                      <div class="col-9 text-end" id="buttonContainer">
                         <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
-                          onclick="buttonSupplierPaymentUpdate()" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                                onclick="buttonSupplierPaymentUpdate()" style=" box-shadow: 0px 4px 6px rgba(0, 0,
                 0, 0.901);">Update</button>
 
                         <button type="submit" class="btn btn-success" id="buttonSubmit" style=" box-shadow: 0px 4px 6px rgba(0, 0,
                 0, 0.901);" onclick="buttonSupplierPaymentSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                      </div>
-
-
                     </div>
-
-                  </div>
                 </div>
-
-
-
-
-              </div>
-
-
 
             </div>
 
@@ -400,15 +256,13 @@
 
 
 
-  </div>
-
   <!-- model view/print -->
   <div class="modal " id="modalSupplierPaymentView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalSupplierPaymentView">Print Supplier Payment Table</h5>
+          <h5 class="modal-title" id="modalSupplierPaymentViewHeader">Print Supplier Payment Table</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 

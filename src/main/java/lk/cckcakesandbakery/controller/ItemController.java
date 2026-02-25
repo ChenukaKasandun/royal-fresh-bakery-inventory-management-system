@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.entity.ItemHasMaterial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -40,30 +41,18 @@ public class ItemController {
     @Autowired
     private UserPrivilegeController userPrivilegeController;
 
-    // request mapping for load item form[URL --->/itemform]
-    @RequestMapping(value = "/itemform")
+    // request mapping for load item form[URL --->/item]
+    @RequestMapping(value = "/item")
     public ModelAndView loadItemForm() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView itemFormUI = new ModelAndView();
-        itemFormUI.setViewName("ItemForm.html");
+        itemFormUI.setViewName("item.html");
         itemFormUI.addObject("loggedusername", auth.getName());
         itemFormUI.addObject("title", "item form");
 
         return itemFormUI;
     }
 
-    // request mapping for load item table[URL --->/itemtable]
-    @RequestMapping(value = "/itemtable")
-    public ModelAndView loadItemTable() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        ModelAndView itemTableUI = new ModelAndView();
-        itemTableUI.setViewName("ItemTable.html");
-        itemTableUI.addObject("loggedusername", auth.getName());
-        itemTableUI.addObject("title", "item table");
-
-        return itemTableUI;
-    }
 
     // request mapping for get item object [URL --->/item/getbyid=] ---> For refill
     // function
@@ -84,6 +73,15 @@ public class ItemController {
             return new Item();
 
         }
+
+    }
+
+    // request mapping for get returning items by item status [URL --->/item/returningbyitemstatus]
+    @GetMapping(value = "/item/returningbyitemstatus", produces = "application/json")
+    public List<Item> getByItemStatus() {
+
+            return itemDao.getByItemStatusId(1);
+
 
     }
 
@@ -142,6 +140,11 @@ public class ItemController {
                 item.setAdd_date_time((LocalDateTime.now()));
                 item.setAdd_user_id(loggedUser.getId());
                 item.setItem_code(itemDao.getNextItemCode());
+
+//                Saving inner form data in the association table
+              for (ItemHasMaterial ihm : item.getItemHasMaterialList()) {
+                  ihm.setItem_id(item);
+              }
 
                 // Save operator(save fontend data object)
                 itemDao.save(item);

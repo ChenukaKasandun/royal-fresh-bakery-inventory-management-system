@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.dao.ItemPriceStatusDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -40,6 +41,9 @@ public class ItemPriceController {
 
     @Autowired
     private ItemDao itemDao;
+
+    @Autowired
+    private ItemPriceStatusDao itemPriceStatusDao;
 
     // request mapping for load invoice ui[URL --->/invoice]
     @RequestMapping(value = "/itemprice")
@@ -109,7 +113,7 @@ public class ItemPriceController {
                 itemPrice.setAdded_date_time((LocalDateTime.now()));
                 itemPrice.setAdded_user_id(loggedUser.getId());
 
-                // Save operator(save fontend data object)
+                // Save operator(save frontend data object)
                 itemPriceDao.save(itemPrice);
                 return "OK";
             } catch (Exception e) {
@@ -155,8 +159,10 @@ public class ItemPriceController {
                 // Set auto added data
                 extItemPriceById.setDelete_date_time(LocalDateTime.now());
                 extItemPriceById.setDelete_user_id(loggedUser.getId());
+                extItemPriceById.setItem_price_status_id(itemPriceStatusDao.getReferenceById(2));
 
-                itemPriceDao.delete(extItemPriceById);
+
+                itemPriceDao.save(extItemPriceById);
 
                 // Dependancy
 

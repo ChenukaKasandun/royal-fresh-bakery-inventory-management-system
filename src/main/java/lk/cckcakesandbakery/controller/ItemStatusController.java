@@ -1,11 +1,13 @@
 package lk.cckcakesandbakery.controller;
 
 import java.util.List;
+
+import lk.cckcakesandbakery.entity.ItemStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lk.cckcakesandbakery.dao.ItemStatusDao;
-import lk.cckcakesandbakery.entity.ItemStatus;
+import lk.cckcakesandbakery.entity.ItemReturnStatus;
 
 @RestController
 public class ItemStatusController {
@@ -20,11 +22,12 @@ public class ItemStatusController {
 
     }
 
-    // request mapping for get item all data [URL --->//itemstatusbyid/alldata]
-    @GetMapping(value = "/itemstatusbyid/alldata", produces = "application/json")
-    public List<ItemStatus> findAllDatabyId() {
+    // request mapping for get item all data [URL --->//itemstatus/alldata]
+    @GetMapping(value = "/itemstatus/notdeletestatusalldata", produces = "application/json")
+    public List<ItemStatus>findAllDataNotDeleteState() {
         return itemStatusDao.getStatusById();
 
     }
+
 
 }

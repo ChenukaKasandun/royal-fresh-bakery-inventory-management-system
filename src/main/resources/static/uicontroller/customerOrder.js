@@ -28,10 +28,7 @@ pickupRadio.addEventListener('change', () => {
 });
 
 
-
-
 //JavaScript to toggle collapse  ---> Order nature(Shop Customer)
-
 const recurentRadio = document.getElementById('recurrentRadio');
 const justOnceRadio = document.getElementById('justOnceRadio');
 const recurentDetails = document.getElementById('recurentDetails');
@@ -48,9 +45,6 @@ justOnceRadio.addEventListener('change', () => {
         bsCollapse2.hide();
     }
 });
-
-
-
 
 
 //Validation Of Dynamic dropdown  
@@ -92,12 +86,17 @@ const orderNatureRadioValidator = () => {
 
     }
 }
-//............................................................
-const discountPriceGenerator = (dataOb) => {
-    const status = dataOb?.customer_id?.customer_status_id?.status;
+//Discount Price Generator
+const discountPriceGenerator = () => {
 
+    console.log("customerorder:", customerorder);
+    console.log("customerorder.customer_id:", customerorder.customer_id);
+    const status = customerorder?.customer_id?.customer_status_id?.status;
+
+    console.log(status);
     if (status == null) {
         console.log("status is not present");
+        return;
 
     }
 
@@ -123,14 +122,13 @@ const discountPriceGenerator = (dataOb) => {
     }
 
     const discountedPrice = totalPrice - (totalPrice * discountRatio / 100);
-    textDiscountedPrice.value = discountedPrice.toFixed(2);
+    textDiscountedPrice.value = parseFloat(discountedPrice).toFixed(2);
     textDiscountedPrice.classList.add("is-valid");
     customerorder.discounted_price = textDiscountedPrice.value;
 };
 
+
 const generateDuePayment = () => {
-
-
     let discountedPrice = textDiscountedPrice.value;
     let advancedPayment = textAdvancePayment1.value;
 
@@ -148,14 +146,8 @@ const generateDuePayment = () => {
 //refresh order form --> Individual Customer
 const refreshForm1 = () => {
 
-    //create a new object for databinding at frontend
-    customerorder = new Object();
-
-    //When Individual tab get selected, the value of customer order type of customerorder object is binded
-    customerorder.customer_order_type_id = { id: 1, type: "Individual" }
-
     //Cleaning attributes
-    formIndividual.reset();
+    formIndividualOrders.reset();
 
 
     //Cleaning Radio buttons (Delivery Method)
@@ -174,7 +166,15 @@ const refreshForm1 = () => {
         textDuePayment1]);
 
 
+    //create a new object for databinding at frontend
+    customerorder = new Object();
 
+    // create a new array to connect with association table
+    customerorder.customerOrderHasItemList = new Array();
+    customerorder.customerOrderHasItemList = [];
+
+        //When Individual tab get selected, the value of customer order type of customerorder object is binded
+        customerorder.customer_order_type_id = { id: 1, type: "Individual" }
 
 
     //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
@@ -199,7 +199,7 @@ const refreshForm1 = () => {
     buttonSubmit1.style.display = "block";
     buttonUpdate1.style.display = "none";
 
-
+    customerOrderInnerFormAndInnerTable1();
 
 }
 
@@ -208,6 +208,11 @@ const refreshForm2 = () => {
 
     //create a new object for databinding at frontend
     customerorder = new Object();
+
+
+    // create a new array to connect with association table
+    customerorder.customerOrderHasItemList = new Array();
+
 
     //When Individual tab get selected, the value of customer order type of customerorder object is binded
     customerorder.customer_order_type_id = { id: 1, type: "Individual" }
@@ -237,17 +242,11 @@ const refreshForm2 = () => {
     //filling data into dropdown
     fillDataIntoSelect(selectCustomerName2, "Please select Customer Name", customers, "name");
 
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
-    let session = getServiceRequest("/productionsession/alldata")
-
-    //filling data into dropdown
-    fillDataIntoSelect(selectSession2, "Please select Production session..!", session, "name");
-
     //Update button getsdissapeared when Add Customer Order clicked
     buttonSubmit2.style.display = "block";
     buttonUpdate2.style.display = "none";
 
-
+    customerOrderInnerFormAndInnerTable2();
 
 }
 
@@ -352,7 +351,7 @@ const getCustomerType = (dataOb) => {
     } else {
 
         if (dataOb.customer_order_type_id.type == "Individual") {
-            return `<p class='fw-bold' style="background-color: pink">${dataOb.customer_order_type_id?.type}</p>`;
+            return `<p class='fw-bold' style="background-color: #fd00d7">${dataOb.customer_order_type_id?.type}</p>`;
         }
 
         if (dataOb.customer_order_type_id.type == "Shop") {
@@ -362,11 +361,6 @@ const getCustomerType = (dataOb) => {
     }
 
 }
-
-
-
-
-
 
 //checking errors in the form
 const checkFormError1 = () => {
@@ -420,14 +414,8 @@ const checkFormError2 = () => {
     }
 
 
-
     if (customerorder.required_date == null) {
         errors = errors + "Please Enter the Required Date..!\n";
-    }
-
-
-    if (customerorder.production_session_id == null) {
-        errors = errors + "Please Enter the Order Session..!\n";
     }
 
 
@@ -451,9 +439,6 @@ const checkFormError2 = () => {
 
     return errors;
 }
-
-
-
 
 
 //form submit event function 
@@ -495,40 +480,25 @@ const buttonOrderSubmit1 = () => {
                     if (postResponce == "OK") {
                         swal("Saved Successfully ....!");
 
-
                         refreshForm1();
                         refreshOrderTable();
                         //$("#orderForm").modal("hide");
-
-
 
                     } else {
                         swal("Failed to submit..! \n" + postResponce);
 
                     }
 
-
                 }
-
-
-
-
-
             })
-
-
 
     } else {
 
         swal("Form has following errors...\n" + errors);
 
-
     }
 
-
     refreshOrderTable();
-
-
 }
 
 
@@ -543,7 +513,6 @@ const buttonOrderSubmit2 = () => {
         let userConfirmMsg2 =
             "\n Customer name:" + customerorder.customer_id.name +
             "\n Required Date :" + customerorder.required_date +
-            "\n Customer Order Session:" + customerorder.production_session_id.name +
             "\n Total Price:" + customerorder.total_price +
             "\n Customer Order Nature:" + customerorder.customer_order_nature_id.nature +
             "\n Customer Order Type:" + customerorder.customer_order_type_id.type;
@@ -554,8 +523,6 @@ const buttonOrderSubmit2 = () => {
                 "\n From:" + customerorder.from_date +
                 "\n To:" + customerorder.to_date;
         }
-
-
 
         swal({
             title: "Are you sure to Submit Following Details..?",
@@ -577,19 +544,11 @@ const buttonOrderSubmit2 = () => {
                         refreshOrderTable();
                         //$("#orderForm").modal("hide");
 
-
-
                     } else {
                         swal("Failed to submit..! \n" + postResponce);
 
                     }
-
-
                 }
-
-
-
-
 
             })
 
@@ -598,13 +557,8 @@ const buttonOrderSubmit2 = () => {
 
         swal("Form has following errors...\n" + errors);
 
-
     }
-
-
     refreshOrderTable();
-
-
 }
 
 
@@ -637,25 +591,18 @@ const buttonOrderRefill = (dataOb, index) => {
         textDuePayment1.value = dataOb.due_payment
         if (dataOb.collection_method_id.name === "To be Collected") {
             pickupRadio.checked = true;
-
         }
 
         if (dataOb.collection_method_id.name === "To be Delivered") {
             deliveryRadio.checked = true;
-
             textDeliveryAddress1.value = dataOb.required_address;
             selectDeliveryRoute1.value = JSON.stringify(dataOb.vehicle_route_id);
 
         }
 
-
-
         //Assign the values of dataOb properties to the front end dataOb in order to track update function
         customerorder.customer_id = dataOb.customer_id;
         oldcustomerorder.customer_id = dataOb.customer_id;
-
-
-
 
         customerorder.collection_method_id = dataOb.collection_method_id;
         oldcustomerorder.collection_method_id = dataOb.collection_method_id;
@@ -663,11 +610,9 @@ const buttonOrderRefill = (dataOb, index) => {
         customerorder.vehicle_route_id = dataOb.vehicle_route_id;
         oldcustomerorder.vehicle_route_id = dataOb.vehicle_route_id;
 
-
-        //Submit button getsdissapeared when "Edit" Customer Order clicked
+        //Submit button gets disappeared when "Edit" Customer Order clicked
         buttonUpdate1.style.display = "block";
         buttonSubmit1.style.display = "none";
-
 
 
     }
@@ -707,13 +652,9 @@ const buttonOrderRefill = (dataOb, index) => {
 
     }
 
-
-
     refreshOrderTable();
 
-
 }
-
 
 
 const checkFormUpdate1 = () => {
@@ -768,15 +709,9 @@ const checkFormUpdate1 = () => {
             }
         }
 
-
-
         return updates;
 
     }
-
-
-
-
 }
 
 
@@ -789,7 +724,6 @@ const checkFormUpdate2 = () => {
         if (customerorder.customer_id.name != oldcustomerorder.customer_id.name) {
             updates = updates + "Customer Name has changed...!\n";
         }
-
 
 
         if (customerorder.required_date != oldcustomerorder.required_date) {
@@ -819,16 +753,9 @@ const checkFormUpdate2 = () => {
                 updates = updates + "To date Has Changed...!\n";
             }
         }
-
-
-
         return updates;
 
     }
-
-
-
-
 }
 
 
@@ -858,25 +785,16 @@ const buttonOrderUpdate1 = () => {
                         if (putResponce == "OK") {
                             swal("Updated Successfully ....!");
 
-
-
-
                             refreshForm1();
                             refreshOrderTable();
                             $("#customerForm").modal("hide");
-
-
-
                         } else {
                             swal("Failed to Update..! \n" + putResponce);
 
                         }
-
-
                     }
 
                 });
-
 
         } else {
             swal({
@@ -885,14 +803,13 @@ const buttonOrderUpdate1 = () => {
             });
         }
 
-
     } else {
         swal("Form has following error..\n" + errors)
 
     }
 
-
 }
+
 
 //form Update event function 
 const buttonOrderUpdate2 = () => {
@@ -918,7 +835,6 @@ const buttonOrderUpdate2 = () => {
                         refreshOrderTable();
                         refreshForm2();
 
-
                     }
 
                 });
@@ -929,12 +845,10 @@ const buttonOrderUpdate2 = () => {
             });
         }
 
-
     } else {
         swal("Form has following error..\n" + errors)
 
     }
-
 
 }
 
@@ -1006,20 +920,9 @@ const buttonOrderDelete = (dataOb, index) => {
 
             }
 
-
-
         });
 
-
 }
-
-
-
-
-
-
-
-
 
 //function define for view/print  customer record
 const buttonOrderView = (dataOb, index) => {
@@ -1040,13 +943,9 @@ const buttonOrderView = (dataOb, index) => {
         tdVehicleRoute.innerText = dataOb.vehicle_route_id?.name;
     }
 
-
     $("#modalOrderView").modal("show");
 
-
 }
-
-
 
 
 //inner row in view
@@ -1058,8 +957,6 @@ const printOrderRow = () => {
 
 
     newWindow.document.write(printView);
-
-
 
     //Print window
     setTimeout(() => {
@@ -1076,15 +973,352 @@ const printOrderRow = () => {
 }
 
 
+//  Individual Customer Order Inner Form and inner table
+
+const customerOrderInnerFormAndInnerTable1 = () =>{
+
+//     cleaning inner attributes
+    customerOrderInnerForm1.reset();
+
+
+    //Removing Validation using a common function
+    setDefault([selectItem1,txtItemQuantity1]);
+
+//     creating a new object to bind data
+    orderHasItem = new Object();
+
+
+//     Filling drop down
+    let item = getServiceRequest("/item/alldata");
+
+    //Filling data into dropdowns
+    fillDataIntoSelect(selectItem1, "Please select Item..!", item, "item_name");
+
+//     customer order table
+
+    let innerColumns = [{ propertyName: getItem, dataType: "function" },
+        { propertyName: "qty", dataType: "string" },
+        { propertyName: "line_price", dataType: "decimal" }];
+
+// Calling common function to fill data into table
+    fillDataIntoInnerTable(tableInnerCustomerBody1, customerorder.customerOrderHasItemList, innerColumns, buttonInnerCustomerOrderRefill1, buttonInnerCustomerOrderDelete1, true);
+
+}
+
+const getItem = (dataOb) =>{
+    return dataOb?.item_id?.item_name;
+}
+
+const  buttonInnerCustomerOrderRefill1 =() =>{
+
+}
+
+const buttonInnerCustomerOrderDelete1 = () =>{
+
+}
+
+const unitPrice1 = document.querySelector("#txtUnitPrice1");
+const qty1 =document.querySelector("#txtItemQuantity1");
+const linePrice1 = document.querySelector("#txtLinePrice1");
+
+// Generate Line Price in Individual Customer
+const linePriceGenerator1 = () =>{
+
+    let unitPrice1Value = unitPrice1.value;
+    let qty1Value = qty1.value;
+
+
+    linePrice1Value = (parseFloat(unitPrice1Value).toFixed(2) * qty1Value);
+    linePrice1.value = parseFloat(linePrice1Value).toFixed(2);
+    orderHasItem.line_price = linePrice1.value;
+    linePrice1.classList.add("is-valid");
+
+}
+
+const unitPrice2 = document.querySelector("#txtUnitPrice2");
+const qty2 =document.querySelector("#txtItemQuantity2");
+const linePrice2 = document.querySelector("#txtLinePrice2");
+
+// Generate Line Price in Individual Customer
+const linePriceGenerator2 = () =>{
+
+    let unitPrice2Value = unitPrice2.value;
+    let qty2Value = qty2.value;
+
+
+    linePrice2Value = (parseFloat(unitPrice2Value).toFixed(2) * qty2Value);
+    linePrice2.value = parseFloat(linePrice2Value).toFixed(2);
+    orderHasItem.line_price = linePrice2.value;
+    linePrice2.classList.add("is-valid");
+
+}
+
+const checkInnerForm1Error = () =>{
+    let errors = "";
+
+    if (orderHasItem.item_id == null) {
+        errors = errors + "Please Select an Item...!\n";
+    }
+
+    if (orderHasItem.qty == null) {
+        errors = errors + "Please Enter No Of Items...!\n";
+    }
+
+    return errors;  //Check form error for required element
+
+}
+
+
+const checkInnerForm2Error = () =>{
+    let errors = "";
+
+    if (orderHasItem.item_id == null) {
+        errors = errors + "Please Select an Item...!\n";
+    }
+
+    if (orderHasItem.qty == null) {
+        errors = errors + "Please Enter No Of Items...!\n";
+    }
+
+    return errors;  //Check form error for required element
+
+}
+
+// Generate Total Price in Individual Customer Form
+const generateTotalPrice1 = () => {
+
+    let totalPrice1 = 0;
+
+    customerorder.customerOrderHasItemList.forEach(itemOb => {
+
+        totalPrice1 += parseFloat(itemOb.line_price);
+
+    })
+
+    textTotalPrice1.value = totalPrice1;
+    customerorder.total_price = totalPrice1;
+    textTotalPrice1.classList.add("is-valid");
+
+
+}
+
+// Generate Total Price in Individual Customer Form
+const generateTotalPrice2 = () => {
+
+    let totalPrice2 = 0;
+
+    customerorder.customerOrderHasItemList.forEach(itemOb => {
+
+        totalPrice2 += parseFloat(itemOb.line_price);
+
+    })
+
+    textTotalPrice2.value = totalPrice2;
+    customerorder.total_price = totalPrice2;
+    textTotalPrice2.classList.add("is-valid");
+
+
+}
+
+
+const buttonInnerForm1Submit = () =>{
+    console.log(orderHasItem);
+    console.log(customerorder);
+
+    let errors = checkInnerForm1Error();
+
+    if (errors == "") {
+
+        let userConfirmMsg3 =
+
+            "\n Item Name :" + orderHasItem.item_id.item_name+
+            "\n Item Quantity :" +orderHasItem.qty+
+            "\n Line Price :" +orderHasItem.line_price;
+
+        swal({
+            title: "Are you sure to add following details..?",
+            text: userConfirmMsg3,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((userResponce) => {
+
+                if (userResponce) {
+                    //call post service
+                    let postResponce = "OK";
+                    if (postResponce == "OK") {
+
+                        // Pushing the object of inner form "customerItem"
+                        customerorder.customerOrderHasItemList.push(orderHasItem);
+
+                        swal("Added Successfully..!")
+                        customerOrderInnerFormAndInnerTable1();
+                        generateTotalPrice1();
+                        discountPriceGenerator();
+                    }
+
+                }
+
+            });
+
+    } else {
+
+        swal(errors);
+    }
+}
+
+
+const buttonInnerForm2Submit = () =>{
+    console.log(orderHasItem);
+    console.log(customerorder);
+
+    let errors = checkInnerForm2Error();
+
+    if (errors == "") {
+
+        let userConfirmMsg4 =
+
+            "\n Item Name :" + orderHasItem.item_id.item_name+
+            "\n Item Quantity :" +orderHasItem.qty+
+            "\n Line Price :" +orderHasItem.line_price+
+            "\n Session :" +orderHasItem.production_session_id.name;
+
+        swal({
+            title: "Are you sure to add following details..?",
+            text: userConfirmMsg4,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((userResponce) => {
+
+                if (userResponce) {
+                    //call post service
+                    let postResponce = "OK";
+                    if (postResponce == "OK") {
+
+                        // Pushing the object of inner form "customerItem"
+                        customerorder.customerOrderHasItemList.push(orderHasItem);
+
+                        swal("Added Successfully..!")
+                        customerOrderInnerFormAndInnerTable2();
+                        generateTotalPrice2();
+                    }
+
+                }
+
+            });
+
+    } else {
+
+        swal(errors);
+    }
+}
+
+
+//Validation Of Dynamic dropdown
+const dynamicElementValidator1 = (element, object, property) => {
+
+    const dynamicElement = element.value;
+
+    orderHasItem[property] = JSON.parse(dynamicElement);
+
+    element.classList.add("is-valid");
+
+
+}
 
 
 
+//Shop Customer Inner Form and Inner Table
+const customerOrderInnerFormAndInnerTable2 = () =>{
+
+//     cleaning inner attributes
+    customerOrderInnerForm2.reset();
+
+
+    //Removing Validation using a common function
+    setDefault([selectItem2,txtItemQuantity2,txtLinePrice2,selectSession2]);
+
+//     creating a new object to bind data
+    orderHasItem = new Object();
+
+
+//     Filling drop down
+    let item = getServiceRequest("/item/alldata");
+
+    //Filling data into dropdowns
+    fillDataIntoSelect(selectItem2, "Please select Item..!", item, "item_name");
+
+    //Filling Dropdown
+    let session = getServiceRequest("/productionsession/alldata")
+
+    //filling data into dropdown
+    fillDataIntoSelect(selectSession2, "Please select Production session..!", session, "name");
+
+
+//     customer order table
+
+    let innerColumns = [{ propertyName: getItem, dataType: "function" },
+        { propertyName: "qty", dataType: "string" },
+        { propertyName: "line_price", dataType: "decimal" },
+        { propertyName: getSession, dataType: "function" }];
+
+// Calling common function to fill data into table
+    fillDataIntoInnerTable(tableInnerCustomerBody2, customerorder.customerOrderHasItemList, innerColumns, buttonInnerCustomerOrderRefill2, buttonInnerCustomerOrderDelete2, true);
+}
+
+
+//Getting Production session from Inner table
+const getSession = (dataOb) =>{
+    return dataOb?.production_session_id?.name;
+}
+
+const  buttonInnerCustomerOrderRefill2 =() =>{
+
+}
+
+const buttonInnerCustomerOrderDelete2 = () =>{
+
+}
+
+
+//Validation Of Dynamic dropdown
+const dynamicElementValidator2 = (element, object, property) => {
+
+    const dynamicElement = element.value;
+
+    orderHasItem[property] = JSON.parse(dynamicElement);
+
+    element.classList.add("is-valid");
+
+}
 
 
 
+// Filling the inner table when Customer selects
+const defaultItemList = () => {
+
+    console.log("..............ok.............")
+    console.log(selectCustomerName2.value);
+    console.log(JSON.parse(selectCustomerName2.value).id)
+
+//     customer order table
+    let innerColumns = [{ propertyName: getItem, dataType: "function" },
+        { propertyName: "qty", dataType: "string" },
+        { propertyName: getLinePrice, dataType: "function" },
+        { propertyName: getSession, dataType: "function"}
+    ];
 
 
+    let defaultItemListShopCustomer = getServiceRequest("/customerhasitem/bycustomerid?customerid="+ JSON.parse(selectCustomerName2.value).id);
+    fillDataIntoInnerTable(tableInnerCustomerBody2, defaultItemListShopCustomer, innerColumns, buttonInnerCustomerOrderRefill1, buttonInnerCustomerOrderDelete1, true);
 
 
+}
 
+const getLinePrice = (dataOb) =>{
+    return "";
+}
 

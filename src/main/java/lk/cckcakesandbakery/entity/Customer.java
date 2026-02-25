@@ -1,16 +1,12 @@
 package lk.cckcakesandbakery.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.*;
+import jakarta.persistence.GenerationType;
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -72,5 +68,12 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "customer_type_id", referencedColumnName = "id") // Foreign Key
     private CustomerTypes customer_type_id;
+
+
+    //Association Table     // Association table   In Here, "cascade = CascadeType.ALL" should be essential to save data into association table
+     //"orphanRemoval = true" should be essential to remove data from the association table
+    @OneToMany(mappedBy = "customer_id" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<CustomerHasItem> customerHasItemList;
+
 
 }

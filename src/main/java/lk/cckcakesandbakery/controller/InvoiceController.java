@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -23,9 +24,6 @@ import lk.cckcakesandbakery.dao.CustomerDao;
 import lk.cckcakesandbakery.dao.InvoiceDao;
 import lk.cckcakesandbakery.dao.InvoiceStatusDao;
 import lk.cckcakesandbakery.dao.UserDao;
-import lk.cckcakesandbakery.entity.Invoice;
-import lk.cckcakesandbakery.entity.Privilege;
-import lk.cckcakesandbakery.entity.User;
 
 @RestController
 public class InvoiceController {
@@ -58,17 +56,45 @@ public class InvoiceController {
         return invoiceUI;
     }
 
-    // request mapping for get invoice no by customer name [URL
-    // --->//invoiceno/customer]
-    @GetMapping(value = "/invoice/invoicenobycustomername", params = {
-            "customerName" }, produces = "application/json")
-    public List<String> findAllInvoiceNoByCustomerName(@RequestParam(name = "customerName") String customerName) {
+    // request mapping for get invoice by customer id [URL
+    // --->/invoice/getinvoicebycustomerid]
+    @GetMapping(value = "/invoice/getinvoicebycustomerid", params = {
+            "customerId" }, produces = "application/json")
+    public List<Invoice> findAllInvoiceByCustomerName(@RequestParam(name = "customerId") Integer customerId) {
 
-        // Get Customer ID from Customer Name
-        Integer customerId = customerDao.getCustomerIdByName(customerName);
-        // Get Invoice No by Customer ID
-        return invoiceDao.getInvoiceNoByCustomerId(customerId);
+        return invoiceDao.getInvoiceByCustomerId(customerId);
     }
+
+
+    // request mapping for get total Price by Invoice No [URL
+    // --->/invoice/gettotalpricebyinvoiceno]
+    @GetMapping(value = "/invoice/gettotalpricebyinvoiceno", params = {
+            "invoiceno" }, produces = "application/json")
+    public Double findTotalPriceByInvoiceNo(@RequestParam(name = "invoiceno") String invoiceno) {
+
+        return invoiceDao.getTotalPriceByInvoiceNo(invoiceno);
+    }
+
+    // request mapping for get Discounted Price by Invoice No [URL
+    // --->/invoice/getdiscountedpricebyinvoiceno]
+    @GetMapping(value = "/getdiscountedpricebyinvoiceno", params = {
+            "invoiceno" }, produces = "application/json")
+    public Double findDiscountedPriceByInvoiceNo(@RequestParam(name = "invoiceno") String invoiceno) {
+
+        return invoiceDao.getDiscountedPriceByInvoiceNo(invoiceno);
+    }
+
+
+
+    // request mapping for get invoice by customer id and session id [URL
+    // --->/invoice/getinvoicebycustomeridandsessionid]
+    @GetMapping(value = "/invoice/getinvoicebycustomeridandsessionid",produces = "application/json")
+    public List<Invoice> findAllInvoiceByCustomerNameAndSession(@RequestParam(name = "customerId") Integer customerId,
+                                                                @RequestParam(name = "sessionId") Integer sessionId) {
+
+        return invoiceDao.getInvoiceByCustomerIdAndSessionId(customerId, sessionId);
+    }
+
 
     // ...................CRUD Operations.......................
 
@@ -115,6 +141,12 @@ public class InvoiceController {
                 invoice.setAdd_date_time(LocalDateTime.now());
                 invoice.setAdd_user_id(loggedUser.getId());
                 invoice.setInvoice_no(invoiceDao.getNextInvoiceNo());
+
+
+//                Saving data in association table
+                for (InvoiceHasItem ihi : invoice.getInvoiceHasItemList() ){
+                    ihi.setInvoice_id(invoice);
+                }
 
                 // save operator(save frontend object)
                 invoiceDao.save(invoice);

@@ -204,7 +204,7 @@ const buttonProductionSubmit = () => {
 
                     refreshProductionTable();
                     refreshForm();
-                    $("#productionForm").modal("hide");
+                    $("#modalProductionForm").modal("hide");
 
 
 
@@ -212,28 +212,17 @@ const buttonProductionSubmit = () => {
                     swal("Failed to submit..! \n" + postResponce);
 
                 }
-
-
             }
-
-
-
-
 
         });
 
     } else {
 
-
         swal("Form has following errors...\n\n" + errors);
 
     }
 
-
     console.log(production);
-
-
-
 
 }
 
@@ -262,7 +251,7 @@ const buttonProductionRefill = (dataOb, index) => {
 
 
     //Opening the form modal when refilling
-    $("#productionForm").modal("show");
+    $("#modalProductionForm").modal("show");
 
 
     //Submit button getsdissapeared when edit function executed
@@ -347,7 +336,7 @@ const buttonProductionUpdate = () => {
 
                             refreshProductionTable();
                             refreshForm();
-                            $("#productionForm").modal("hide");
+                            $("#modalProductionForm").modal("hide");
 
                         } else {
                             swal("Failed to Update..! \n" + putResponce);

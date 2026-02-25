@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url(/images/newwallpaperlogin2.jpg);
+    background-image: url(/images/freshbun.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -22,6 +22,15 @@ body {
 }
 
 #buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    /* aligns buttons to the right */
+    padding: 10px;
+}
+
+
+
+#buttonContainer2 {
     display: flex;
     justify-content: flex-end;
     /* aligns buttons to the right */

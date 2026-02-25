@@ -1,9 +1,11 @@
 package lk.cckcakesandbakery.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.entity.CustomerOrderHasItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -58,19 +60,73 @@ public class CustomerOrderController {
         return customerOrderUI;
     }
 
-    // request mapping for get customerorders by customer name [URL
+    // request mapping for get customer orders by customer name [URL
     // --->//customerorder/orderByCustomerName]
-    @GetMapping(value = "/customerorder/orderByCustomerName", params = {
-            "customerName" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    @GetMapping(value = "/customerorder/customerorderbycustomerid", params = {
+            "customerId" }, produces = "application/json") // produces = "application/json" --> Data from the database
                                                              // pases to the front end in json format...
-    public List<String> findAllOrderNoByCustomerName(@RequestParam(name = "customerName") String customerName) {
+    public List<CustomerOrder> findCustomerOderByCustomerId(@RequestParam(name = "customerId") Integer customerId) {
 
-        // Get Customer ID from Customer Name
-        Integer customerId = customerDao.getCustomerIdByName(customerName);
-
-        // Get Order No by Customer Id
-        return customerOrderDao.getOrderNoByCustomerId(customerId);
+        // Get Order No by CustomerId
+        return customerOrderDao.getCustomerOrderByCustomerId(customerId);
     }
+
+    // request mapping for get Total Price by Invoice No [URL
+    // --->/customerorder/totalpricebyinvoiceno]
+    @GetMapping(value = "/customerorder/totalpricebyinvoiceno", params = {
+            "invoiceno" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    // pases to the front end in json format...
+    public Double findTotalPriceByInvoice(@RequestParam(name = "invoiceno") String invoiceno) {
+
+        return customerOrderDao.getTotalPriceByInvoice(invoiceno);
+    }
+
+
+
+
+    // request mapping for get Discounted Price by Invoice No [URL
+    // --->/customerorder/totalpricebyinvoiceno]
+    @GetMapping(value = "/customerorder/discountedpricebyinvoiceno", params = {
+            "invoiceno" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    // pases to the front end in json format...
+    public Double findDiscountedPriceByInvoice(@RequestParam(name = "invoiceno") String invoiceno) {
+
+        return customerOrderDao.getDiscountedPriceByInvoice(invoiceno);
+    }
+
+    // request mapping for get Discounted Price by Invoice No [URL
+    // --->/customerorder/advancedpaymentbyinvoiceno]
+    @GetMapping(value = "/customerorder/advancedpaymentbyinvoiceno", params = {
+            "invoiceno" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    // pases to the front end in json format...
+    public Double findAdvancedPaymentByInvoice(@RequestParam(name = "invoiceno") String invoiceno) {
+
+        return customerOrderDao.getAdvancedPaymentByInvoice(invoiceno);
+    }
+
+
+    // request mapping for get Total Price by Customer Order Id [URL
+    // --->/customerorder/totalpricebycustomerorderid]
+    @GetMapping(value = "/customerorder/totalpricebycustomerorderid", params = {
+            "customerOrderId" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    // pases to the front end in json format...
+    public Double findTotalPriceByCustomerOrderId(@RequestParam(name = "customerOrderId") Integer customerOrderId) {
+
+        return customerOrderDao.getTotalPriceByCustomerOrderId(customerOrderId);
+    }
+
+
+    // request mapping for get Discounted Price by Customer OrderId [URL
+    // --->/customerorder/discountedpricebycustomerorderid]
+    @GetMapping(value = "/customerorder/discountedpricebycustomerorderid", params = {
+            "customerOrderId" }, produces = "application/json") // produces = "application/json" --> Data from the database
+    // pases to the front end in json format...
+    public Double findDiscountedPriceByCustomerOrderId(@RequestParam(name = "customerOrderId") Integer customerOrderId) {
+
+        return customerOrderDao.getDiscountedPriceByCustomerOrderId(customerOrderId);
+    }
+
+
 
     // Normally, Spring can infer the parameter name if your code is compiled with
     // the -parameters flag. But if that flag is missing, Spring can't see the
@@ -81,22 +137,7 @@ public class CustomerOrderController {
     // So by writing @RequestParam(name = "customerName"), you're manually
     // specifying the name to avoid that error.
 
-    // request mapping for get Total Price by customer Order No [URL
-    // --->///customerorder/totalPriceByCustomerOrder]
-    @GetMapping(value = "/customerorder/totalPriceByCustomerOrder", params = {
-            "customerOrderNo" }, produces = "application/json")
-    public String findTotalPriceByCustomerOrder(@RequestParam(name = "customerOrderNo") String customerOrderNo) {
 
-        // Get Order No by Customer Id
-        return customerOrderDao.getTotalPriceByOrderNo(customerOrderNo);
-    }
-
-    @GetMapping(value = "/customerorder/discountedPriceByCustomerOrder", params = {
-            "customerOrderNo" }, produces = "application/json")
-    public String findDiscountedPriceByCustomerOrder(@RequestParam(name = "customerOrderNo") String customerOrderNo) {
-
-        return customerOrderDao.getDiscountedPriceByOrderNo(customerOrderNo);
-    }
 
     // ..............................CRUD Operations...................
     // 1.............Select...........................................
@@ -144,6 +185,11 @@ public class CustomerOrderController {
                 customerorder.setAdded_date_time(LocalDateTime.now());
                 customerorder.setAdd_user_id(loggedUser.getId());
                 customerorder.setOrder_no(customerOrderDao.getNextOrderNo());
+
+                //Saving data in association table
+                for (CustomerOrderHasItem cohi : customerorder.getCustomerOrderHasItemList()){
+                    cohi.setCustomer_order_id(customerorder);
+                }
 
                 // save operator(save frontend object)
                 customerOrderDao.save(customerorder);

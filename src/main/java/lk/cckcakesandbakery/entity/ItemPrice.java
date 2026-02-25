@@ -1,6 +1,7 @@
 package lk.cckcakesandbakery.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -27,13 +28,23 @@ public class ItemPrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private BigDecimal selling_price;
+    private LocalDate  date;
+
+    private BigDecimal raw_material_cost;
+
+    private BigDecimal whole_sale_price;
+
+    private BigDecimal reatil_profit_ratio;
+
+    private BigDecimal retail_price;
 
     private BigDecimal returned_price;
 
     private BigDecimal total_production_cost;
 
-    private BigDecimal profit_ratio;
+    private BigDecimal production_cost;
+
+    private BigDecimal wholesale_profit_ratio;
 
     @NotNull
     private LocalDateTime added_date_time;
@@ -54,7 +65,7 @@ public class ItemPrice {
     private Item item_id;
 
     @ManyToOne
-    @JoinColumn(name = "item_return_status_id", referencedColumnName = "id")
-    private ItemReturnStatus item_return_status_id;
+    @JoinColumn(name = "item_price_status_id", referencedColumnName = "id")
+    private ItemPriceStatus item_price_status_id;
 
 }

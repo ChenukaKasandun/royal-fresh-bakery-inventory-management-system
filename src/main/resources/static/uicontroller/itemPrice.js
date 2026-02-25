@@ -5,78 +5,10 @@ window.addEventListener('load', () => {
     refreshItemPriceTable();
     refreshForm();
 
-
-
-
-
 })
 
 
-
-const returningStatusValidator = () => {
-
-    if (returningRadio.checked) {
-
-        itemPrice.item_return_status_id = { id: 1, status: "Returns Accepted" };
-
-    }
-
-    if (notReturningRadio.checked) {
-
-        itemPrice.item_return_status_id = { id: 2, status: "Returns  Not Accepted" };
-
-    }
-
-
-}
-
-
-
-
-
-const generateSellingPrice = () => {
-
-    let totalProductionCost = txtTotalProductionCost.value;
-    let profitRatio = txtProfitRatio.value;
-
-    let sellingPrice = (parseFloat(totalProductionCost) * parseFloat(profitRatio) / 100) + parseFloat(totalProductionCost);
-
-
-    txtSellingPrice.value = sellingPrice;
-    itemPrice.selling_price = txtSellingPrice.value;
-    txtSellingPrice.classList.add("is-valid");
-
-
-}
-
-
-
-
-
-//JavaScript to toggle collapse  --->Returning status collapse
-const returningRadio = document.getElementById('returningRadio');
-const notReturningRadio = document.getElementById('notReturningRadio');
-const collapseTarget = document.getElementById('returnDetails');
-const bsCollapse = new bootstrap.Collapse(collapseTarget, { toggle: false });
-
-returningRadio.addEventListener('change', () => {
-    if (returningRadio.checked) {
-        bsCollapse.show();
-    }
-});
-
-notReturningRadio.addEventListener('change', () => {
-    if (notReturningRadio.checked) {
-        bsCollapse.hide();
-    }
-});
-
-
-
-
-
-
-//Validation Of Dynamic dropdown  
+//Validation Of Dynamic dropdown
 const dynamicElementValidator = (element, object, property) => {
 
     const dynamicElement = element.value;
@@ -85,224 +17,207 @@ const dynamicElementValidator = (element, object, property) => {
 
     element.classList.add("is-valid");
 
-
 }
 
 
-
-
-
-
+//Refresh form
 const refreshForm = () => {
 
+    //Resetting Item Form
+    itemPriceForm.reset()
+
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([txtDate,selectItem, txtRawMaterialCost, txtProductionCost, txtTotalProductionCost,txtWholeSaleProfitRatio,
+        txtRetailProfitRatio,txtWholeSalePrice,txtRetailPrice,txtReturnPrice,textNote]);
+
+    //Creation of new object for front end data binding
     itemPrice = new Object();
 
-    selectItem.value = "";
-    txtRawMaterialCost.value = "";
-    txtTotalProductionCost.value = "";
-    txtProfitRatio.value = "";
-    txtSellingPrice.value = "";
-    txtReturningPrice.value = "";
-    textNote.value = "";
-
-
-    notReturningRadio.checked = false;
-    returningRadio.checked = false;
-
-
-
-    selectItem.classList.remove("is-invalid");
-    selectItem.classList.remove("is-valid");
-
-    txtRawMaterialCost.classList.remove("is-invalid");
-    txtRawMaterialCost.classList.remove("is-valid");
-
-    txtTotalProductionCost.classList.remove("is-invalid");
-    txtTotalProductionCost.classList.remove("is-valid");
-
-    txtProfitRatio.classList.remove("is-invalid");
-    txtProfitRatio.classList.remove("is-valid");
-
-    txtSellingPrice.classList.remove("is-invalid");
-    txtSellingPrice.classList.remove("is-valid");
-
-    returningRadio.classList.remove("is-invalid");
-    returningRadio.classList.remove("is-valid");
-
-    textNote.classList.remove("is-invalid");
-    textNote.classList.remove("is-valid");
-
-
-
-
-
-    //Retriving data from the data base using ajax common function defined in the coomonFunctions.js
+    //Retrieving data from the database using ajax common function defined in the commonFunctions.js
     let itemName = getServiceRequest("/item/alldata");
 
     //Filling data into dropdowns
     fillDataIntoSelect(selectItem, "Please select Item..!", itemName, "item_name");
 
-
-
-    let selectItemName = document.querySelector("#selectItem");
-
-    selectItemName.addEventListener("change", () => {
-
-        let itemName = JSON.parse(selectItemName.value);
-
-        let rawmaterialCost = getServiceRequest("/itemprice/getrawmaterialcost?itemName=" + itemName.item_name);
-
-        txtRawMaterialCost.value = rawmaterialCost;
-
-        //Binding the value of materialCost to the dataOb
-        itemPrice.materialCost = txtRawMaterialCost.value;
-
-
-        txtRawMaterialCost.classList.add("is-valid");
-    })
-
-
     //Update button getsdissapeared when refreshForm
     buttonSubmit.style.display = "block";
     buttonUpdate.style.display = "none";
 
+}
+
+// Generation production Cost
+const generateProductionCost = () =>{
+    let rawMaterialCost = parseFloat(txtRawMaterialCost.value);
+
+    // Assume that the production cost is equal to the 20% of the raw material cost of an every item
+    let productionCost  = (rawMaterialCost * 0.20)
+
+    txtProductionCost.value = productionCost.toFixed(2);
+    itemPrice.production_cost = txtProductionCost.value;
+    txtProductionCost.classList.add("is-valid");
+    generateTotalProductionCost();
+}
+
+// Generate Total Production Cost
+const generateTotalProductionCost = () =>{
+
+    let rawMaterialCost = parseFloat(txtRawMaterialCost.value);
+    let productionCost = parseFloat(txtProductionCost.value);
+
+    let totalProductionCost = (rawMaterialCost + productionCost);
+
+    txtTotalProductionCost.value = totalProductionCost.toFixed(2);
+    itemPrice.total_production_cost = txtTotalProductionCost.value;
+    txtTotalProductionCost.classList.add("is-valid");
+    generateWholeSalePrice();
+    generateRetailPrice();
+}
 
 
+// Generate Wholesale price
+const generateWholeSalePrice = () =>{
+
+    let totalProductionCost = parseFloat(txtTotalProductionCost.value);
+    let wholeSaleProfitRatio = parseFloat(txtWholeSaleProfitRatio.value);
+
+    // Assume that the wholesale Profit Ratio is = 20%
+    let wholeSalePrice = totalProductionCost + (totalProductionCost * (wholeSaleProfitRatio/100));
+
+    txtWholeSalePrice.value = wholeSalePrice.toFixed(2);
+    itemPrice.whole_sale_price =  txtWholeSalePrice.value;
+    txtWholeSalePrice.classList.add("is-valid");
+}
+
+
+// Generate Retail price
+const generateRetailPrice = () =>{
+    let totalProductionCost = parseFloat(txtTotalProductionCost.value);
+    let retailPriceRatio = parseFloat(txtRetailProfitRatio.value);
+
+    // Assume that retail Profit Ratio is 30%
+    let retailPrice = totalProductionCost + (totalProductionCost * (retailPriceRatio/100));
+
+    txtRetailPrice.value = retailPrice.toFixed(2);
+    itemPrice.retail_price = txtRetailPrice.value;
+    txtRetailPrice.classList.add("is-valid");
 
 }
 
 
 
+//Refresh Item Price Table
 const refreshItemPriceTable = () => {
 
     //string => string/date/number
     //function => object/array/boolean
-    let propertyList = [{ propertyName: getItemName, dataType: "function" },
-    { propertyName: "total_production_cost", dataType: "decimal" },
-    { propertyName: "profit_ratio", dataType: "decimal" },
-    { propertyName: "selling_price", dataType: "decimal" },
-    { propertyName: getReturnedPrice, dataType: "function" }
+    let propertyList = [{ propertyName: "date", dataType: "string" },
+        { propertyName: getItemName, dataType: "function" },
+        { propertyName: "raw_material_cost", dataType: "decimal" },
+        { propertyName: "production_cost", dataType: "decimal" },
+        { propertyName: "total_production_cost", dataType: "decimal" },
+        { propertyName: getWholeSalePrice, dataType: "function" },
+        { propertyName: getRetailPrice, dataType: "function" },
+        { propertyName: getReturnedPrice, dataType: "function" },
+        { propertyName: getStatus, dataType: "function" }
     ];
-
 
 
     let itemPrice = getServiceRequest("/itemprice/alldata");
 
     //calling function to fill data into the table
-    fillDataIntoTable1(itemPriceTableBody, itemPrice, propertyList, buttonItemPriceRefill, buttonProductionDelete, buttonProductionView, true);
+    fillDataIntoTable1(itemPriceTableBody, itemPrice, propertyList,buttonItemPriceRefill, buttonProductionDelete, buttonProductionView, true);
 
-
+    //Jquery function for table
     $('#itemPriceTable').DataTable();
-
-
 }
 
 
+//Getting Item Name
 const getItemName = (dataOb) => {
     return dataOb.item_id.item_name;
 }
 
-const getReturnedPrice = (dataOb) => {
-    if (dataOb.returned_price == null) {
-        return "-";
+
+
+//Getting Status
+const getStatus= (dataOb) => {
+
+    if (dataOb?.item_price_status_id?.status == "Deleted") {
+        return `<P style='background-color:red'>${dataOb?.item_price_status_id?.status}</P>`;
 
     } else {
-        return parseFloat(dataOb.returned_price).toFixed(2);
+        return "";
 
     }
-
 }
 
 
+const getWholeSalePrice = (dataOb) =>{
+
+    return `<p class ="fw-bold" style="background-color : green">${(dataOb?.whole_sale_price)?.toFixed(2)}</p>`;
+}
+
+const getRetailPrice = (dataOb) =>{
+    return `<p class ="fw-bold" style="background-color : #fd00d7">${(dataOb?.retail_price)?.toFixed(2)}</p>`;
+}
 
 
+const getReturnedPrice= (dataOb) =>{
+    return `<p class ="fw-bold" style="background-color : #fda400">${(dataOb?.returned_price)?.toFixed(2)}</p>`;
+}
+
+//Checking Form Errors
 const checkFormError = () => {
 
-
     //need to check all required properties
-
     let errors = "";
+
+    if (itemPrice.date == null) {
+        errors = errors + "Please Select a Date.....!\n";
+
+    }
 
     if (itemPrice.item_id == null) {
         errors = errors + "Please Select an Item.....!\n";
 
     }
 
-    if (itemPrice.materialCost == null) {
-        errors = errors + "Please Enter Raw  Material Cost.....!\n";
+    if (itemPrice.wholesale_profit_ratio == null) {
+        errors = errors + "Please Enter Whole Sale Profit Ratio....!\n";
 
     }
 
-
-    if (itemPrice.total_production_cost == null) {
-        errors = errors + "Please Enter Total Production Cost....!\n";
-
-    }
-
-    if (itemPrice.profit_ratio == null) {
-        errors = errors + "Please Enter Profit Ratio.....!\n";
+    if (itemPrice.reatil_profit_ratio == null) {
+        errors = errors + "Please Enter Retail Profit Ratio.....!\n";
 
     }
 
-    if (itemPrice.selling_price == null) {
-        errors = errors + "Please Enter Selling Price.....!\n";
+    if (itemPrice.returned_price == null) {
+        errors = errors + "Please Enter the Returning Price.....!\n";
 
     }
-
-
-    if (itemPrice.item_return_status_id == null) {
-        errors = errors + "Please Select Return Status.....!\n";
-
-    }
-
-
-    if (returningRadio.checked) {
-
-        if (itemPrice.returned_price == null) {
-            errors = errors + "Please Enter Returned Price.....!\n";
-
-        }
-
-    }
-
 
     return errors;
-
-
-
-
 }
 
 
 
-//form submit event function 
+//form submit event function
 const buttonItemPriceSubmit = () => {
 
     //Check form error for required element
     let errors = checkFormError();
     console.log(itemPrice);
 
-
     if (errors == "") {
 
         let userConfirmMsg1 =
 
-
+            "\n Date :" + itemPrice.date +
             "\n Item Name :" + itemPrice.item_id.item_name +
-            "\n Material Cost :" + itemPrice.materialCost +
-            "\n Total Production Cost :" + itemPrice.total_production_cost +
-            "\n Profit Ratio :" + itemPrice.profit_ratio +
-            "\n Sellling Price :" + itemPrice.selling_price +
-            "\n Returning Status :" + itemPrice.item_return_status_id.status;
-
-
-        if (returningRadio.checked) {
-            userConfirmMsg1 +=
-                "\n Returning  Price:" + itemPrice.returned_price;
-
-        }
-
-
+            "\n Whole sale Profit Ratio:" + itemPrice.wholesale_profit_ratio+
+            "\n Retail Profit Ratio :" + itemPrice.reatil_profit_ratio +
+            "\n Returned Price:" + itemPrice.returned_price;
 
         swal({
             title: "Are you sure to Submit Following Details..?",
@@ -318,26 +233,19 @@ const buttonItemPriceSubmit = () => {
                     let postResponce = getHTTPServiceRequest("/itemprice/insert", "POST", itemPrice);
                     if (postResponce == "OK") {
                         swal("Saved Successfully ....!");
-
+                        console.log(itemPrice);
 
                         refreshItemPriceTable();
                         refreshForm();
 
-                        $("#itemPriceForm").modal("hide");
-
-
+                        $("#modalItemPrice").modal("hide");
 
                     } else {
                         swal("Failed to submit..! \n" + postResponce);
 
                     }
 
-
                 }
-
-
-
-
 
             });
 
@@ -346,111 +254,104 @@ const buttonItemPriceSubmit = () => {
 
         swal("Form has following errors...\n\n" + errors);
 
-
     }
-
     refreshItemPriceTable();
-
 }
 
 
+
+//Refilling data into fields in the item price form
 const buttonItemPriceRefill = (dataOb, index) => {
 
+    if (dataOb?.item_price_status_id?.status != "Deleted" ){
+        //Creating two objects for comparison --> Update Item
+        itemPrice = JSON.parse(JSON.stringify(dataOb));
+        oldItemPrice = JSON.parse(JSON.stringify(dataOb));
 
-    //Creating two objects for comparison --> Update Item
-    itemPrice = JSON.parse(JSON.stringify(dataOb));
-    oldItemPrice = JSON.parse(JSON.stringify(dataOb));
+        //Refilling data From database to the form attributes
+        txtDate.value = dataOb.date;
+        selectItem.value = JSON.stringify(dataOb.item_id);
+        txtRawMaterialCost.value = dataOb.raw_material_cost;
+        txtProductionCost.value = dataOb.production_cost;
+        txtTotalProductionCost.value = dataOb.total_production_cost;
+        txtWholeSaleProfitRatio.value = dataOb.wholesale_profit_ratio;
+        txtWholeSalePrice.value = dataOb.whole_sale_price;
+        txtRetailProfitRatio.value = dataOb.reatil_profit_ratio;
+        txtRetailPrice.value =dataOb.retail_price;
+        txtReturnPrice.value = dataOb.returned_price;
 
-    //Refilling data From database to the form atrributes
+        //Assigning values from dataOb to front end  object in order to avoid mismatch
+        itemPrice.item_id = dataOb.item_id;
+        oldItemPrice.item_id = dataOb.item_id;
 
-    selectItem.value = JSON.stringify(dataOb.item_id);
-    txtRawMaterialCost.value = dataOb.item_id.production_cost;
-    txtTotalProductionCost.value = dataOb.total_production_cost;
-    txtProfitRatio.value = dataOb.profit_ratio;
-    txtSellingPrice.value = dataOb.selling_price;
-    txtRawMaterialCost.value = dataOb.item_id.raw_material_cost;
 
-    if (dataOb.item_return_status_id.status == "Returns Accepted") {
-        returningRadio.checked = true;
+        //Submit button get disappeared when Edit Function executed
+        buttonUpdate.style.display = "block";
+        buttonSubmit.style.display = "none";
 
-        txtReturningPrice.value = dataOb.returned_price;
-
+        $("#modalItemPrice").modal("show");
+        refreshItemPriceTable();
     }
 
-    if (dataOb.item_return_status_id.status == "Returns  Not Accepted") {
-
-        notReturningRadio.checked = true;
-    }
-
-    //Assigning values ffrom dataOb to front end  object in order to avoid mismatch
-
-    itemPrice.item_id = dataOb.item_id.item_name;
-    itemPrice.materialCost = dataOb.item_id.raw_material_cost;
-
-
-    oldItemPrice.item_id = dataOb.item_id.item_name;
-    oldItemPrice.materialCost = dataOb.item_id.raw_material_cost;
-
-
-    //Submit button get dissapeared when Edit Function executed
-    buttonUpdate.style.display = "block";
-    buttonSubmit.style.display = "none";
-
-
-    $("#itemPriceForm").modal("show");
-    refreshItemPriceTable();
 }
 
 
 
-
+//Checking form Updates
 const checkFormUpdate = () => {
 
     let updates = "";
 
     if (itemPrice != null && oldItemPrice != null) {
 
+        if (itemPrice.date != oldItemPrice.date) {
+            updates = updates + "Date Has Changed..!\n";
+
+        }
+
         if (itemPrice.item_id != oldItemPrice.item_id) {
             updates = updates + "Item Name Has Changed..!\n";
 
         }
 
-        if (itemPrice.materialCost != oldItemPrice.materialCost) {
-            updates = updates + "Material Cost Has Changed..!\n";
+        if (itemPrice.raw_material_cost != oldItemPrice.raw_material_cost) {
+            updates = updates + " Raw Material Cost Has Changed..!\n";
 
         }
 
+        if (itemPrice.production_cost != oldItemPrice.production_cost) {
+            updates = updates + "Production  Cost Has Changed..!\n";
+
+        }
         if (itemPrice.total_production_cost != oldItemPrice.total_production_cost) {
-            updates = updates + "Production  Costs Has Changed..!\n";
+            updates = updates + " Total Production CostsHas Changed..!\n";
 
         }
 
-        if (itemPrice.profit_ratio != oldItemPrice.profit_ratio) {
-            updates = updates + "Profit Ratio Has Changed..!\n";
+        if (itemPrice.wholesale_profit_ratio != oldItemPrice.wholesale_profit_ratio) {
+            updates = updates + "Wholesale Profit Ratio Has Changed..!\n";
 
         }
 
-        if (itemPrice.selling_price != oldItemPrice.selling_price) {
-            updates = updates + "Selling Price Has Changed..!\n";
+        if (itemPrice.whole_sale_price != oldItemPrice.whole_sale_price) {
+            updates = updates + "Whole Sale Price Has Changed..!\n";
 
         }
 
-        if (itemPrice.item_return_status_id.status != oldItemPrice.item_return_status_id.status) {
-            updates = updates + "Return Status Has Changed..!\n";
+        if (itemPrice.reatil_profit_ratio != oldItemPrice.reatil_profit_ratio) {
+            updates = updates + "Retail Profit Ratio Has Changed..!\n";
 
         }
 
-        if (returningRadio.checked) {
-
-            if (itemPrice.returned_price != oldItemPrice.returned_price) {
-                updates = updates + "Returning Price Has Changed..!\n";
-
-            }
+        if (itemPrice.retail_price != oldItemPrice.retail_price) {
+            updates = updates + "Retail Price Has Changed..!\n";
 
         }
 
+        if (itemPrice.returned_price != oldItemPrice.returned_price) {
+            updates = updates + "Return Price Has Changed..!\n";
 
-
+        }
     }
     return updates;
 
@@ -462,7 +363,6 @@ const buttonItemPriceUpdate = () => {
 
     //need to check form errors
     let errors = checkFormError();
-
 
     if (errors == "") {
 
@@ -489,32 +389,18 @@ const buttonItemPriceUpdate = () => {
                         if (putResponce == "OK") {
                             swal("Updated Successfully ....!");
 
-
-
                             refreshItemPriceTable();
                             refreshForm();
 
-                            $("#itemForm").modal("hide");
-
-
+                            $("#modalItemPrice").modal("hide");
 
                         } else {
                             swal("Failed to Update..! \n" + putResponce);
 
                         }
-
-
                     }
 
-
-
-
-
                 });
-
-
-
-
 
         }
 
@@ -523,30 +409,25 @@ const buttonItemPriceUpdate = () => {
 
     }
 
-
-
-
 }
 
 
-//function define for delete Item Pricce  record
+//function define for delete Item Price  record
 const buttonProductionDelete = (dataOb, index) => {
 
     console.log("Delete", dataOb, index);
 
-
     //need to get user confirmation
     let userConfirmMsg =
 
-        "\n Item Name:" + dataOb.item_id.item_name +
-        "\n TotalProduction Cost :" + parseFloat(dataOb.total_production_cost).toFixed(2) +
-        "\n Selling Price:" + parseFloat(dataOb.selling_price).toFixed(2);
+        "\n Item Name :" + dataOb.item_id.item_name +
+        "\n Raw material Cost :" + parseFloat(dataOb.raw_material_cost).toFixed(2)+
+        "\n Production Cost :" + parseFloat(dataOb.production_cost).toFixed(2)+
+        "\n Total Production Cost :" + parseFloat(dataOb.total_production_cost).toFixed(2)+
+        "\n Wholesale Price :" + parseFloat(dataOb.whole_sale_price).toFixed(2)+
+        "\n Retail Price :" + parseFloat(dataOb.retail_price).toFixed(2) +
+        "\n Return Price :" + parseFloat(dataOb.returned_price).toFixed(2);
 
-    if (dataOb.returned_price != null) {
-        userConfirmMsg +=
-
-            "\n Returning Price:" + parseFloat(dataOb.returned_price).toFixed(2);
-    }
 
     //Sweet alert function
     swal({
@@ -559,7 +440,6 @@ const buttonProductionDelete = (dataOb, index) => {
         .then((userResponce) => {
             if (userResponce) {
 
-
                 let deleteResponce = getHTTPServiceRequest("/itemprice/delete", "DELETE", dataOb)
 
                 if (deleteResponce == "OK") {
@@ -568,7 +448,7 @@ const buttonProductionDelete = (dataOb, index) => {
                     });
                     refreshItemPriceTable();
                     refreshForm();
-                    $("#itemPriceForm").modal(hide)
+                    $("#modalItemPrice").modal(hide)
 
 
                 } else {
@@ -580,10 +460,7 @@ const buttonProductionDelete = (dataOb, index) => {
 
             }
 
-
-
         });
-
 
 }
 
@@ -592,12 +469,14 @@ const buttonProductionDelete = (dataOb, index) => {
 //form view event function 
 const buttonProductionView = (dataOb, index) => {
 
+    tdDate.innerText = dataOb.date;
     tdItemName.innerText = dataOb.item_id.item_name;
-    tdTotalProductionCost.innerText = dataOb.total_production_cost;
-    tdSelllingPrice.innerText = dataOb.selling_price;
-    tdReturningPrice.innerText = dataOb.tdReturningPrice;
-
-
+    tdRawMaterialCost.innerText = parseFloat(dataOb.raw_material_cost).toFixed(2);
+    tdProductionCost.innerText = parseFloat(dataOb.production_cost).toFixed(2);
+    tdTotalProductionCost.innerText = parseFloat(dataOb.total_production_cost).toFixed(2);
+    tdWholeSalePrice.innerText = parseFloat(dataOb.whole_sale_price).toFixed(2);
+    tdRetailPrice.innerText = parseFloat(dataOb.retail_price).toFixed(2);
+    tdReturnPrice.innerText = parseFloat(dataOb.returned_price).toFixed(2);
 
     $("#modalItemPriceView").modal("show");
 }
@@ -608,13 +487,10 @@ const buttonProductionView = (dataOb, index) => {
 const printItemPriceRow = () => {
 
     let newWindow = window.open();
-    let printView = "<head> <title>print-production</title><link rel = 'stylesheet' href = '/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head> " +
+    let printView = "<head> <title>print-Item Price</title><link rel = 'stylesheet' href = '/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head> " +
         "<body>" + tableItemPriceView.outerHTML + "</body>";
 
-
     newWindow.document.write(printView);
-
-
 
     //Print window
     setTimeout(() => {

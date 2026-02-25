@@ -28,11 +28,10 @@ public class ProductionManagement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer quantity;
+
 
     private String note;
 
-    private LocalDate production_date;
 
     @NotNull
     private LocalDateTime added_date_time;
@@ -48,14 +47,8 @@ public class ProductionManagement {
 
     private Integer delete_user_id;
 
-    @ManyToOne
-    @JoinColumn(name = "production_status_id", referencedColumnName = "id") // foreign key
-    private ProductionStatus production_status_id;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id", referencedColumnName = "id") // foreign key
-    private Item item_id;
-
+//    Foreign Key
     @ManyToOne
     @JoinColumn(name = "item_production_order_id", referencedColumnName = "id") // foreign key
     private ItemProductionOrder item_production_order_id;

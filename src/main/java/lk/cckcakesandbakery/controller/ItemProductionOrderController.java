@@ -2,8 +2,10 @@ package lk.cckcakesandbakery.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import lk.cckcakesandbakery.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -47,6 +49,13 @@ public class ItemProductionOrderController {
 
         return productionOrderUI;
     }
+
+    // Requesting customers based on customer type ----> Individual
+    @GetMapping("/productionorder/alldatagetbydate")
+    public List<ItemProductionOrder> findAllDataByDate() {
+        return itemProductionOrderDao.getItemProductionOrderNoByDate("production_date");
+    }
+
 
     // ........................CRUD Operations..................
 

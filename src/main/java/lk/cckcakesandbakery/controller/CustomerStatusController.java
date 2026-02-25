@@ -23,4 +23,12 @@ public class CustomerStatusController {
         return customerStatusDao.findAll();
     }
 
+    //Retriving customer status other than "Deleted"
+    @GetMapping(value = "/customerstatus/getbycustomerstatus", produces = "application/json")
+    public List<CustomerStatus>getByCustomerStatusotherthanDelete(){
+
+        return customerStatusDao.getByCustomerStatus();
+    }
+
+
 }

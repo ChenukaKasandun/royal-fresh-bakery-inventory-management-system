@@ -33,21 +33,19 @@
         </div>
 
 
-
-
         <div class="row mt-2">
             <div class="col-8"></div>
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-dark col-3" style="height: 30px; box-shadow: 0px 4px 6px rgba(0, 0,
-                0, 0.901)" data-bs-toggle="modal" data-bs-target="#materialStockForm">
+                0, 0.901)" data-bs-toggle="modal" data-bs-target="#modalMaterialStockForm">
                 <h6><i class="fa-solid fa-plus"></i>
                     <b> Add Raw material to the Stock</b>
                 </h6>
             </button>
 
             <!-- Modal -->
-            <div class="modal fade modal-xl" id="materialStockForm" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade modal-xl" id="modalMaterialStockForm" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -56,10 +54,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                             style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
                             <div class="card2  ">
-                                <form onsubmit="return false " id="materialStockForm">
 
+<!--                                Material Stock Form starts-->
+                                <form onsubmit="return false " id="materialStockForm">
 
                                     <div class="row mt-2 mb-3">
                                         <div class="col">
@@ -77,10 +76,6 @@
                                             <select class="form-select" id="selectGRN"
                                                 onchange="dynamicElementValidator(this,'stock','grn_id');"></select>
                                         </div>
-
-
-
-
                                     </div>
 
                                     <div class="row">
@@ -104,9 +99,6 @@
 
                                     </div>
 
-
-
-
                                     <div class="row mt-2 mb-3">
 
 
@@ -128,9 +120,6 @@
                                                     onchange="stock.exp_date = this.value">
                                             </div>
                                         </div>
-
-
-
 
                                     </div>
 
@@ -169,31 +158,22 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-6">
+                                            <label for="textNote" class="form-label fw-bold">Note :</label>
+                                            <textarea class="form-control " id="textNote" rows="3"></textarea>
 
-
-                                    </div>
-
-
-
-
-                                    <div class="row mb-3">
-
-
-
-                                        <label for="textNote" class="form-label fw-bold">Note :</label>
-                                        <textarea class="form-control " id="textNote" rows="3"></textarea>
+                                        </div>
 
                                     </div>
+
 
                                     <div class="row mt-2">
 
-                                        <div class="col-3 text-start">
-                                            <button type="reset" class="btn btn-info"
-                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                                        <div class="text-end" id="buttonContainer">
 
+                                            <button type="reset" class="btn btn-info me-2"
+                                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                                        </div>
-                                        <div class="col-9 text-end" id="buttonContainer">
                                             <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
                                                 onclick="buttonStockUpdate()">Update</button>
@@ -203,23 +183,12 @@
                                                 onclick="buttonStockSubmit()"><i
                                                     class="fa-solid fa-plus"></i>Add</button>
 
-
-
-
                                         </div>
 
-
                                     </div>
-
-
-
-
-
-
-
-
                                 </form>
 
+<!--                                Material Stock Form Ends-->
 
                             </div>
 
@@ -237,7 +206,7 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalStockView">Print Material Stock Table</h5>
+                            <h5 class="modal-title" id="modalStockViewHeader">Print Material Stock Table</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -291,26 +260,10 @@
                 </div>
             </div>
 
-
-
-
-
         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--        material Stock Table Starts-->
         <div class="row mt-2 text-center ">
 
             <div class="col-1"></div>
@@ -361,18 +314,8 @@
                     </div>
                 </div>
 
-
-
             </div>
             <div class="col-1"></div>
-
-
-
-
-
-
-
-
 
         </div>
 

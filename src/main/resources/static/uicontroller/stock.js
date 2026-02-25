@@ -279,7 +279,7 @@ const buttonStockSubmit = () => {
 
                         refreshStockTable();
                         refreshForm();
-                        $("#materialStockForm").modal("hide");
+                        $("#modalMaterialStockForm").modal("hide");
 
 
 
@@ -360,7 +360,7 @@ const stockFormRefill = (dataOb, index) => {
     buttonUpdate.style.display = "block";
 
 
-    $("#materialStockForm").modal("show");
+    $("#modalMaterialStockForm").modal("show");
 
 
 
@@ -484,7 +484,7 @@ const buttonStockUpdate = () => {
 
                         refreshForm();
                         refreshStockTable();
-                        $("#materialStockForm").modal("hide");
+                        $("#modalMaterialStockForm").modal("hide");
 
                     } else {
                         swal("Failed to Update..! \n" + putResponce);

@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "item_has_material")
 
@@ -27,7 +29,7 @@ public class ItemHasMaterial {
     private Integer id;
 
     @NotNull
-    private Integer qty;
+    private BigDecimal qty;
 
     // Foreign Key
     @ManyToOne

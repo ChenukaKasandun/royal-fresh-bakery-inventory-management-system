@@ -14,16 +14,23 @@ public interface CustomerOrderDao extends JpaRepository<CustomerOrder, Integer> 
     String getNextOrderNo();
 
     // Query to get order no by customer id
-    @Query(value = "SELECT co.order_no FROM cckcakesandbakery.customer_order as co where co.customer_id = ?1", nativeQuery = true)
-    List<String> getOrderNoByCustomerId(Integer customerId); // In here return type is List<String> because one customer
-                                                             // can have multiple orders
+    @Query(value = "SELECT co FROM CustomerOrder as co where co.customer_id.id = ?1")
+    List<CustomerOrder> getCustomerOrderByCustomerId(Integer customerId);
 
-    // Query to get total price by order no
-    @Query(value = "SELECT co.total_price FROM cckcakesandbakery.customer_order as co where co.order_no = ?1", nativeQuery = true)
-    String getTotalPriceByOrderNo(String customerOrderNo);
+    @Query(value = "SELECT co.total_price FROM cckcakesandbakery.customer_order as co where co.id in(SELECT i.customer_order_id FROM cckcakesandbakery.invoice as i where i.invoice_no =?1);" , nativeQuery = true)
+    Double getTotalPriceByInvoice(String invoiceNo);
 
-    // Query to get Discounted Price by order no
-    @Query(value = "SELECT co.discounted_price FROM cckcakesandbakery.customer_order as co where co.order_no =?1", nativeQuery = true)
-    String getDiscountedPriceByOrderNo(String customerOrderNo);
+    @Query(value = "SELECT co.discounted_price FROM cckcakesandbakery.customer_order as co where co.id in(SELECT i.customer_order_id FROM cckcakesandbakery.invoice as i where i.invoice_no =?1)" ,nativeQuery = true)
+    Double getDiscountedPriceByInvoice(String invoiceNo);
+
+    @Query(value = "SELECT co.advanced_payment FROM cckcakesandbakery.customer_order as co where co.id in(SELECT i.customer_order_id FROM cckcakesandbakery.invoice as i where i.invoice_no =?1)" ,nativeQuery = true)
+    Double getAdvancedPaymentByInvoice(String invoiceNo);
+
+    @Query(value ="SELECT co.total_price FROM CustomerOrder co where co.id =?1")
+    Double getTotalPriceByCustomerOrderId(Integer customerOrderId);
+
+
+    @Query(value ="SELECT co.discounted_price FROM CustomerOrder co where co.id =?1")
+    Double getDiscountedPriceByCustomerOrderId(Integer customerOrderId);
 
 }

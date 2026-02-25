@@ -32,8 +32,6 @@
     </div>
 
 
-
-
     <div class="row mt-2">
       <div class="col-8"></div>
 
@@ -56,7 +54,7 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
 
               <!-- Tabs -->
@@ -79,298 +77,222 @@
               </ul>
 
 
-
               <!-- Tab contents -->
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                   <!-- Tab contents -> Individual Orders -->
-                  <form onsubmit="return false " id="formIndividualProductionOrder">
 
-
-                    <div class="card">
-                      <div class="card-body">
                         <div class="row">
-                          <div class="col-6">
-                            <div class="card"
-                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                              <div class="card-body">
-                                <div class="row">
-                                  <div class="col">
-                                    <div class="mb-3">
-                                      <label for="dateProductionOrder1" class="form-label"><b> Production Date:<span
-                                            class="text-danger">*</span></b></label>
-                                      <input type="date" class="form-control" id="dateProductionOrder1"
-                                        onkeydown="return false" onchange="productionOrder.production_date = this.value;
-                                    dateProductionOrder.classList.add('is-valid');">
-                                    </div>
-                                  </div>
 
-                                  <div class="col">
-                                    <label for="selectOrderNo1" class="form-label"><b>Order No :<span
-                                          class="text-danger">*</span></b></label>
-                                    <select class="form-select" id="selectOrderNo1"
-                                      onchange="dynamicElementValidator(this,'productionOrder','customer_order_id');"></select>
-                                  </div>
-
-                                </div>
-
-                                <div class="row mt-2 mb-3">
-                                  <div class="col">
-                                    <label for="selectProductionSession1" class="form-label"><b>Production Session
-                                        :<span class="text-danger">*</span></b></label>
-                                    <select class="form-select" id="selectProductionSession1"
-                                      onchange="dynamicElementValidator(this,'productionOrder','production_session_id');"></select>
-                                  </div>
-
-                                  <div class="col">
-                                    <label for="selectProductionOrderStatus1" class="form-label"><b>Production Order
-                                        Status
-                                        :<span class="text-danger">*</span></b></label>
-                                    <select class="form-select" id="selectProductionOrderStatus1"
-                                      onchange="dynamicElementValidator(this,'productionOrder','item_production_order_status_id');"></select>
-                                  </div>
-
-
-                                </div>
-
-
-
-                                <div class="row mb-3">
-
-                                  <label for="textNote1" class="form-label fw-bold">Note :</label>
-                                  <textarea class="form-control " id="textNote1" rows="3"></textarea>
-
-                                </div>
-
-
-
-
-
-
-                              </div>
-
-
-                            </div>
-                          </div>
-
-                          <div class="col-6">
-                            <div class="card">
-                              <div class="card-body">
-                                <div class="card"
-                                  style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                  <div class="card-body">
-
+                            <div class="col-6">
+                                <!--                                  Item Production Order Form Starts-->
+                                <form onsubmit="return false " id="formIndividualProductionOrder">
                                     <div class="row">
-                                      <div class="  text-center fw-bold title text-light">
-                                        <h7>Item Production Order- Item Inner Form</h7>
-                                      </div>
-
-                                      <div class="row"></div>
-                                      <div class="row"></div>
-
-                                    </div>
-                                    <div class="form">
-                                      <div class="row">
-
                                         <div class="col">
-                                          <div class="mb-3">
-                                            <label for="txtItem" class="form-label"><b>Item Name:<span
-                                                  class="text-danger">*</span></b></label>
-                                            <input type="text" class="form-control" id="txtItem"
-                                              placeholder="Ex: Enter Item Name">
-                                            <div class="valid-feedback">
-                                              Looks good!
+                                            <div class="mb-3">
+                                                <label for="dateProductionOrder1" class="form-label"><b> Production Date:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="date" class="form-control" id="dateProductionOrder1"
+                                                       onkeydown="return false" onchange="productionOrder.production_date = this.value;
+                                    dateProductionOrder.classList.add('is-valid');">
                                             </div>
-                                            <div class="invalid-feedback">
-                                              Looks not good!
-                                            </div>
-                                          </div>
                                         </div>
 
                                         <div class="col">
+                                            <label for="selectOrderNo1" class="form-label"><b>Order No :<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectOrderNo1"
+                                                    onchange="dynamicElementValidator(this,'productionOrder','customer_order_id');"></select>
+                                        </div>
 
-                                          <div class="mb-3">
-                                            <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
-                                                  class="text-danger">*</span></b></label>
-                                            <input type="text" class="form-control" id="txtItemQuantity"
-                                              placeholder="Ex: Enter Item Quantity">
-                                            <div class="valid-feedback">
-                                              Looks good!
-                                            </div>
-                                            <div class="invalid-feedback">
-                                              Looks not good!
-                                            </div>
-                                          </div>
+                                    </div>
+                                    <div class="row mt-2 mb-3">
+                                        <div class="col">
+                                            <label for="selectProductionSession1" class="form-label"><b>Production Session
+                                                :<span class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectProductionSession1"
+                                                    onchange="dynamicElementValidator(this,'productionOrder','production_session_id');"></select>
+                                        </div>
 
+                                        <div class="col">
+                                            <label for="selectProductionOrderStatus1" class="form-label"><b>Production Order
+                                                Status
+                                                :<span class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectProductionOrderStatus1"
+                                                    onchange="dynamicElementValidator(this,'productionOrder','item_production_order_status_id');"></select>
                                         </div>
 
 
+                                    </div>
+                                    <div class="row mb-3 col-6">
 
-
-
-                                        <div class="row mt-2">
-
-                                          <div class="col-3 text-start">
-                                          </div>
-                                          <div class="col-9 text-end">
-                                            <button type="reset" class="btn btn-info"
-                                              style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-                                            <button type=" submit" class="btn btn-success"
-                                              style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                                class=" fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                          </div>
-
-
-                                        </div>
-
-
-
-
-                                      </div>
-
-
+                                        <label for="textNote1" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control " id="textNote1" rows="3"></textarea>
 
                                     </div>
 
-
-
-
-
-                                  </div>
-                                </div>
-
-                                <br><br>
-
-                                <div class="card"
-                                  style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                  <div class="card-body">
-
-                                    <div class="row mt-2 mb-3">
-                                      <div class="  text-center fw-bold title text-light">
-                                        <h7>Item Production Order - Item Inner Table</h7>
-                                      </div>
-                                    </div>
-                                    <div class="row mt-2 mb-3">
-                                      <table class="table table-hover" id="itemInnerTable">
-                                        <thead class="table" style="background-color: peru;">
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Item</th>
-                                            <th scope="col">Item Qty</th>
-                                            <th scope="col">Modify</th>
-
-                                          </tr>
-                                        </thead>
-                                        <tbody id="itemInnerTableBody">
-
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-
-
-                                        </tbody>
-                                      </table>
-
-                                    </div>
-
-
-
-                                  </div>
-                                </div>
-                                <br><br>
-                                <div class="card"
-                                  style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                  <div class="card-body">
-
-                                    <div class="row mt-2 mb-3">
-                                      <div class="  text-center fw-bold title text-light">
-                                        <h7>Item Production Order - Material Inner Table</h7>
-                                      </div>
-                                    </div>
-                                    <div class="row mt-2 mb-3">
-                                      <table class="table table-hover" id="itemInnerTable">
-                                        <thead class="table" style="background-color: peru;">
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Material</th>
-                                            <th scope="col">Required Qty</th>
-                                            <th scope="col">Available Qty</th>
-                                            <th scope="col">Modify</th>
-
-                                          </tr>
-                                        </thead>
-                                        <tbody id="tableInnerItemBody">
-
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-
-
-                                        </tbody>
-                                      </table>
-
-                                    </div>
-
-
-
-                                  </div>
-                                </div>
-
-
-
-
-
-                              </div>
+                                </form>
+                                <!--                                  Item Production Order Form Ends-->
                             </div>
 
+
+                            <div class="col-6">
+
+                                <div class="card" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                    <div class="card-body">
+                                        <!--                            Item Production Order Inner Form Starts-->
+                                        <div class="row">
+                                            <div class="  text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h7>Item Inner Form</h7>
+                                            </div>
+                                        </div>
+                                        <div class="form">
+                                            <div class="row">
+
+                                                <div class="col">
+                                                    <div class="mb-3">
+                                                        <label for="txtItem" class="form-label"><b>Item Name:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <input type="text" class="form-control" id="txtItem"
+                                                               placeholder="Ex: Enter Item Name">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Looks not good!
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+
+                                                    <div class="mb-3">
+                                                        <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <input type="text" class="form-control" id="txtItemQuantity"
+                                                               placeholder="Ex: Enter Item Quantity">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Looks not good!
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row mt-2">
+
+                                                    <div class="col-3 text-start">
+                                                    </div>
+                                                    <div class="col-9 text-end">
+                                                        <button type="reset" class="btn btn-info"
+                                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                                        <button type=" submit" class="btn btn-success"
+                                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
+                                                                class=" fa-solid fa-plus"></i>Add</button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <hr><hr>
+
+                                        <div class="row mt-2 mb-3">
+                                            <div class="  text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h7>Item Inner Table</h7>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <table class="table table-hover" id="itemInnerTable">
+                                                <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Item</th>
+                                                    <th scope="col">Item Qty</th>
+                                                    <th scope="col">Modify</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody id="itemInnerTableBody">
+
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <hr><hr>
+
+                                        <div class="row mt-2 mb-3">
+                                            <div class="  text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h7>Material Inner Table</h7>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <table class="table table-hover" id="materialInnerTable">
+                                                <thead class="table-light" >
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Material</th>
+                                                    <th scope="col">Required Qty</th>
+                                                    <th scope="col">Available Qty</th>
+                                                    <th scope="col">Modify</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tableInnerItemBody">
+
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
                           </div>
+
                         </div>
 
-                        <div class="row mt-2">
+                    <div class="row mt-2">
 
-                          <div class="col-3 text-start">
-                            <button type="reset" class="btn btn-info"
-                              style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                        <div class="text-end" id="buttonContainer">
 
+                            <button type="reset" class="btn btn-info me-2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                          </div>
-                          <div class="col-9 text-end" id="buttonContainer">
                             <button type="submit" class="btn btn-warning me-2" id="buttonUpdate1"
-                              style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                              onclick=" buttonProductionOrderUpdate1()">Update</button>
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick=" buttonProductionOrderUpdate1()">Update</button>
 
                             <button type="submit" class="btn btn-success" id="buttonSubmit1"
-                              style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                              onclick=" productionOrderSubmit1()">Submit</button>
-
-
-
-
-                          </div>
-
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick=" productionOrderSubmit1()">Submit</button>
 
                         </div>
 
 
-                      </div>
                     </div>
-
-
-
-
-
-
-
-
-                  </form>
 
                 </div>
 
@@ -378,15 +300,10 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                   <!-- Tab contents -> Shop Customer -->
 
-                  <div class="card">
-                    <div class="card-body">
                       <div class="row">
                         <div class="col-6">
-                          <div class="card"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                            <div class="card-body">
+<!--                                Shop Production Order Form Starts-->
                               <form onsubmit="return false " id="formShop">
-
 
                                 <div class="row mt-2">
                                   <div class="col">
@@ -402,9 +319,6 @@
                                     <select class="form-select" id="selectOrderNo2"
                                       onchange="dynamicElementValidator(this,'productionOrder','customer_order_id');"></select>
                                   </div>
-
-
-
 
                                 </div>
 
@@ -442,7 +356,7 @@
                                 <!-- Collapse Section -->
                                 <div class="collapse mt-3" id="recurentDetails">
                                   <div class="card card-body"
-                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                       style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
                                     <div class="row">
                                       <div class="col">
@@ -465,206 +379,150 @@
 
                                       </div>
 
-
-
                                     </div>
-
-
                                   </div>
                                 </div>
 
 
-
-                                <div class=" row mb-3">
+                                <div class=" row mb-3 col-6">
 
                                   <label for="textNoteShop" class="form-label fw-bold">Note :</label>
                                   <textarea class="form-control" id="textNoteShop" rows="3"></textarea>
 
                                 </div>
 
-
-
                               </form>
 
-                            </div>
-
-                          </div>
                         </div>
-
-
+<!--                          Production Order InnerForm and  Inner table Starts-->
                         <div class="col-6">
-                          <div class="card">
-                            <div class="card-body">
-                              <div class="card"
-                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                <div class="card-body">
-                                  <div class="row">
-                                    <div class="  text-center fw-bold title text-light">
-                                      <h5>Customer Order Inner Form</h5>
-                                    </div>
 
-                                    <div class="row"></div>
-                                    <div class="row"></div>
-
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="txtItemName" class="form-label"><b>Item Name:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="txtItemName"
-                                          placeholder="Ex: Enter Item Name">
-                                        <div class="valid-feedback">
-                                          Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                          Looks not good!
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="col">
-
-                                      <div class="mb-3">
-                                        <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="txtItemQuantity"
-                                          placeholder="Ex: Enter Item Quantity">
-                                        <div class="valid-feedback">
-                                          Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                          Looks not good!
-                                        </div>
-                                      </div>
-
-                                    </div>
-
-
-                                  </div>
-
-
-
-
-                                  <div class="row mt-2">
-
-                                    <div class="col-3 text-start">
-                                    </div>
-                                    <div class="col-9 text-end">
-                                      <button type="reset" class="btn btn-info"
-                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-                                      <button type=" submit" class="btn btn-success"
-                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                          class=" fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                    </div>
-
-
-                                  </div>
-
-
-
-                                </div>
-                              </div>
-                              <br><br>
-
-                              <div class="card"
-                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                            <div class="card" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
                                 <div class="card-body">
 
-                                  <div class="row mt-2 mb-3">
-                                    <div class="  text-center fw-bold title text-light">
-                                      <h5>Customer Order Inner Table</h5>
+                                    <div class="row">
+                                        <div class="  text-center fw-bold title text-light"
+                                             style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                            <h5>Customer Order Inner Form</h5>
+                                        </div>
+
                                     </div>
-                                  </div>
-                                  <div class="row mt-2 mb-3">
-                                    <table class="table table-hover" id="customerInnerTable">
-                                      <thead class="table-dark">
-                                        <tr>
-                                          <th scope="col">#</th>
-                                          <th scope="col">Item Name</th>
-                                          <th scope="col">Item Quantity</th>
-                                          <th scope="col">Session</th>
-                                          <th scope="col">Modify</th>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="txtItemName" class="form-label"><b>Item Name:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="txtItemName"
+                                                       placeholder="Ex: Enter Item Name">
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Looks not good!
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                        </tr>
-                                      </thead>
-                                      <tbody id="tableInnerCustomerBody">
+                                        <div class="col">
 
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                            <div class="mb-3">
+                                                <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="txtItemQuantity2"
+                                                       placeholder="Ex: Enter Item Quantity">
+                                                <div class="valid-feedback">
+                                                    Looks good!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Looks not good!
+                                                </div>
+                                            </div>
 
-                                      </tbody>
-                                    </table>
+                                        </div>
 
-                                  </div>
+                                    </div>
 
+                                    <div class="row mt-2">
 
+                                        <div class="col-3 text-start">
+                                        </div>
+                                        <div class="col-9 text-end">
+                                            <button type="reset" class="btn btn-info"
+                                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                                </div>
-                              </div>
+                                            <button type=" submit" class="btn btn-success"
+                                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
+                                                    class=" fa-solid fa-plus"></i>Add</button>
 
+                                        </div>
 
+                                    </div>
 
+                                    <hr><hr>
+
+                                    <div class="row mt-2 mb-3">
+                                        <div class="  text-center fw-bold title text-light"
+                                             style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                            <h5>Customer Order Inner Table</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 mb-3">
+                                        <table class="table table-hover" id="customerInnerTable">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Item Name</th>
+                                                <th scope="col">Item Quantity</th>
+                                                <th scope="col">Session</th>
+                                                <th scope="col">Modify</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tableInnerCustomerBody">
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>>
                             </div>
-                          </div>
-
-
-                        </div>
+                         </div>
 
                       </div>
-
-                    </div>
-
+<!--Buttons-->
                     <div class="row mt-2">
 
-                      <div class="col-3 text-start">
-                        <button type="reset" class="btn btn-info ms-1"
-                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                        <div class="text-end" id="buttonContainer2">
 
+                            <button type="reset" class="btn btn-info me-2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                      </div>
-                      <div class="col-9 text-end" id="buttonContainer">
-                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate2"
-                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                          onclick=" buttonProductionOrderUpdate2()">Update</button>
+                            <button type="submit" class="btn btn-warning me-2" id="buttonUpdate2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick=" buttonProductionOrderUpdate1()">Update</button>
 
-                        <button type="submit" class="btn btn-success me-2" id="buttonSubmit2"
-                          style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="productionOrderSubmit2()"><i
-                            class=" fa-solid fa-plus"></i>Add</button>
+                            <button type="submit" class="btn btn-success" id="buttonSubmit2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick=" productionOrderSubmit1()">Submit</button>
 
-
-
-
-                      </div>
-
+                        </div>
 
                     </div>
-
-                  </div>
-                </div>
-
-
-
 
               </div>
 
             </div>
 
-
-
           </div>
 
         </div>
       </div>
-
 
 
       <!-- model view/print -->
@@ -673,7 +531,7 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalProductionOrderView">Item Production Order View</h5>
+              <h5 class="modal-title" id="modalProductionOrderViewHeader">Item Production Order View</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -702,11 +560,6 @@
                       <td id="tdProductionOrderStatus"></td>
                     </tr>
 
-
-
-
-
-
                   </table>
 
                 </div>
@@ -720,8 +573,6 @@
           </div>
         </div>
       </div>
-
-
 
 
 

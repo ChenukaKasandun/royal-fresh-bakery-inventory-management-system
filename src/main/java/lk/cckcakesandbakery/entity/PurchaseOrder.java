@@ -3,15 +3,11 @@ package lk.cckcakesandbakery.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
+
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,9 +28,6 @@ public class PurchaseOrder {
 
     private String order_no;
 
-    private Integer order_qty;
-
-    private BigDecimal unit_price;
 
     private BigDecimal total_price;
 
@@ -54,16 +47,20 @@ public class PurchaseOrder {
 
     private Integer delete_user_id;
 
+    //fk
     @ManyToOne
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     private Supplier supplier_id;
 
-    @ManyToOne
-    @JoinColumn(name = "material_id", referencedColumnName = "id")
-    private Material material_id;
-
+    //fk
     @ManyToOne
     @JoinColumn(name = "purchase_order_status_id", referencedColumnName = "id")
     private PurchaseOrderStatus purchase_order_status_id;
+
+    //link association table
+    @OneToMany(mappedBy = "purchase_order_id")
+    private List<PurchaseOrderHasMaterial>purchaseOrderHasMaterialList;
+
+
 
 }

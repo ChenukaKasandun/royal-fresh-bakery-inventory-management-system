@@ -16,7 +16,6 @@ public class WebConfiguration {
         // service authentication matching(urls)
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/login").permitAll()
-                    .requestMatchers("/index").permitAll()
                     .requestMatchers("/createadmin").permitAll()
                     .requestMatchers("/bootstrap-5.2.3/**").permitAll()
                     .requestMatchers("/fontawesome-free-6.6.0-web/**").permitAll()
@@ -42,6 +41,8 @@ public class WebConfiguration {
                             .passwordParameter(("password"));
 
                 })
+
+
 
                 // logout details
                 .logout(logout -> {

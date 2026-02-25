@@ -33,149 +33,234 @@
     </div>
 
 
-
-
     <div class="row mt-2">
       <div class="col-8"></div>
 
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-dark col-3" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
-                0, 0.901);" data-bs-toggle="modal" data-bs-target="#poForm"><i class="fa-solid fa-plus"></i>
+                0, 0.901);" data-bs-toggle="modal" data-bs-target="#modalPoForm"><i class="fa-solid fa-plus"></i>
         <b>Add Purchase Order</b>
       </button>
 
       <!-- Modal -->
-      <div class="modal fade modal-xl" id="poForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      <div class="modal fade modal-xl" id="modalPoForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-            </div>
+
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                <div class="row">
+                    <div class="col-6">
+                        <!--PO form starts here-->
+                        <form onsubmit="return false " id="poForm">
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="selectSupplier" class="form-label"><b>Supplier Name :<span
+                                            class="text-danger">*</span></b></label>
+                                    <select class="form-select" id="selectSupplier"
+                                            onchange="dynamicElementValidator(this,' purchaseOrder','supplier_id');"></select>
+                                </div>
+
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="txtTotal" class="form-label"><b>Total Price:<span
+                                                class="text-danger">*</span></b></label>
+                                        <input type="text" class="form-control" id="txtTotal"
+                                               onchange="purchaseOrder.total_price = this.value;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2 mb-3">
+
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="txtRequiredDate" class="form-label"><b>Required Date:</b></label>
+                                        <input type="date" class="form-control" id="txtRequiredDate"
+                                               onchange="dateValidator(this,'purchaseOrder','required_date');">
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <label for="selectPoStatus" class="form-label"><b>Purchase Order Status :<span
+                                            class="text-danger">*</span></b></label>
+                                    <select class="form-select" id="selectPoStatus"
+                                            onchange="dynamicElementValidator(this,'purchaseOrder','purchase_order_status_id');"></select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="textNote" class="form-label fw-bold">Note :</label>
+                                    <textarea class="form-control ms-2" id="textNote" rows="3"></textarea>
+                                </div>
 
 
-            <div class="card" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-              <div class="card-body">
-                <form onsubmit="return false " id="poForm">
-                  <div class="row">
-                    <div class="col">
-                      <label for="selectMaterial" class="form-label"><b>Material :<span
-                            class="text-danger">*</span></b></label>
-                      <select class="form-select" id="selectMaterial"
-                        onchange="dynamicElementValidator(this,' purchaseOrder','material_id');"></select>
+                            </div>
+
+                        </form>
+                        <!-- Form Ends Here-->
                     </div>
-                    <div class="col">
-                      <label for="selectSupplier" class="form-label"><b>Supplier Name :<span
-                            class="text-danger">*</span></b></label>
-                      <select class="form-select" id="selectSupplier"
-                        onchange="dynamicElementValidator(this,' purchaseOrder','supplier_id');"></select>
+                    <!--PO inner form and Inner Table Starts-->
+                    <div class="col-6">
+
+                        <div class="card" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="  text-center fw-bold title text-light"
+                                         style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                        <h5>Material Form</h5>
+                                    </div>
+
+                                    <hr><hr>
+
+                                </div>
+
+                                <!--Form Starts-->
+                                <form id="materialInnerForm">
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label for="selectMaterial" class="form-label"><b>Material Name :<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectMaterial"
+                                                    onchange="dynamicElementValidator2(this,'purchaseOrderMaterial','material_id');"></select>
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="txtPurchasePrice"
+                                                   class="form-label"><b>Purchase Price:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtPurchasePrice"
+                                                   placeholder="Ex: Enter Purchase Price..!"
+                                                   onkeyup="textValidator(this,'^([1-9][0-9]{1,5})|([1-9][0-9]{1,5}[.][0-9]{2})$','purchaseOrderMaterial','purchase_price')">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label for="txtQuantity"
+                                                   class="form-label"><b>Quantity:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtQuantity"
+                                                   placeholder="Ex: Enter Quantity..!"
+                                                   onkeyup="textValidator(this,'^([1-9]{1,100})$','purchaseOrderMaterial','quantity')">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="txtLinePrice"
+                                                   class="form-label"><b>Line Price:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtLinePrice"
+                                                   placeholder="Ex: Enter Line Price..!"
+                                                   onkeyup="textValidator(this,'^([1-9][0-9]{1,5})|([1-9][0-9]{1,5}[.][0-9]{2})$','purchaseOrderMaterial','line_price')">
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Looks not good!
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <!- Form Ends-->
+
+                                <div class="row mt-2 mt-2">
+
+                                    <div class="col-3 text-start">
+                                    </div>
+                                    <div class="col-9 text-end">
+                                        <button type="reset" class="btn btn-info"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                        <button type="submit" class="btn btn-success"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                onclick="buttonInnerFormSubmit()"><i
+                                                class="fa-solid fa-plus"></i>Add</button>
+                                    </div>
+                                </div>
+
+
+                                <hr><hr>
+                                <div class="row mt-2 mb-3">
+                                    <div class="  text-center fw-bold title text-light"
+                                         style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                        <h5>Material Table</h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 mb-3">
+                                    <table class="table table-hover" id="materialInnerTable">
+                                        <thead class="table-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Material</th>
+                                            <th scope="col">Purchase Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Line Price</th>
+                                            <th scope="col">Modify</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tableInnerMaterialBody" style="background-color: white">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <!--PO inner form and Inner Table Ends-->
+                            </div>
+                        </div>
+
                     </div>
-                  </div>
 
+                </div>
 
+                <!--              Buttons-->
 
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3">
+                        <!--Buttons-->
+                        <div class="text-end" id="buttonContainer">
+                            <button type="reset" class="btn btn-info me-1" style=" box-shadow: 0px 4px 6px rgba(0, 0,0, 0.901);">Clear</button>
 
-
-                  <div class="row mt-2 mb-3">
-
-                    <div class="col">
-                      <div class="mb-3">
-                        <label for="txtUnit" class="form-label"><b>Unit Price:<span
-                              class="text-danger">*</span></b></label>
-                        <input type="text" class="form-control" id="txtUnit"
-                          onchange="purchaseOrder.unit_price = this.value;">
-                      </div>
-                    </div>
-
-                    <div class="col">
-                      <div class="mb-3">
-                        <label for="txtQty" class="form-label"><b>Order Quantity:<span
-                              class="text-danger">*</span></b></label>
-                        <input type="text" class="form-control" id="txtQty"
-                          onchange="purchaseOrder.order_qty = this.value;">
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="row mt-2 mb-3">
-                    <div class="col">
-                      <div class="mb-3">
-                        <label for="txtTotal" class="form-label"><b>Total Price:<span
-                              class="text-danger">*</span></b></label>
-                        <input type="text" class="form-control" id="txtTotal"
-                          onchange="purchaseOrder.total_price = this.value;">
-                      </div>
-                    </div>
-
-
-                    <div class="col">
-                      <div class="mb-3">
-                        <label for="txtRequiredDate" class="form-label"><b>Required Date:</b></label>
-                        <input type="date" class="form-control" id="txtRequiredDate"
-                          onchange="dateValidator(this,'purchaseOrder','required_date');">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col">
-                      <label class="form-label"><b>Purchase Order Status:<span class="text-danger">*</span></b></label>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="confirmRadio"
-                          onchange="PurchaseOrderStatusValidator()">
-                        <label class="form-check-label" for="confirmRadio"> Confirmed</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" id="cancelRadio" value="cancelled"
-                          onchange="PurchaseOrderStatusValidator()">
-                        <label class="form-check-label" for="cancelRadio">Cancelled</label>
-                      </div>
-
-                    </div>
-                  </div>
-
-
-                  <div class="row mb-3">
-
-                    <label for="textNote" class="form-label fw-bold">Note :</label>
-                    <textarea class="form-control " id="textNote" rows="3"></textarea>
-
-                  </div>
-
-                  <div class="row mt-2">
-
-                    <div class="col-3 text-start">
-                      <button type="reset" class="btn btn-info" style=" box-shadow: 0px 4px 6px rgba(0, 0,
-                0, 0.901);">Clear</button>
-
-
-                    </div>
-                    <div class="col-9 text-end" id="buttonContainer">
-                      <button type="submit" class="btn btn-warning me-2" id="buttonUpdate" style=" box-shadow: 0px 4px 6px rgba(0, 0,
+                            <button type="submit" class="btn btn-warning me-2" id="buttonUpdate" style=" box-shadow: 0px 4px 6px rgba(0, 0,
                 0, 0.901);" onclick="buttonPurchaseOrderUpdate()">Update</button>
 
-                      <button type="submit" class="btn btn-success" id="buttonSubmit" style=" box-shadow: 0px 4px 6px rgba(0, 0,
-                0, 0.901);" onclick="buttonPurchaseOrderSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
-
+                            <button type="submit" class="btn btn-success" id="buttonSubmit" style=" box-shadow: 0px 4px 6px rgba(0, 0,0, 0.901);" onclick="buttonPurchaseOrderSubmit()"><i class="fa-solid fa-plus"></i>Add</button>
+                        </div>
                     </div>
+                </div>
 
-
-                  </div>
-
-
-                </form>
-
-              </div>
             </div>
-
-
-
-
-          </div>
-
 
         </div>
 
@@ -188,12 +273,13 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalPoView">Print Purchase Order Table</h5>
+              <div class="w-100 text-center">
+                  <h5 class="modal-title" id="modalPoViewTitle">Purchase Order Details</h5>
+              </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div class="modal-body">
-
             <div class="card">
               <div class="card-body form-area">
                 <table class="table table-hover table-striped" id="tablePoView">
@@ -209,18 +295,6 @@
                     <td id="tdSupplierName"></td>
                   </tr>
                   <tr>
-                    <th>Material</th>
-                    <td id="tdMaterial"></td>
-                  </tr>
-
-                  <tr>
-                    <th>Unit Price</th>
-                    <td id="tdUnitPrice"></td>
-                  </tr>
-                  <tr>
-                    <th>Order Qty</th>
-                    <td id="tdOrderQty"></td>
-                  </tr>
                   <tr>
                     <th>Total Price</th>
                     <td id="tdTotalPrice"></td>
@@ -254,11 +328,6 @@
 
 
 
-
-  </div>
-
-
-
   <!-- Purchase Order Table -->
   <div class="row mt-2 text-center ">
 
@@ -276,9 +345,6 @@
                 <th scope="col">#</th>
                 <th scope="col">Purchase Order No</th>
                 <th scope="col">Supplier Name</th>
-                <th scope="col">Material</th>
-                <th scope="col">Unit Price</th>
-                <th scope="col">Order Qty</th>
                 <th scope="col">Total Price</th>
                 <th scope="col">Required Date</th>
                 <th scope="col">Status</th>
@@ -286,13 +352,8 @@
 
               </tr>
             </thead>
-            <tbody id="tablePurchaseOrderBody">
+            <tbody id="tablePurchaseOrderBody" class="text-start">
 
-
-
-              <td></td>
-              <td></td>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -313,30 +374,15 @@
     <div class="col-1"></div>
 
 
-
-
-
-
-
-
-
   </div>
 
 
 
-
-
-
-
-
-
-
-
-  </div>
-
+  <script src="/script/commonValidationFunctions.js"></script>
   <script src="/script/commonFunctions.js"></script>
   <script src="/uicontroller/purchaseOrder.js"></script>
 
+      </div>
 </body>
 
 </html>

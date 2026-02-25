@@ -4,17 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -75,10 +69,6 @@ public class CustomerOrder {
     @JoinColumn(name = "customer_order_status_id", referencedColumnName = "id")
     private OrderStatus customer_order_status_id;
 
-    @ManyToOne
-    @JoinColumn(name = "production_session_id", referencedColumnName = "id")
-    private ProductionSession production_session_id;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer_id;
@@ -98,5 +88,12 @@ public class CustomerOrder {
     @ManyToOne
     @JoinColumn(name = "collection_method_id", referencedColumnName = "id")
     private OrderCollectionMethod collection_method_id;
+
+// Association table   In Here, "cascade = CascadeType.ALL" should be essential to save data into association table
+//"orphanRemoval = true" should be essential to remove data from the association table
+    @OneToMany(mappedBy = "customer_order_id", cascade = CascadeType.ALL , orphanRemoval = true)
+   private List<CustomerOrderHasItem> customerOrderHasItemList;
+
+
 
 }

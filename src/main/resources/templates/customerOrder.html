@@ -53,7 +53,7 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg'); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
 
               <!-- Tabs -->
@@ -79,349 +79,317 @@
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                   <!-- Tab contents -> Individual Orders -->
-                  <form onsubmit="return false " id="formIndividual">
 
-                    <div class="card">
-                      <div class="card-body">
                         <div class="row">
-                          <div class="col-6">
-                            <div class="card"
-                              style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                              <div class="card-body">
+
+                            <div class="col-6">
+
+                                <!--                                  Individual Order Form Starts-->
                                 <form onsubmit="return false" id="formIndividualOrders">
 
-                                  <div class="row">
+                                    <div class="row">
 
-
-
-                                    <div class="col">
-                                      <label for="selectCustomerName1" class="form-label"><b>Customer Name
-                                          :<span class="text-danger">*</span></b></label>
-                                      <select class="form-select" id="selectCustomerName1"
-                                        onchange="dynamicElementValidator(this,'customerorder','customer_id');"></select>
-                                    </div>
-
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="dateRequiredDate1" class="form-label"><b>Required Date:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="date" class="form-control" id="dateRequiredDate1"
-                                          onchange="customerorder.required_date = this.value">
-
-                                      </div>
-                                    </div>
-
-
-                                  </div>
-
-                                  <div class="row">
-
-
-
-
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="textRequiredTime1" class="form-label"><b>Required Time:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="time" class="form-control" id="textRequiredTime1"
-                                          onchange="customerorder.required_time = this.value;">
-                                      </div>
-
-                                    </div>
-
-                                    <div class="col-6">
-                                      <div class="mb-3">
-                                        <label for="textTotalPrice1" class="form-label"><b>Total Price:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="textTotalPrice1"
-                                          placeholder="Enter  Total Price...!"
-                                          onkeyup="customerorder.total_price = this.value; discountPriceGenerator();">
-
-                                      </div>
-
-
-                                    </div>
-                                  </div>
-
-
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="textDiscountedPrice" class="form-label"><b>Discounted
-                                            Price:<span class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="textDiscountedPrice"
-                                          placeholder="Enter Discounted Price...!">
-                                      </div>
-
-                                    </div>
-
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="textAdvancePayment1" class="form-label"><b>Advanced Payment:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="textAdvancePayment1"
-                                          placeholder="Enter Advance Payment Amount..!"
-                                          onkeyup="customerorder.advanced_payment = this.value ; generateDuePayment()">
-
-                                      </div>
-
-
-                                    </div>
-
-                                  </div>
-
-
-                                  <div class="row mt-2 mb-3">
-                                    <div class="col-6">
-                                      <div class="mb-3">
-                                        <label for="textDuePayment1" class="form-label"><b>Due Payment:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="textDuePayment1"
-                                          placeholder="Enter Due Payment Amount..!">
-
-                                      </div>
-
-
-                                    </div>
-
-                                  </div>
-
-
-
-
-
-
-
-
-
-                                  <!-- Collection Method Radio Buttons -->
-                                  <div class="row mt-4">
-                                    <div class="col">
-                                      <label class="form-label"><b>Collection Method:<span
-                                            class="text-danger">*</span></b></label>
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="collectionMethod"
-                                          onchange="radioElementValidator();" id="pickupRadio" value="tobecollected">
-                                        <label class="form-check-label" for="pickupRadio">To be collected</label>
-                                      </div>
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="collectionMethod"
-                                          onchange="radioElementValidator();" id="deliveryRadio" value="tobedelivered">
-                                        <label class="form-check-label" for="deliveryRadio">To be delivered</label>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <!-- Collapse Section -->
-                                  <div class="collapse mt-3" id="deliveryDetails">
-                                    <div class="card card-body"
-                                      style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-
-                                      <div class="row">
                                         <div class="col">
-                                          <div class="mb-3">
-                                            <label for="textDeliveryAddress1" class="form-label"><b>Delivery
-                                                Address:<span class="text-danger">*</span></b></label>
-                                            <input type="text" class="form-control" id="textDeliveryAddress1"
-                                              placeholder="Please Enter Your Address....!"
-                                              onkeyup="customerorder.required_address = this.value;">
-                                          </div>
+                                            <label for="selectCustomerName1" class="form-label"><b>Customer Name
+                                                :<span class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectCustomerName1"
+                                                    onchange="dynamicElementValidator(this,'customerorder','customer_id');"></select>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="dateRequiredDate1" class="form-label"><b>Required Date:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="date" class="form-control" id="dateRequiredDate1"
+                                                       onchange="customerorder.required_date = this.value">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textRequiredTime1" class="form-label"><b>Required Time:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="time" class="form-control" id="textRequiredTime1"
+                                                       onchange="customerorder.required_time = this.value;">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="textTotalPrice1" class="form-label"><b>Total Price:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textTotalPrice1"
+                                                       placeholder="Enter  Total Price...!"
+                                                     >
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textDiscountedPrice" class="form-label"><b>Discounted
+                                                    Price:<span class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textDiscountedPrice"
+                                                       placeholder="Enter Discounted Price...!">
+                                            </div>
 
                                         </div>
 
                                         <div class="col">
-                                          <label for="selectDeliveryRoute1" class="form-label"><b>Delivery Route
-                                              :<span class="text-danger">*</span></b></label>
-                                          <select class="form-select" id="selectDeliveryRoute1"
-                                            onchange="dynamicElementValidator(this,'customerorder','vehicle_route_id');"></select>
+                                            <div class="mb-3">
+                                                <label for="textAdvancePayment1" class="form-label"><b>Advanced Payment:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textAdvancePayment1"
+                                                       placeholder="Enter Advance Payment Amount..!"
+                                                       onkeyup="textValidator(this,'^(([1-9][0-9]{1,10})|([1-9][0-9]{1,10}[.][0-9]{2}))$', 'customerorder', 'advanced_payment') ,generateDuePayment();" >
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row mt-2 mb-3">
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label for="textDuePayment1" class="form-label"><b>Due Payment:<span
+                                                        class="text-danger">*</span></b></label>
+                                                <input type="text" class="form-control" id="textDuePayment1"
+                                                       placeholder="Enter Due Payment Amount..!">
+
+                                            </div>
+                                        </div>
+                                        <!-- Collection Method Radio Buttons -->
+                                        <div class="col">
+                                            <label class="form-label"><b>Collection Method:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="collectionMethod"
+                                                       onchange="radioElementValidator();" id="pickupRadio" value="tobecollected">
+                                                <label class="form-check-label" for="pickupRadio">To be collected</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="collectionMethod"
+                                                       onchange="radioElementValidator();" id="deliveryRadio" value="tobedelivered">
+                                                <label class="form-check-label" for="deliveryRadio">To be delivered</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Collapse Section -->
+                                        <div class="collapse mt-3" id="deliveryDetails">
+                                            <div class="card card-body"
+                                                 style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="textDeliveryAddress1" class="form-label"><b>Delivery
+                                                                Address:<span class="text-danger">*</span></b></label>
+                                                            <input type="text" class="form-control" id="textDeliveryAddress1"
+                                                                   placeholder="Please Enter Your Address....!"
+                                                                   onkeyup="customerorder.required_address = this.value;">
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="selectDeliveryRoute1" class="form-label"><b>Delivery Route
+                                                            :<span class="text-danger">*</span></b></label>
+                                                        <select class="form-select" id="selectDeliveryRoute1"
+                                                                onchange="dynamicElementValidator(this,'customerorder','vehicle_route_id');"></select>
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </div>
                                         </div>
 
 
-                                      </div>
+                                    </div>
 
+
+                                    <div class=" row mb-3 col-6">
+
+                                        <label for="textNoteIndividual" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control" id="textNoteIndividual" rows="3"></textarea>
 
                                     </div>
-                                  </div>
-
-
-                                  <div class=" row mb-3">
-
-                                    <label for="textNoteIndividual" class="form-label fw-bold">Note :</label>
-                                    <textarea class="form-control" id="textNoteIndividual" rows="3"></textarea>
-
-                                  </div>
-
-
 
                                 </form>
 
-                              </div>
-                            </div>
+                                <!--                                  Individual Order Form Ends -->
 
-                          </div>
-                          <div class="col-6">
-                            <div class="card">
-                              <div class="card-body">
-                                <div class="card"
-                                  style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                  <div class="card-body">
-                                    <div class="row">
-                                      <div class="  text-center fw-bold title text-light">
-                                        <h5>Customer Order Inner Form</h5>
-                                      </div>
-
-                                      <div class="row"></div>
-                                      <div class="row"></div>
-
-                                    </div>
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="mb-3">
-                                          <label for="txtItemName" class="form-label"><b>Item Name:<span
-                                                class="text-danger">*</span></b></label>
-                                          <input type="text" class="form-control" id="txtItemName"
-                                            placeholder="Ex: Enter Item Name">
-                                          <div class="valid-feedback">
-                                            Looks good!
-                                          </div>
-                                          <div class="invalid-feedback">
-                                            Looks not good!
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div class="col">
-
-                                        <div class="mb-3">
-                                          <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
-                                                class="text-danger">*</span></b></label>
-                                          <input type="text" class="form-control" id="txtItemQuantity"
-                                            placeholder="Ex: Enter Item Quantity">
-                                          <div class="valid-feedback">
-                                            Looks good!
-                                          </div>
-                                          <div class="invalid-feedback">
-                                            Looks not good!
-                                          </div>
-                                        </div>
-
-                                      </div>
-
-
-                                    </div>
-
-
-
-
-                                    <div class="row mt-2">
-
-                                      <div class="col-3 text-start">
-                                      </div>
-                                      <div class="col-9 text-end">
-                                        <button type="reset" class="btn btn-info"
-                                          style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-                                        <button type=" submit" class="btn btn-success"
-                                          style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                            class=" fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                      </div>
-
-
-                                    </div>
-
-
-
-                                  </div>
-                                </div>
-
-                                <br><br>
-
-                                <div class="card"
-                                  style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                  <div class="card-body">
-
-                                    <div class="row mt-2 mb-3">
-                                      <div class="  text-center fw-bold title text-light">
-                                        <h5>Customer Order Inner Table</h5>
-                                      </div>
-                                    </div>
-                                    <div class="row mt-2 mb-3">
-                                      <table class="table table-hover" id="customerInnerTable">
-                                        <thead class="table-dark">
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Item Name</th>
-                                            <th scope="col">Item Quantity</th>
-                                            <th scope="col">Modify</th>
-
-                                          </tr>
-                                        </thead>
-                                        <tbody id="tableInnerCustomerBody">
-
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-
-
-                                        </tbody>
-                                      </table>
-
-                                    </div>
-
-
-
-                                  </div>
-                                </div>
-
-
-
-                              </div>
                             </div>
 
 
-                          </div>
+                            <!--                            Inner Item Form and Inner Table Starts-->
+                            <div class="col-6">
+                               <div class="card" style="background-image:url('/images/newwww.jpg'); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                   <div class="card-body">
+                                       <div class="row">
+                                           <div class="  text-center fw-bold title text-light"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                               <h5>Customer Order Inner Form</h5>
+                                           </div>
+                                       </div>
+
+                                       <form id="customerOrderInnerForm1">
+                                           <div class="row">
+                                               <div class="col-6">
+                                                   <label for="selectItem1" class="form-label"><b>Item :<span
+                                                           class="text-danger">*</span></b></label>
+                                                   <select class="form-select" id="selectItem1"
+                                                           onchange="dynamicElementValidator1(this,'orderHasItem','item_id');"></select>
+                                               </div>
+
+                                               <div class="col">
+
+                                                   <div class="mb-3">
+                                                       <label for="txtUnitPrice1" class="form-label"><b>Unit Price:<span
+                                                               class="text-danger">*</span></b></label>
+                                                       <input type="text" class="form-control" id="txtUnitPrice1"
+                                                       onkeyup="linePriceGenerator1(),this.classList.add('is-valid')">
+                                                       <div class="valid-feedback">
+                                                           Looks good!
+                                                       </div>
+                                                       <div class="invalid-feedback">
+                                                           Looks not good!
+                                                       </div>
+                                                   </div>
+
+                                               </div>
+
+                                           </div>
+
+                                               <div class="row">
+                                                   <div class="col">
+
+                                                       <div class="mb-3">
+                                                           <label for="txtItemQuantity1" class="form-label"><b>Item Quantity:<span
+                                                                   class="text-danger">*</span></b></label>
+                                                           <input type="text" class="form-control" id="txtItemQuantity1"
+                                                                  onkeyup="textValidator(this,'^([0-9]{1,100})$','orderHasItem','qty') ,linePriceGenerator1();"
+                                                                  placeholder="Ex: Enter Item Quantity">
+                                                           <div class="valid-feedback">
+                                                               Looks good!
+                                                           </div>
+                                                           <div class="invalid-feedback">
+                                                               Looks not good!
+                                                           </div>
+                                                       </div>
+
+                                                   </div>
+
+                                                   <div class="col">
+
+                                                       <div class="mb-3">
+                                                           <label for="txtLinePrice1" class="form-label"><b>Line Price:<span
+                                                                   class="text-danger">*</span></b></label>
+                                                           <input type="text" class="form-control" id="txtLinePrice1">
+                                                           <div class="valid-feedback">
+                                                               Looks good!
+                                                           </div>
+                                                           <div class="invalid-feedback">
+                                                               Looks not good!
+                                                           </div>
+                                                       </div>
+
+                                                   </div>
+
+                                               </div>
+
+                                       </form>
+
+                                       <div class="row mt-2">
+
+                                           <div class="col-3 text-start">
+                                           </div>
+                                           <div class="col-9 text-end">
+                                               <button type="reset" class="btn btn-info"
+                                                       style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                               <button type="submit" class="btn btn-success"
+                                                       style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                       onclick="buttonInnerForm1Submit();"><i
+                                                       class=" fa-solid fa-plus"></i>Add</button>
+                                           </div>
+                                       </div>
+
+                                       <hr><hr>
+
+                                       <div class="row mt-2 mb-3">
+                                           <div class="  text-center fw-bold title text-light"
+                                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                               <h5>Customer Order Inner Table</h5>
+                                           </div>
+                                       </div>
+                                       <div class="row mt-2 mb-3">
+                                           <table class="table table-hover" id="customerInnerTable1">
+                                               <thead class="table-light">
+                                               <tr>
+                                                   <th scope="col">#</th>
+                                                   <th scope="col">Item Name</th>
+                                                   <th scope="col">Item Quantity</th>
+                                                   <th scope="col">Line Price</th>
+                                                   <th scope="col">Modify</th>
+
+                                               </tr>
+                                               </thead>
+                                               <tbody id="tableInnerCustomerBody1" style="background-color: white">
+
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+
+
+                                               </tbody>
+                                           </table>
+
+                                       </div>
+
+                                   </div>
+                               </div>
+
+
+                            </div>
 
                         </div>
 
-                        <div class="row mt-2">
+<!--                    buttons-->
+                    <div class="row mt-2">
 
-                          <div class="col-3 text-start">
-                            <button type="reset" class="btn btn-info"
-                              style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                        <div class="text-end" id="buttonContainer">
 
+                            <button type="reset" class="btn btn-info me-2"
+                                    style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                          </div>
-                          <div class=" col-9 text-end" id="buttonContainer">
                             <button type="submit" class="btn btn-warning me-2" id="buttonUpdate1"
-                              style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick=" buttonOrderUpdate1()"
-                              ;>Update</button>
+                                    style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick=" buttonOrderUpdate1()"
+                                    ;>Update</button>
 
-                            <button type="submit" class="btn btn-success " id="buttonSubmit1"
-                              style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick=" buttonOrderSubmit1()"><i
-                                class=" fa-solid fa-plus"></i>Add</button>
-
-
-                          </div>
+                            <button type="submit" class="btn btn-success me-2" id="buttonSubmit1"
+                                    style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick=" buttonOrderSubmit1()"><i
+                                    class=" fa-solid fa-plus"></i>Add</button>
 
 
                         </div>
 
-                      </div>
+
                     </div>
 
-
-
-
-
-
-
-
-                  </form>
 
                 </div>
 
@@ -429,309 +397,284 @@
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                   <!-- Tab contents -> Shop Customer -->
 
-                  <div class="card">
-                    <div class="card-body">
                       <div class="row">
-                        <div class="col-6">
-                          <div class="card"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                            <div class="card-body">
+
+                          <div class="col-6">
+                              <!--                                Shop Order Form Starts-->
                               <form onsubmit="return false " id="formShop">
 
-
-                                <div class="row mt-2">
-                                  <div class="col">
-                                    <label for="selectCustomerName2" class="form-label"><b>Customer Name :<span
-                                          class="text-danger">*</span></b></label>
-                                    <select class="form-select" id="selectCustomerName2"
-                                      onchange="dynamicElementValidator(this,'customerorder','customer_id');"></select>
-                                  </div>
-
-                                  <div class="col">
-                                    <div class="mb-3">
-                                      <label for="dateRequiredDateShopCustomer2" class="form-label"><b>Required
-                                          Date:</b></label>
-                                      <input type="date" class="form-control" id="dateRequiredDateShopCustomer2"
-                                        onchange="customerorder.required_date = this.value">
-
-                                    </div>
-                                  </div>
-
-
-
-                                </div>
-
-
-
-
-                                <div class="row">
-
-
-
-
-
-                                  <div class="col">
-                                    <label for="selectSession2" class="form-label"><b>Session :<span
-                                          class="text-danger">*</span></b></label>
-                                    <select class="form-select" id="selectSession2"
-                                      onchange="dynamicElementValidator(this,'customerorder','production_session_id');"></select>
-                                  </div>
-
-                                  <div class="col-6">
-                                    <div class="mb-3">
-                                      <label for="textTotalPrice2" class="form-label"><b>Total Price:</b></label>
-                                      <input type="text" class="form-control" id="textTotalPrice2"
-                                        placeholder="Enter Total Price..!"
-                                        onkeyup="customerorder.total_price = this.value">
-
-                                    </div>
-                                  </div>
-
-
-
-                                </div>
-
-
-                                <div class="row">
-                                  <div class="col">
-                                    <label class="form-label"><b>Order Nature:<span
-                                          class="text-danger">*</span></b></label>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="orderNature" id="justOnceRadio"
-                                        value="justonce" onchange="orderNatureRadioValidator()">
-                                      <label class="form-check-label" for="justOnceRadio">Just Once</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="orderNature"
-                                        id="recurrentRadio" value="recurrent" onchange="orderNatureRadioValidator()">
-                                      <label class="form-check-label" for="recurrentRadio">Recurrent</label>
-                                    </div>
-                                  </div>
-                                </div>
-
-
-                                <!-- Collapse Section -->
-                                <div class="collapse mt-3" id="recurentDetails">
-                                  <div class="card card-body"
-                                    style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-
-                                    <div class="row">
+                                  <div class="row mt-2">
                                       <div class="col">
-                                        <div class="mb-3">
-                                          <label for="dateFromDate" class="form-label"><b>From
-                                              :<span class="text-danger">*</span></b></label>
-                                          <input type="date" class="form-control" id="dateFromDate"
-                                            onchange="customerorder.from_date = this.value">
-                                        </div>
+                                          <label for="selectCustomerName2" class="form-label"><b>Customer Name :<span
+                                                  class="text-danger">*</span></b></label>
+                                          <select class="form-select" id="selectCustomerName2"
+                                                  onchange="dynamicElementValidator(this,'customerorder','customer_id'),defaultItemList();"></select>
+                                      </div>
 
+                                      <div class="col">
+                                          <div class="mb-3">
+                                              <label for="dateRequiredDateShopCustomer2" class="form-label"><b>Required
+                                                  Date:</b></label>
+                                              <input type="date" class="form-control" id="dateRequiredDateShopCustomer2"
+                                                     onchange="customerorder.required_date = this.value">
+
+                                          </div>
+                                      </div>
+
+                                  </div>
+
+                                  <div class="row">
+
+                                      <div class="col">
+                                          <div class="mb-3">
+                                              <label for="textTotalPrice2" class="form-label"><b>Total Price:</b></label>
+                                              <input type="text" class="form-control" id="textTotalPrice2"
+                                                     placeholder="Enter Total Price..!"
+                                                     onkeyup="customerorder.total_price = this.value">
+
+                                          </div>
                                       </div>
 
 
                                       <div class="col">
-                                        <div class="mb-3">
-                                          <label for="dateToDate" class="form-label"><b>To
-                                              :<span class="text-danger">*</span></b></label>
-                                          <input type="date" class="form-control" id="dateToDate"
-                                            onchange="customerorder.to_date = this.value">
-                                        </div>
+                                          <label for="textNoteShop" class="form-label fw-bold">Note :</label>
+                                          <textarea class="form-control" id="textNoteShop" rows="3"></textarea>
 
                                       </div>
 
+                                  </div>
 
 
-                                    </div>
+                                  <div class=" row mb-3">
 
+                                      <div class="col">
+                                          <label class="form-label"><b>Order Nature:<span
+                                                  class="text-danger">*</span></b></label>
+                                          <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" name="orderNature" id="justOnceRadio"
+                                                     value="justonce" onchange="orderNatureRadioValidator()">
+                                              <label class="form-check-label" for="justOnceRadio">Just Once</label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" name="orderNature"
+                                                     id="recurrentRadio" value="recurrent" onchange="orderNatureRadioValidator()">
+                                              <label class="form-check-label" for="recurrentRadio">Recurrent</label>
+                                          </div>
+                                      </div>
+
+
+                                      <!-- Collapse Section -->
+                                      <div class="collapse mt-3" id="recurentDetails">
+                                          <div class="card card-body"
+                                               style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                                              <div class="row">
+                                                  <div class="col">
+                                                      <div class="mb-3">
+                                                          <label for="dateFromDate" class="form-label"><b>From
+                                                              :<span class="text-danger">*</span></b></label>
+                                                          <input type="date" class="form-control" id="dateFromDate"
+                                                                 onchange="customerorder.from_date = this.value">
+                                                      </div>
+
+                                                  </div>
+
+
+                                                  <div class="col">
+                                                      <div class="mb-3">
+                                                          <label for="dateToDate" class="form-label"><b>To
+                                                              :<span class="text-danger">*</span></b></label>
+                                                          <input type="date" class="form-control" id="dateToDate"
+                                                                 onchange="customerorder.to_date = this.value">
+                                                      </div>
+
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
 
                                   </div>
-                                </div>
-
-
-
-                                <div class=" row mb-3">
-
-                                  <label for="textNoteShop" class="form-label fw-bold">Note :</label>
-                                  <textarea class="form-control" id="textNoteShop" rows="3"></textarea>
-
-                                </div>
-
-
 
                               </form>
 
-                            </div>
-
-                          </div>
-                        </div>
-
-
-                        <div class="col-6">
-                          <div class="card">
-                            <div class="card-body">
-                              <div class="card"
-                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                <div class="card-body">
-                                  <div class="row">
-                                    <div class="  text-center fw-bold title text-light">
-                                      <h5>Customer Order Inner Form</h5>
-                                    </div>
-
-                                    <div class="row"></div>
-                                    <div class="row"></div>
-
-                                  </div>
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="txtItemName" class="form-label"><b>Item Name:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="txtItemName"
-                                          placeholder="Ex: Enter Item Name">
-                                        <div class="valid-feedback">
-                                          Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                          Looks not good!
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="col">
-
-                                      <div class="mb-3">
-                                        <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
-                                              class="text-danger">*</span></b></label>
-                                        <input type="text" class="form-control" id="txtItemQuantity"
-                                          placeholder="Ex: Enter Item Quantity">
-                                        <div class="valid-feedback">
-                                          Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                          Looks not good!
-                                        </div>
-                                      </div>
-
-                                    </div>
-
-
-                                  </div>
-
-
-
-
-                                  <div class="row mt-2">
-
-                                    <div class="col-3 text-start">
-                                    </div>
-                                    <div class="col-9 text-end">
-                                      <button type="reset" class="btn btn-info"
-                                        style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
-
-                                      <button type="submit" class="btn btn-success"
-                                        style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"><i
-                                          class="fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                    </div>
-
-
-                                  </div>
-
-
-
-                                </div>
-                              </div>
-
-                              <br><br>
-
-                              <div class="card"
-                                style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                                <div class="card-body">
-
-                                  <div class="row mt-2 mb-3">
-                                    <div class="  text-center fw-bold title text-light">
-                                      <h5>Customer Order Inner Table</h5>
-                                    </div>
-                                  </div>
-                                  <div class="row mt-2 mb-3">
-                                    <table class="table table-hover" id="customerInnerTable">
-                                      <thead class="table-dark">
-                                        <tr>
-                                          <th scope="col">#</th>
-                                          <th scope="col">Item Name</th>
-                                          <th scope="col">Item Quantity</th>
-                                          <th scope="col">Session</th>
-                                          <th scope="col">Modify</th>
-
-                                        </tr>
-                                      </thead>
-                                      <tbody id="tableInnerCustomerBody">
-
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
-                                      </tbody>
-                                    </table>
-
-                                  </div>
-
-
-
-                                </div>
-                              </div>
-
-
-
-                            </div>
                           </div>
 
 
-                        </div>
+                          <!--                            Inner Item Form and Inner Table Starts-->
+                          <div class="col-6">
+                              <div class="card" style="background-image:url('/images/newwww.jpg'); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                  <div class="card-body">
+                                      <div class="row">
+                                          <div class="  text-center fw-bold title text-light"
+                                               style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                              <h5>Customer Order Inner Form</h5>
+                                          </div>
+                                      </div>
+
+                                      <form id="customerOrderInnerForm2">
+                                          <div class="row">
+                                              <div class="col-6">
+                                                  <label for="selectItem2" class="form-label"><b>Item :<span
+                                                          class="text-danger">*</span></b></label>
+                                                  <select class="form-select" id="selectItem2"
+                                                          onchange="dynamicElementValidator2(this,'orderHasItem','item_id');"></select>
+                                              </div>
+
+                                              <div class="col">
+
+                                                  <div class="mb-3">
+                                                      <label for="txtUnitPrice2" class="form-label"><b>Unit Price:<span
+                                                              class="text-danger">*</span></b></label>
+                                                      <input type="text" class="form-control" id="txtUnitPrice2"
+                                                      onkeyup="linePriceGenerator2();">
+                                                      <div class="valid-feedback">
+                                                          Looks good!
+                                                      </div>
+                                                      <div class="invalid-feedback">
+                                                          Looks not good!
+                                                      </div>
+                                                  </div>
+
+                                              </div>
+
+                                          </div>
+
+                                              <div class="row">
+                                                  <div class="col">
+
+                                                      <div class="mb-3">
+                                                          <label for="txtItemQuantity2" class="form-label"><b>Item Quantity:<span
+                                                                  class="text-danger">*</span></b></label>
+                                                          <input type="text" class="form-control" id="txtItemQuantity2"
+                                                                 onkeyup="textValidator(this,'^([0-9]{1,100})$','orderHasItem','qty'), linePriceGenerator2();"
+                                                                 placeholder="Ex: Enter Item Quantity">
+                                                          <div class="valid-feedback">
+                                                              Looks good!
+                                                          </div>
+                                                          <div class="invalid-feedback">
+                                                              Looks not good!
+                                                          </div>
+                                                      </div>
+
+                                                  </div>
+
+                                                  <div class="col">
+
+                                                      <div class="mb-3">
+                                                          <label for="txtLinePrice2" class="form-label"><b>Line Price:<span
+                                                                  class="text-danger">*</span></b></label>
+                                                          <input type="text" class="form-control" id="txtLinePrice2">
+                                                          <div class="valid-feedback">
+                                                              Looks good!
+                                                          </div>
+                                                          <div class="invalid-feedback">
+                                                              Looks not good!
+                                                          </div>
+                                                      </div>
+
+                                                  </div>
+
+                                              </div>
+
+                                              <div class="row">
+                                                  <div class="col-6">
+                                                      <label for="selectSession2" class="form-label"><b>Session :<span
+                                                              class="text-danger">*</span></b></label>
+                                                      <select class="form-select" id="selectSession2"
+                                                              onchange="dynamicElementValidator2(this,'orderHasItem','production_session_id');"></select>
+                                                  </div>
+                                              </div>
+
+
+                                      </form>
+
+                                      <div class="row mt-2">
+
+                                          <div class="col-3 text-start">
+                                          </div>
+                                          <div class="col-9 text-end">
+                                              <button type="reset" class="btn btn-info"
+                                                      style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                              <button type="submit" class="btn btn-success"
+                                                      style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                      onclick="buttonInnerForm2Submit();"><i
+                                                      class=" fa-solid fa-plus"></i>Add</button>
+                                          </div>
+                                      </div>
+
+                                      <hr><hr>
+
+                                      <div class="row mt-2 mb-3">
+                                          <div class="  text-center fw-bold title text-light"
+                                               style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                              <h5>Customer Order Inner Table</h5>
+                                          </div>
+                                      </div>
+                                      <div class="row mt-2 mb-3">
+                                          <table class="table table-hover" id="customerInnerTable2">
+                                              <thead class="table-light">
+                                              <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Item Name</th>
+                                                  <th scope="col">Item Quantity</th>
+                                                  <th scope="col">Line Price</th>
+                                                  <th scope="col">Session</th>
+                                                  <th scope="col">Modify</th>
+
+                                              </tr>
+                                              </thead>
+                                              <tbody id="tableInnerCustomerBody2" style="background-color: white">
+
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+
+
+                                              </tbody>
+                                          </table>
+
+                                      </div>
+
+                                  </div>
+                              </div>
+
+
+                          </div>
 
                       </div>
 
-                    </div>
 
+                    <!--Buttons-->
                     <div class="row mt-2">
 
-                      <div class="col-3 text-start">
-                        <button type="reset" class="btn btn-info ms-2"
-                          style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
+                        <div class="text-end" id="buttonContainer2">
+                            <button type="submit" class="btn btn-warning me-2" form="formShop" id="buttonUpdate2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick="buttonOrderUpdate2();">Update</button>
+
+                            <button type="reset" class="btn btn-info me-2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                            <button type="submit" class="btn btn-success me-2" form="formShop" id="buttonSubmit2"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="buttonOrderSubmit2();"><i
+                                    class=" fa-solid fa-plus"></i>Add</button>
 
 
-                      </div>
-                      <div class="col-9 text-end" id="buttonContainer">
-                        <button type="submit" class="btn btn-warning me-2" id="buttonUpdate2"
-                          style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
-                          onclick="buttonOrderUpdate2()">Update</button>
-
-                        <button type="submit" class="btn btn-success me-2" id="buttonSubmit2"
-                          style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)" onclick="buttonOrderSubmit2()"><i
-                            class=" fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                      </div>
-
+                        </div>
 
                     </div>
 
-                  </div>
                 </div>
-
-
 
 
               </div>
 
             </div>
-
-
 
           </div>
 
@@ -747,7 +690,7 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalOrderView">Print Order Table</h5>
+            <h5 class="modal-title" id="modalOrderViewHeader">Print Order Table</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 

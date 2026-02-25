@@ -12,8 +12,6 @@
   <link rel="stylesheet" href="/css/rawMaterial.css">
 </head>
 
-
-
 <body>
 
   <!-- nav bar -->
@@ -29,9 +27,6 @@
       <div class="col-3"></div>
 
     </div>
-
-
-
 
     <div class="row mt-2">
       <div class="col-8"></div>
@@ -54,10 +49,11 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey; opacity: 1.5">
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg'); opacity: 1.5">
               <div class="card2">
-                <form onsubmit="return false " id="materialForm">
 
+                <!--Form starts-->
+                <form onsubmit="return false " id="materialForm">
 
                   <div class="row mt-2 mb-3">
                     <div class="col">
@@ -65,18 +61,16 @@
                         <label for="txtMaterialName" class="form-label"><b>Material Name:<span
                               class="text-danger">*</span></b></label>
                         <input type="text" class="form-control" id="txtMaterialName"
-                          placeholder="Enter Raw material Name...!" onkeyup="material.material_name = this.value">
+                          placeholder="Enter Raw material Name...!"
+                               onkeyup="textValidator(this,'^([A-Z][a-z]{1,20})([ ][A-Z][a-z]{1,20})*$','material','material_name')">
                       </div>
                     </div>
                     <div class="col">
                       <label for="selectSIunit" class="form-label"><b>SI Unit :<span
                             class="text-danger">*</span></b></label>
                       <select class="form-select" id="selectSIunit"
-                        onchange="material.unit_type_id= JSON.parse(this.value)"></select>
+                        onchange="dynamicElementValidator(this,'material','unit_type_id')"></select>
                     </div>
-
-
-
 
                   </div>
 
@@ -87,7 +81,8 @@
                         <label for="textPurchasingUnit" class="form-label"><b>Purchasing Unit:<span
                               class="text-danger">*</span></b></label>
                         <input type="text" class="form-control" id="textPurchasingUnit"
-                          onkeyup="material.purchasing_unit = this.value;" placeholder="Enter Purchasing Unit..! ">
+                           placeholder="Enter Purchasing Unit..! "
+                               onkeyup="textValidator(this,'^([0-9]{1,5})$','material','purchasing_unit')">
                       </div>
                     </div>
                     <div class="col">
@@ -95,7 +90,8 @@
                         <label for="textUsingUnit" class="form-label"><b>Using Unit:<span
                               class="text-danger">*</span></b></label>
                         <input type="text" class="form-control" id="textUsingUnit"
-                          onkeyup="material.measuring_unit = this.value" placeholder="Enter Using Measuring Unit..!">
+                               onkeyup="textValidator(this,'^([0-9]{1,5})$','material','measuring_unit')"
+                               placeholder="Enter Using Measuring Unit..!">
                       </div>
                     </div>
 
@@ -105,13 +101,12 @@
 
                   <div class="row mt-2 mb-3">
 
-
                     <div class="col">
                       <div class="col">
                         <div class="mb-3">
                           <label for="textROP" class="form-label"><b>ROP:<span class="text-danger">*</span></b></label>
                           <input type="text" class="form-control" id="textROP" placeholder="Enter Reorder Point"
-                            onkeyup="material.rop = this.value">
+                                 onkeyup="textValidator(this,'^([0-9]{1,5})$','material','rop')">
                         </div>
                       </div>
 
@@ -122,23 +117,17 @@
                         <div class="mb-3">
                           <label for="textROQ" class="form-label"><b>ROQ:<span class="text-danger">*</span></b></label>
                           <input type="text" class="form-control" id="textROQ" placeholder="Enter Reorder Quantity"
-                            onkeyup="material.roq = this.value">
+                                 onkeyup="textValidator(this,'^([0-9]{1,5})$','material','roq')">
                         </div>
                       </div>
 
                     </div>
-
-
-
-
 
                   </div>
 
 
 
                   <div class="row mb-3">
-
-
 
                     <label for="textNote" class="form-label fw-bold">Note :</label>
                     <textarea class="form-control" id="textNote" rows="3"></textarea>
@@ -151,7 +140,8 @@
                     </div>
                     <div class="col-9 text-end" id="buttonContainer">
                         <button type="reset" class="btn btn-info me-2"
-                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+                                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                onclick="buttonRawMaterialClear()">Clear</button>
 
                         <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
                         style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
@@ -162,21 +152,14 @@
                           class="fa-solid fa-plus"></i>Add</button>
 
 
-
-
                     </div>
 
 
                   </div>
 
 
-
-
-
-
-
-
                 </form>
+                <!--Form Ends-->
 
 
               </div>
@@ -195,8 +178,10 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalUserView">Print Raw Material Table</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="w-100 text-center">
+                    <h5 class="modal-title" id="modalUserView">Raw Material View</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -206,7 +191,7 @@
                   <table class="table table-hover table-striped" id="tableRawView">
 
                     <tr>
-                      <th>Material </th>
+                      <th>Raw Material </th>
                       <td id="tdMaterial"></td>
                     </tr>
 
@@ -248,24 +233,7 @@
         </div>
       </div>
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <div class="row mt-2 text-center ">
@@ -306,9 +274,6 @@
                 <td></td>
                 <td></td>
 
-
-
-
               </tbody>
             </table>
 
@@ -320,28 +285,9 @@
       </div>
       <div class="col-1"></div>
 
-
-
-
-
-
-
-
-
     </div>
 
-
-
-
-
-
-
-
-
-
-
   </div>
-
 
   <script src="/script/commonValidationFunctions.js"></script>
   <script src="/script/commonFunctions.js"></script>

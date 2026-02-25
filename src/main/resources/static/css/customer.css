@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url(/images/newwallpaperlogin2.jpg);
+    background-image: url(/images/freshbun.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -21,12 +21,21 @@ body {
     --bs-nav-pills-link-active-bg: brown;
 }
 
-#buttonContainer {
+#buttonContainer1 {
     display: flex;
     justify-content: flex-end;
     /* aligns buttons to the right */
     padding: 10px;
 }
+
+
+#buttonContainer2 {
+    display: flex;
+    justify-content: flex-end;
+    /* aligns buttons to the right */
+    padding: 10px;
+}
+
 
 .form-control {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);

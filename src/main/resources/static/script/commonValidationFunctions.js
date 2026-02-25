@@ -1,9 +1,6 @@
 
 
-
-
 //Common Validator Function(Reusable)
-
 const textValidator = (element, dataPattern, object, property) => {
 
     const mobileValue = element.value;
@@ -47,7 +44,7 @@ const textValidator = (element, dataPattern, object, property) => {
 
         } else {
 
-            element.classList.remove("is-valid");
+            element.classList.remove("is-invalid");
 
         }
 

@@ -1,15 +1,11 @@
 package lk.cckcakesandbakery.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,11 +25,10 @@ public class CustomerPayment {
 
     private LocalDate payment_date;
 
-    private Integer paid_amount;
+    private BigDecimal paid_amount;
 
-    private Integer balance_amount;
+    private BigDecimal balance_amount;
 
-    private String returned_item_list;
 
     @NotNull
     private LocalDateTime add_date_time;
@@ -52,5 +47,9 @@ public class CustomerPayment {
     @ManyToOne
     @JoinColumn(name = "customer_payment_type_id", referencedColumnName = "id")
     private CustomerPaymentType customer_payment_type_id;
+
+    @ManyToOne
+    @JoinColumn(name = "return_items_id" , referencedColumnName = "id")
+    private ReturnItems return_items_id;
 
 }

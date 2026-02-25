@@ -1,10 +1,10 @@
 package lk.cckcakesandbakery.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +16,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // All Argument constructor
 @NoArgsConstructor // Default constructor / empty constructor
 public class ItemStatus {
-    @Id // PK
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // AI
+
+    @Id
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private Integer id;
 
-    // @column (name = "designation") column mapping
-    private String name;
+    @NotNull
+    private String status;
 
 }

@@ -83,7 +83,7 @@ public class PrivilegeController {
             Privilege extPrivilege = privilegeDao.getPrivilegeByRoleModule(privilege.getRole_id().getId(),
                     privilege.getModule_id().getId());
             if (extPrivilege != null) {
-                return "Save not Completed : Privilege Allready exists..!";
+                return "Save not Completed : Privilege All ready exists..!";
 
             }
 

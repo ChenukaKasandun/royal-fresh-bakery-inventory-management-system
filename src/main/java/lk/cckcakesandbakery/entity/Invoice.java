@@ -1,16 +1,12 @@
 package lk.cckcakesandbakery.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +25,10 @@ public class Invoice {
     private Integer id;
 
     private String invoice_no;
+
+    private BigDecimal total_price;
+
+    private BigDecimal discount_price;
 
     private LocalDate date;
 
@@ -52,8 +52,18 @@ public class Invoice {
     @JoinColumn(name = "invoice_status_id", referencedColumnName = "id") // Foreign key
     private InvoiceStatus invoice_status_id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "production_session_id" , referencedColumnName = "id")
+    private ProductionSession production_session_id;
+
+    @ManyToOne
     @JoinColumn(name = "customer_order_id", referencedColumnName = "id") // Foreign key
     private CustomerOrder customer_order_id;
+
+    // Association table   In Here, "cascade = CascadeType.ALL" should be essential to save data into association table
+    //"orphanRemoval = true" should be essential to remove data from the association table
+    @OneToMany(mappedBy = "invoice_id" , cascade = CascadeType.ALL ,orphanRemoval = true )
+    private List<InvoiceHasItem> invoiceHasItemList;
+
 
 }

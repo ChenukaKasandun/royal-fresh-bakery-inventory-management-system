@@ -4,57 +4,50 @@ window.addEventListener('load', () => {
     refreshForm();
     refreshRawMaterialTable();
 
-
 })
 
 
-
+//Form refresh
 const refreshForm = () => {
 
+    //Empting the fields of form
+    materialForm.reset();
 
     //Defining a new object for data binding
     material = new Object();
 
-    //clean the properties when refreshing form
-    txtMaterialName.value = "";
-    selectSIunit.value = "";
-    textPurchasingUnit.value = "";
-    textUsingUnit.value = "";
-    textROP.value = "";
-    textROQ.value = "";
-    textNote.value = "";
-
-
-
-    //set initial validation colour when refreshing form
-    txtMaterialName.classList.remove("is-valid");
-    txtMaterialName.classList.remove("is-invalid");
-
-
-    selectSIunit.classList.remove("is-valid");
-    selectSIunit.classList.remove("is-invalid");
-
-    textPurchasingUnit.classList.remove("is-valid");
-    textPurchasingUnit.classList.remove("is-invalid");
-
-    textUsingUnit.classList.remove("is-valid");
-    textUsingUnit.classList.remove("is-invalid");
-
-
-    textROP.classList.remove("is-valid");
-    textROP.classList.remove("is-invalid");
-
-
+    //Removing Validation Colours using a common function declared in common.js
+    setDefault([txtMaterialName, selectSIunit, textPurchasingUnit,textUsingUnit,textROP,textROQ,textNote]);
 
     //material status calling from backend using a common function declared in commonFunction.js
     let siUnit = getServiceRequest("/siunit/alldata");
 
+    //Filling the dropdown
     fillDataIntoSelect(selectSIunit, "Please Select SI Unit...!", siUnit, "name");
 
     //Update button getsdissapeared when edit function executed
     buttonSubmit.style.display = "block";
     buttonUpdate.style.display = "none";
 
+}
+
+
+//Validation Of Dynamic dropdown
+const dynamicElementValidator = (element, object, property) => {
+
+    const dynamicElement = element.value;
+
+    material[property] = JSON.parse(dynamicElement);
+
+    element.classList.add("is-valid");
+
+
+}
+
+//clear button
+const buttonRawMaterialClear =()=>{
+    materialForm.reset();
+    //selectSIunit.selectedIndex = 0; // goes back to "Please Select SI Unit...!".........................................
 
 }
 
@@ -62,7 +55,6 @@ const refreshForm = () => {
 
 //refresh Table
 const refreshRawMaterialTable = () => {
-
 
     //string => string/sate/number
     //function => object/array/boolean
@@ -78,11 +70,10 @@ const refreshRawMaterialTable = () => {
     //Defining raw materials using ajax function calling defined in the commonFunctions.js
     let rawMaterials = getServiceRequest("/rawmaterial/alldata");
 
-
     //Calling common function to fill data into table
     fillDataIntoTable1(tableRawMaterialBody, rawMaterials, propertyList, materialFormRefill, buttonRawMaterialDelete, buttonRawMaterialView, true);
 
-
+    //Jquery function to set table
     $('#rawMaterialTable').DataTable();
 }
 
@@ -94,6 +85,7 @@ const getUnitType = (dataOb) => {
     return dataOb.unit_type_id.name;
 }
 
+//Function for get Raw material Status
 const getRawMaterialStatus = (dataOb) => {
 
     if (dataOb.rawmaterial_status_id?.status == "Deleted") {
@@ -110,6 +102,7 @@ const getRawMaterialStatus = (dataOb) => {
 }
 
 
+//Checking errors in the form
 const checkFormError = () => {
 
     let errors = "";
@@ -205,38 +198,36 @@ const buttonRawMaterialSubmit = () => {
 
     }
 
-
-
-
 }
 
-
+//Refill function
 const materialFormRefill = (dataOb, index) => {
 
-    txtMaterialName.value = dataOb.material_name;
-    selectSIunit.value = JSON.stringify(dataOb.unit_type_id);
-    textPurchasingUnit.value = dataOb.measuring_unit;;
-    textUsingUnit.value = dataOb.purchasing_unit;
-    textROP.value = dataOb.rop;
-    textROQ.value = dataOb.roq;
+    if (dataOb?.rawmaterial_status_id?.status != "Deleted"){
 
-    //create two copies for comparison for update
-    material = JSON.parse(JSON.stringify(dataOb));
-    oldMaterial = JSON.parse(JSON.stringify(dataOb));
+        txtMaterialName.value = dataOb.material_name;
+        selectSIunit.value = JSON.stringify(dataOb.unit_type_id);
+        textPurchasingUnit.value = dataOb.purchasing_unit;
+        textUsingUnit.value = dataOb.measuring_unit;
+        textROP.value = dataOb.rop;
+        textROQ.value = dataOb.roq;
 
-    $("#materialFormModal").modal("show");
+        //create two copies for comparison for update
+        material = JSON.parse(JSON.stringify(dataOb));
+        oldMaterial = JSON.parse(JSON.stringify(dataOb));
 
-    //Submit button getsdissapeared when edit function executed
-    buttonUpdate.style.display = "block";
-    buttonSubmit.style.display = "none";
+        $("#materialFormModal").modal("show");
 
+        //Submit button getsdissapeared when edit function executed
+        buttonUpdate.style.display = "block";
+        buttonSubmit.style.display = "none";
 
-
-
+    }
 
 }
 
 
+//Checking Form Updates
 const checkFormUpdates = () => {
 
 
@@ -274,10 +265,7 @@ const checkFormUpdates = () => {
     console.log(oldMaterial);
 
 
-
     return updates;
-
-
 
 }
 
@@ -332,10 +320,6 @@ const buttonRawMaterialUpdate = (dataOb, index) => {
 
                     }
 
-
-
-
-
                 });
 
         }
@@ -345,12 +329,10 @@ const buttonRawMaterialUpdate = (dataOb, index) => {
 
     }
 
-
     refreshRawMaterialTable();
 
-
-
 }
+
 
 
 //form View event function 
@@ -368,15 +350,13 @@ const buttonRawMaterialView = (dataOb, index) => {
     refreshForm();
 
 
-
-
 }
 
-
+//Print the View
 const printRawMaterialRow = () => {
 
     let newWindow = window.open();
-    let printView = "<head> <title>print-raw</title><link rel = 'stylesheet' href = '/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head> " +
+    let printView = "<head><title>print-raw material Details</title><link rel = 'stylesheet' href = '/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head> " +
         "<body>" + tableRawView.outerHTML + "</body>";
 
 
@@ -448,10 +428,8 @@ const buttonRawMaterialDelete = (dataOb, index) => {
 
         });
 
-
     refreshRawMaterialTable();
     refreshForm();
-
 
 }
 

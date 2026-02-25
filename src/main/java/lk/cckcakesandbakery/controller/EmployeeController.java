@@ -211,7 +211,13 @@ public class EmployeeController {
             // if "employee" object is saved, changes of the front end object may also saved
             // in the darabase and it will be a destroyy data integrity
 
-            // dependancy
+            // dependancy ............................................................
+
+            //User empUser = userDao.getEmployee(extEmployee.getId());
+            // if(empUser != null){
+            // empUser.setstatus(Boolean.FALSE);
+            //userDao.save(empUser);
+            //}
 
             return "OK";
 

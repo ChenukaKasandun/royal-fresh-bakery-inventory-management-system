@@ -70,7 +70,7 @@ const refreshForm = () => {
     fillDataIntoSelect(selectSelectedItemElement,"",supplier.rawMaterials,"material_name");
 
 
-     supplierStatus = getServiceRequest("supplierstatus/alldata");
+     supplierStatus = getServiceRequest("/supplierstatus/alldataexceptdelete");
     //Filling supplier status dropdown
     fillDataIntoSelect(selectSupplierStatusElement, "Please select Supplier Status..!", supplierStatus, "status");
 
@@ -191,10 +191,10 @@ const refreshSupplierTable = () => {
     //function => object/array/boolean
     let propertyList = [{ propertyName: "supplier_name", dataType: "string" },
     { propertyName: getMaterial, dataType: "function" },
-    { propertyName: getSupplierStatus, dataType: "function" },
     { propertyName: "supplier_address", dataType: "string" },
     { propertyName: "supplier_contact", dataType: "string" },
     { propertyName: "supplier_email", dataType: "string" },
+        { propertyName: getSupplierStatus, dataType: "function" },
     ];
 
 
@@ -212,7 +212,16 @@ const refreshSupplierTable = () => {
 }
 //Functions to get properties for table
 const getSupplierStatus = (dataOb) => {
-    return dataOb.supplier_registration_status_id.status;
+
+    if (dataOb.supplier_registration_status_id.status == "Deleted"){
+        return `<P style='background-color:red'>${dataOb.supplier_registration_status_id.status}</P>`;
+
+    }else{
+        return dataOb.supplier_registration_status_id.status;
+    }
+
+
+
 }
 
 const getMaterial = (dataOb) => {

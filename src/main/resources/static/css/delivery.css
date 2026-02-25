@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url(/images/newwallpaperlogin2.jpg);
+    background-image: url(/images/freshbun.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -16,13 +16,13 @@ body {
 
 
 
-.card {
+/*.card {*/
 
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
+/*    border-top-right-radius: 20px;*/
+/*    border-top-left-radius: 20px;*/
+/*    border-bottom-right-radius: 20px;*/
+/*    border-bottom-left-radius: 20px;*/
+/*}*/
 
 #buttonContainer {
     display: flex;

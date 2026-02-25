@@ -10,13 +10,15 @@
 }
 
 body {
-    background-image: url(/images/newwallpaperlogin2.jpg);
+    background-image: url(/images/freshbun.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 
-
+.modal-header{
+    justify-content: center;
+}
 
 
 

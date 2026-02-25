@@ -1,6 +1,5 @@
 package lk.cckcakesandbakery.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,31 +51,34 @@ public class Item {
 
     // Foreign Key
     @ManyToOne
+    @JoinColumn(name = "item_return_status_id", referencedColumnName = "id")
+    private ItemReturnStatus item_return_status_id;
+
+    // Foreign Key
+    @ManyToOne
     @JoinColumn(name = "item_status_id", referencedColumnName = "id")
     private ItemStatus item_status_id;
+
 
     // Foreign Key
     @ManyToOne
     @JoinColumn(name = "item_category_id", referencedColumnName = "id")
     private ItemCategory item_category_id;
 
-    @ManyToOne
-    @JoinColumn(name = "item_return_status_id", referencedColumnName = "id")
-    private ItemReturnStatus item_return_status_id;
+    // Association table   In Here, "cascade = CascadeType.ALL" should be essential to save data into association table
+    //"orphanRemoval = true" should be essential to remove data from the association table
+    @OneToMany(mappedBy = "item_id" , cascade = CascadeType.ALL ,orphanRemoval = true )
+    private List<ItemHasMaterial>itemHasMaterialList;
 
-    // Association table
-    @OneToMany(mappedBy = "item_id", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ItemHasMaterial> itemHasMaterialList;
-
-    // Item Constructor that created to request a selected List of properties from
-    // the dataBase using a query at itemDao
-    public Item(Integer id, String item_name, String item_code) {
-
-        this.id = id;
-        this.item_name = item_name;
-        this.item_code = item_code;
-
-
-    }
+//    // Item Constructor that created to request a selected List of properties from
+//    // the dataBase using a query at itemDao
+//    public Item(Integer id, String item_name, String item_code) {
+//
+//        this.id = id;
+//        this.item_name = item_name;
+//        this.item_code = item_code;
+//
+//
+//    }
 
 }

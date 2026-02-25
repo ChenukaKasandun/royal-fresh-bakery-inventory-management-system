@@ -16,18 +16,6 @@ public class CckcakesandbakeryApplication {
 		System.out.println("Hello World");
 	}
 
-	// @RequestMapping(value = "/index")
-	// public String index(){
-	// return" <h1> Hello World </h>";
-	// }
 
-	// mapping for return index page url --> [/index or /]x
-	@RequestMapping(value = { "/index", "/" })
-	public ModelAndView uiIndexPage() {
-		ModelAndView indexPage = new ModelAndView();
-		indexPage.setViewName("index.html");
-		return indexPage;
-
-	}
 
 }

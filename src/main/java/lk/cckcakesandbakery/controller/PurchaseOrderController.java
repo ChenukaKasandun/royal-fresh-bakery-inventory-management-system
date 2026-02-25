@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.dao.PurchaseOrderStatusDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -35,6 +36,9 @@ public class PurchaseOrderController {
 
     @Autowired
     private UserPrivilegeController userPrivilegeController;
+
+    @Autowired
+    private PurchaseOrderStatusDao purchaseOrderStatusDao;
 
     // request mapping for load purchase Order ui[URL --->/purchaseorder]
     @RequestMapping(value = "/purchaseorder")
@@ -147,8 +151,9 @@ public class PurchaseOrderController {
                 // Set auto added data
                 extPurchaseOrderById.setDelete_date_time(LocalDateTime.now());
                 extPurchaseOrderById.setDelete_user_id(loggedUser.getId());
+                extPurchaseOrderById.setPurchase_order_status_id(purchaseOrderStatusDao.getReferenceById(4));
 
-                purchaseOrderDao.delete(extPurchaseOrderById);
+                purchaseOrderDao.save(extPurchaseOrderById);
 
                 // Dependancy
 

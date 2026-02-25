@@ -22,6 +22,9 @@ public interface ItemDao extends JpaRepository<Item, Integer> {
     List<String> getRawMaterialCostByItemName(String item_name);
 
 
+    @Query(value = "SELECT i FROM Item as i where i.item_status_id.id =?1")
+    List<Item> getByItemStatusId(Integer returnItemStatus);
+
 
 
 

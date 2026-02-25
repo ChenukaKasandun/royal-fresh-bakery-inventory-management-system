@@ -18,9 +18,9 @@ public class SupplierStatusController {
 
     // request mapping for get supplier Status all data [URL
     // --->//supplierstatus/alldata]
-    @GetMapping(value = "/supplierstatus/alldata", produces = "application/json")
+    @GetMapping(value = "/supplierstatus/alldataexceptdelete", produces = "application/json")
     public List<SupplierRegStatus> findAllData() {
-        return supplierStatuSDao.findAll();
+        return supplierStatuSDao.findAllStatusExceptDelete();
 
     }
 

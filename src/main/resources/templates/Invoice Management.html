@@ -31,9 +31,6 @@
 
     </div>
 
-
-
-
     <div class="row mt-2">
       <div class="col-8"></div>
 
@@ -53,297 +50,614 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="card"
-                        style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                        <div class="card-body">
-                          <form onsubmit="return false " id="modalInvoiceForm">
-
-                            <div class="row">
-                              <div class="col-6">
+            <div class="modal-body" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
 
 
-                                <div class="col">
-                                  <div class="mb-3">
-                                    <label for="txtDate" class="form-label"><b>Date:<span
-                                          class="text-danger">*</span></b></label>
-                                    <input type="date" class="form-control" id="txtDate"
-                                      onchange="invoice.date = this.value; txtDate.classList.add('is-valid')">
-                                  </div>
+                <!-- Tabs -->
+                <ul class="nav nav-pills mb-3 " id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="tabIndividual" data-bs-toggle="pill" data-bs-target="#pills-home"
+                                style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" type=" button" role="tab"
+                                aria-controls="pills-home" aria-selected="true">Individual
+                            Invoice</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link " id="tabShop" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                                style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" type=" button" role="tab"
+                                aria-controls="pills-profile" aria-selected="false"
+                                >Shop Invoice</button>
+                    </li>
+
+                </ul>
+
+                <!-- Tab contents -->
+                <div class="tab-content" id="pills-tabContent">
+
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                    <div class="row">
+
+                        <div class="col-6">
+                            <!--                               Individual Order Form Starts-->
+                            <form onsubmit="return false " id="invoiceForm1">
+
+                                <div class="row mt-2">
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="txtDate1" class="form-label"><b>
+                                                Date:</b></label>
+                                            <input type="date" class="form-control" id="txtDate1"
+                                            onchange="invoice.date = this.value,this.classList.add('is-valid')">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="selectCustomerName1" class="form-label"><b>Customer Name :<span
+                                                class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectCustomerName1"
+                                                onchange="dynamicElementValidator(this,'invoice','customer_id');" ></select>
+                                    </div>
+
+
                                 </div>
 
-                              </div>
+                                <div class="row">
+
+                                    <div class="col">
+                                        <label for="selectCustomerOrderNo1" class="form-label"><b>Customer Order No<span
+                                                class="text-danger">*</span></b></label>
+                                        <select class="form-select" id="selectCustomerOrderNo1"
+                                                onchange="dynamicElementValidator(this,'invoice','customer_order_id');"  ></select>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="textTotalPrice1" class="form-label"><b>Total Price:</b></label>
+                                            <input type="text" class="form-control" id="textTotalPrice1"
+                                                   placeholder="Enter Total Price..!">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="textDiscountedPrice1" class="form-label"><b>Discounted Price:</b></label>
+                                                <input type="text" class="form-control" id="textDiscountedPrice1">
+
+                                            </div>
+
+                                        </div>
 
 
-                              <div class="col">
-                                <label for="selectCustomerName" class="form-label"><b>Customer Name:<span
-                                      class="text-danger">*</span></b></label>
-                                <select class="form-select" id="selectCustomerName"
-                                  onchange="dynamicElementValidator(this,'invoice','customer_id');"></select>
-                              </div>
+                                        <div class="col">
+                                            <label for="selectStatus1" class="form-label"><b>Status :<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectStatus1"
+                                                    onchange="dynamicElementValidator(this,'invoice','invoice_status_id');"
+                                                    ></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <label for="textNote1" class="form-label fw-bold">Note :</label>
+                                            <textarea class="form-control" id="textNote1" rows="3"></textarea>
+
+                                        </div>
+                                    </div>
 
 
 
-
-
-                            </div>
-
-                            <div class="row mt-2 mb-3">
-
-
-                              <div class="col-6">
-                                <label for="selectOrderNo" class="form-label"><b> Order No:<span
-                                      class="text-danger">*</span></b></label>
-                                <select class="form-select" id="selectOrderNo"
-                                  onchange="dynamicElementValidator(this,'invoice','customer_order_id');"></select>
-                              </div>
-
-
-                              <div class="col">
-                                <div class="mb-3">
-                                  <label for="txtTotalPrice" class="form-label"><b>Total Price:</b></label>
-                                  <input type="text" class="form-control" id="txtTotalPrice" placeholder=" Total Price"
-                                    onkeyup="invoice.totalPrice = this.value">
                                 </div>
-                              </div>
 
 
-
-                            </div>
-
-
-                            <div class="row mt-2 mb-3">
-
-                              <div class="col-6">
-                                <div class="mb-3">
-                                  <label for="txtDiscountedPrice" class="form-label"><b>Discounted Price:</b></label>
-                                  <input type="text" class="form-control" id="txtDiscountedPrice"
-                                    placeholder=" Discounted Price">
-                                </div>
-                              </div>
-
-                              <div class="col-6">
-                                <label for="selectStatus" class="form-label"><b> Status:<span
-                                      class="text-danger">*</span></b></label>
-                                <select class="form-select" id="selectStatus"
-                                  onchange="dynamicElementValidator(this,'invoice','invoice_status_id');"></select>
-                              </div>
-
-
-
-                            </div>
-
-
-                            <div class="row mb-3">
-
-
-
-                              <label for="textNote" class="form-label fw-bold">Note :</label>
-                              <textarea class="form-control " id="textNote" rows="3"></textarea>
-
-                            </div>
-
-
-
-
-
-
-
-
-
-                          </form>
+                            </form>
 
                         </div>
-                      </div>
 
+
+                        <!--                            Inner Item Form and Inner Table Starts-->
+                        <div class="col-6">
+                            <div class="card" style="background-image:url('/images/newwww.jpg'); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                <div class="card-body">
+
+                                    <div class="row mt-2 mb-3">
+                                        <div class="  text-center fw-bold title text-light"
+                                             style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                            <h5>Customer Order Item List</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2 mb-3">
+                                        <table class="table table-hover" id="customerOrderInnerTable1">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Item Name</th>
+                                                <th scope="col">Item Quantity</th>
+                                                <th scope="col">Availability</th>
+                                                <th scope="col">Line Price</th>
+                                                <th scope="col">Ability</th>
+                                                <th scope="col">Modify</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody id="customerOrderInnerTable1Body1" style="background-color: white">
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <hr><hr>
+
+<!--                                    Invoice Form and Table --->
+                                    <div class="row">
+                                        <div class="  text-center fw-bold title text-light"
+                                             style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                            <h5>Invoice Inner Form</h5>
+                                        </div>
+                                    </div>
+
+                                    <form id="invoiceInnerForm1">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="selectItem1" class="form-label"><b>Item :<span
+                                                        class="text-danger">*</span></b></label>
+                                                <select class="form-select" id="selectItem1"
+                                                        onchange="dynamicElementValidatorInner(this,'invoiceHasItem','item_id');"
+                                                        ></select>
+                                            </div>
+
+                                            <div class="col">
+
+                                                <div class="mb-3">
+                                                    <label for="txtUnitPrice1" class="form-label"><b>Unit Price:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="text" class="form-control" id="txtUnitPrice1"
+                                                           onkeyup="generateLinePrice1(),this.classList.add('is-valid')" >
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Looks not good!
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+
+                                                <div class="mb-3">
+                                                    <label for="txtItemQuantity1" class="form-label"><b>Item Quantity:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="text" class="form-control" id="txtItemQuantity1"
+                                                           onkeyup="textValidator(this,'^([0-9]{1,100})$','invoiceHasItem','qty') ,generateLinePrice1();"    placeholder="Ex: Enter Item Quantity">
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Looks not good!
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col">
+
+                                                <div class="mb-3">
+                                                    <label for="txtLinePrice1" class="form-label"><b>Line Price:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="text" class="form-control" id="txtLinePrice1">
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Looks not good!
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                    <div class="row mt-2">
+
+                                        <div class="col-3 text-start">
+                                        </div>
+                                        <div class="col-9 text-end">
+                                            <button type="reset" class="btn btn-info"
+                                                    style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                            <button type="submit" class="btn btn-success"
+                                                    style=" box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                    onclick="buttonInnerFormSubmit1();"><i
+                                                    class=" fa-solid fa-plus"></i>Add</button>
+                                        </div>
+                                    </div>
+
+                                    <hr><hr>
+
+                                    <div class="row mt-2 mb-3">
+                                        <div class="  text-center fw-bold title text-light"
+                                             style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                            <h5>Invoice Inner Table</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2 mb-3">
+                                        <table class="table table-hover" id="invoiceInnerTable1">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Item Name</th>
+                                                <th scope="col">Item Quantity</th>
+                                                <th scope="col">Line Price</th>
+                                                <th scope="col">Modify</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tableInnerInvoiceBody1" style="background-color: white">
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
 
                     </div>
 
-                    <div class="col-6">
-                      <div class="card">
-                        <div class="cad-body">
-                          <div class="card"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                            <div class="card-body">
 
-                              <div class="row">
-                                <div class="  text-center fw-bold title text-light">
-                                  <h5>Invoice Inner Form</h5>
-                                </div>
+                    <!--Buttons-->
+                    <div class="row mt-2">
 
-                                <div class="row"></div>
-                                <div class="row"></div>
-                                <div class="row"></div>
+                        <div class="text-end" id="buttonContainer1">
+                            <button type="submit" class="btn btn-warning me-2" form="invoiceForm1" id="buttonInvoiceUpdateId1"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                    onclick="buttonInvoiceUpdate1();">Update</button>
 
-                              </div>
-                              <div class="row">
-                                <div class="col">
-                                  <div class="mb-3">
-                                    <label for="txtItemName" class="form-label"><b>Item Name:<span
-                                          class="text-danger">*</span></b></label>
-                                    <input type="text" class="form-control" id="txtItemName"
-                                      placeholder="Ex: Enter Item Name">
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                      Looks not good!
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="col">
-
-                                  <div class="mb-3">
-                                    <label for="txtItemQuantity" class="form-label"><b>Item Quantity:<span
-                                          class="text-danger">*</span></b></label>
-                                    <input type="text" class="form-control" id="txtItemQuantity"
-                                      placeholder="Ex: Enter Item Quantity">
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                      Looks not good!
-                                    </div>
-                                  </div>
-
-                                </div>
-
-
-                              </div>
-
-
-
-
-                              <div class="row mt-2">
-
-                                <div class="col-3 text-start">
-                                </div>
-                                <div class="col-9 text-end">
-                                  <button type="reset" class="btn btn-info"
+                            <button type="reset" class="btn btn-info me-2"
                                     style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
 
-                                  <button type="submit" class="btn btn-success"
-                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"><i
-                                      class="fa-solid fa-plus"></i>Add</button>
-
-
-
-
-                                </div>
-
-
-                              </div>
-
-
-
-
-                            </div>
-                          </div>
-
-
-                          <br><br>
-                          <div class="card"
-                            style="background-color: darkgrey;  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
-                            <div class="card-body">
-
-                              <div class="row mt-2 mb-3">
-                                <div class="  text-center fw-bold title text-light">
-                                  <h5>Invoice Inner Table</h5>
-                                </div>
-                              </div>
-                              <div class="row mt-2 mb-3">
-                                <table class="table table-hover" id="invoiceInnerTable">
-                                  <thead class="table-dark">
-                                    <tr>
-                                      <th scope="col">#</th>
-                                      <th scope="col">Item Name</th>
-                                      <th scope="col">Item Quantity</th>
-                                      <th scope="col">Modify</th>
-
-                                    </tr>
-                                  </thead>
-                                  <tbody id="tableInnerInvoiceBody">
-
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-
-
-                                  </tbody>
-                                </table>
-
-                              </div>
-
-
-
-                            </div>
-                          </div>
-
+                            <button type="submit" class="btn btn-success me-2" form="invoiceForm1" id="buttonInvoiceSubmitId1"
+                                    style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="buttonInvoiceSubmit1();"><i
+                                    class=" fa-solid fa-plus"></i>Add</button>
 
 
                         </div>
-                      </div>
-
-
-
 
                     </div>
-
-
-
-                  </div>
-
-                  <div class="row mt-2">
-
-                    <div class="col-3 text-start">
-                      <button type="reset" class="btn btn-info"
-                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
-
-
-                    </div>
-                    <div class="col-9 text-end" id="buttonContainer">
-                      <button type="submit" class="btn btn-warning me-2" id="buttonUpdate"
-                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                        onclick="buttonInvoiceUpdate()">Update</button>
-
-                      <button type="submit" class="btn btn-success " id="buttonSubmit"
-                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
-                        onclick=" buttonInvoiceSubmit()">Submit</button>
-
-
-
-
-                    </div>
-
-
-                  </div>
-
-
-
 
                 </div>
-              </div>
+
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <!-- Tab contents -> Shop Invoice -->
 
 
+                        <div class="row">
+
+                            <div class="col-6">
+                                <!--                           Shop Invoice Form Starts -->
+                                <form onsubmit="return false " id="invoiceForm2">
+
+                                    <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="txtDate2" class="form-label"><b>Date:<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <input type="date" class="form-control" id="txtDate2"
+                                                           onchange="invoice.date = this.value ,this.classList.add('is-valid')">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="selectSession2" class="form-label"><b>Session:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectSession2"
+                                                    onchange="dynamicElementValidator(this,'invoice','production_session_id');"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row mt-2 mb-3">
 
 
+                                        <div class="col">
+                                            <label for="selectCustomerName2" class="form-label"><b>Customer Name:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectCustomerName2"
+                                                    onchange="dynamicElementValidator(this,'invoice','customer_id');"></select>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label for="selectOrderNo2" class="form-label"><b> Order No:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectOrderNo2"
+                                                    onchange="dynamicElementValidator(this,'invoice','customer_order_id')
+                                       "></select>
+                                        </div>
+
+                                    </div>
 
 
+                                    <div class="row mt-2 mb-3">
 
-            </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="txtTotalPrice2" class="form-label"><b>Total Price:</b></label>
+                                                <input type="text" class="form-control" id="txtTotalPrice2" placeholder=" Total Price">
+                                            </div>
+                                        </div>
 
+                                        <div class="col-6">
+                                            <label for="selectStatus2" class="form-label"><b> Status:<span
+                                                    class="text-danger">*</span></b></label>
+                                            <select class="form-select" id="selectStatus2"
+                                                    onchange="dynamicElementValidator(this,'invoice','invoice_status_id');"></select>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row mb-3 col-6">
+
+                                        <label for="textNote2" class="form-label fw-bold">Note :</label>
+                                        <textarea class="form-control " id="textNote2" rows="3"></textarea>
+
+                                    </div>
+
+
+                                </form>
+                                <!--Invoice Form Ends -->
+                            </div>
+
+
+                            <!--Shop CustomerOrder Item List Table-->
+                            <div class="col-6">
+
+                                <div class="card" style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                    <div class="card-body">
+
+                                        <div class="row mt-2 mb-3">
+                                            <div class="  text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h5>Order Item List</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <table class="table table-hover" id="orderItemListInnerTable">
+                                                <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Item Name</th>
+                                                    <th scope="col">Required Quantity</th>
+                                                    <th scope="col">Available Quantity</th>
+                                                    <th scope="col">Line Price</th>
+                                                    <th scope="col">Session</th>
+                                                    <th scope="col">Ability</th>
+                                                    <th scope="col">Modify</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody id="ordeItemListInnerTableBody"  style="background-color: white">
+
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+
+<!--                                        Invoice Inner Form2-->
+                                        <div class="row">
+                                            <div class=" text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h5>Invoice Inner Form</h5>
+                                            </div>
+
+                                        </div>
+
+
+                                        <form id="invoiceInnerForm2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label for="selectItemInner2" class="form-label"><b>Item :<span
+                                                            class="text-danger">*</span></b></label>
+                                                    <select class="form-select" id="selectItemInner2"
+                                                            onchange="dynamicElementValidatorInner(this,'invoiceHasItem','item_id');"></select>
+                                                </div>
+
+                                                <div class="col">
+
+                                                    <div class="mb-3">
+                                                        <label for="txtUnitPriceInner2" class="form-label"><b>Unit Price:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <input type="text" class="form-control" id="txtUnitPriceInner2"
+                                                               onkeyup="generateLinePrice2(),this.classList.add('is-valid')">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Looks not good!
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">
+
+                                                    <div class="mb-3">
+                                                        <label for="txtItemQuantityInner2" class="form-label"><b>Item Quantity:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <input type="text" class="form-control" id="txtItemQuantityInner2"
+                                                               onkeyup="textValidator(this,'^([0-9]{1,100})$','invoiceHasItem','qty') ,generateLinePrice2();"
+                                                               placeholder="Ex: Enter Item Quantity">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Looks not good!
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col">
+
+                                                    <div class="mb-3">
+                                                        <label for="txtLinePriceInner2" class="form-label"><b>Line Price:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <input type="text" class="form-control" id="txtLinePriceInner2">
+                                                        <div class="valid-feedback">
+                                                            Looks good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Looks not good!
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </form>
+
+
+                                        <div class="row mt-2">
+
+                                            <div class="col-3 text-start">
+                                            </div>
+                                            <div class="col-9 text-end">
+                                                <button type="reset" class="btn btn-info"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                                <button type="submit" class="btn btn-success"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                                        onclick="buttonInnerFormSubmit2()"><i
+                                                        class="fa-solid fa-plus"></i>Add</button>
+                                            </div>
+
+                                        </div>
+
+                                        <hr><hr>
+
+<!--                                        Invoice Inner Table-->
+                                        <div class="row mt-2 mb-3">
+                                            <div class="  text-center fw-bold title text-light"
+                                                 style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                <h5>Invoice Inner Table</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 mb-3">
+                                            <table class="table table-hover" id="invoiceInnerTable">
+                                                <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Item Name</th>
+                                                    <th scope="col">Required Quantity</th>
+                                                    <th scope="col">Line Price</th>
+                                                    <th scope="col">Modify</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tableInnerInvoiceBody2"  style="background-color: white">
+
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--Buttons-->
+                        <div class="row mt-2">
+
+                            <div class="text-end" id="buttonContainer2">
+                                <button type="submit" class="btn btn-warning me-2" form="invoiceForm2" id="buttonInvoiceUpdateId2"
+                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                        onclick="buttonInvoiceUpdate2();">Update</button>
+
+                                <button type="reset" class="btn btn-info me-2"
+                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Clear</button>
+
+                                <button type="submit" class="btn btn-success me-2" form="invoiceForm2" id="buttonInvoiceSubmitId2"
+                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" onclick="buttonInvoiceSubmit2();"><i
+                                        class=" fa-solid fa-plus"></i>Add</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
           </div>
         </div>
       </div>
 
+
+
       <!-- model view/print -->
-      <div class="modal " id="modalInvoice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      <div class="modal " id="modalInvoiceHeader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
@@ -413,19 +727,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="row mt-2 text-center ">
 
       <div class="col-1"></div>
@@ -433,7 +734,7 @@
 
         <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
           <div class="row mt-2 mb-3">
-            <h5><i class="fa-solid fa-table"></i> <b>Invoice Table</b></h>
+            <h5><i class="fa-solid fa-table"></i> <b>Invoice Table</b></h5>
           </div>
           <div class="row mt-2 mb-3">
             <table class="table table-hover" id="invoiceTable">
@@ -445,7 +746,6 @@
                   <th scope="col">Customer Name</th>
                   <th scope="col">Order No</th>
                   <th scope="col">Total Price</th>
-                  <th scope="col">Discounted Price</th>
                   <th scope="col">Status</th>
                   <th scope="col">Modify</th>
 
@@ -461,8 +761,6 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
-
 
               </tbody>
             </table>
@@ -477,22 +775,7 @@
 
 
 
-
-
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
 
 
   </div>
@@ -502,6 +785,7 @@
   <script src="/script/commonValidationFunctions.js"></script>
   <script src="/uicontroller/invoice.js"></script>
 
+      </div>
 </body>
 
 </html>

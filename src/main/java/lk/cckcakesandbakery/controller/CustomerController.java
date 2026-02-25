@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lk.cckcakesandbakery.entity.CustomerHasItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -58,7 +59,37 @@ public class CustomerController {
     return customerDao.getCustomerByType(1);
   }
 
-  // Requesting customers based on customer type ----> Individual
+
+    // Requesting customers based on customer type ----> Shop and have orders
+    @GetMapping("/customer/alldataByShopCustomerAndHaveOrder")
+    public List<Customer> findAllDataByShopCustomerAndHaveOrder() {
+
+      return customerDao.getByShopCustomerAndHaveOrder();
+    }
+
+    // Requesting customers based on customer type ----> Individual and have orders
+    @GetMapping("/customer/alldataByIndividualCustomerAndHaveOrder")
+    public List<Customer> findAllDataByIndividualCustomerAndHaveOrder() {
+        return customerDao.getByIndividualCustomerAndHaveOrder();
+    }
+
+    // Requesting customers based on customer type ----> Shop and have Invoices
+    @GetMapping("/customer/alldataByShopCustomerAndHaveInvoice")
+    public List<Customer> findAllDataByShopCustomerAndHaveInvoice() {
+
+        return customerDao.getByShopCustomerOrderAndHaveInvoice();
+    }
+
+    // Requesting customers based on customer type ----> Individual and have Invoices
+    @GetMapping("/customer/alldataByIndividualCustomerAndHaveInvoice")
+    public List<Customer> findAllDataByIndividualCustomerAndHaveInvoice() {
+
+        return customerDao.getByIndividualCustomerOrderAndHaveInvoice();
+    }
+
+
+
+    // Requesting customers based on customer type ----> Individual
   @GetMapping("/customer/alldataByCustomerTypeShop")
   public List<Customer> findAllDataByCustomerTypeShop() {
     return customerDao.getCustomerByType(2);
@@ -129,8 +160,17 @@ public class CustomerController {
         customer.setAdd_user_id(loggedUser.getId());
         customer.setReg_no(customerDao.getNextCustomerRegNo());
 
+
+//        Saving data in association table
+        for (CustomerHasItem chi : customer.getCustomerHasItemList() ){
+            chi.setCustomer_id(customer);
+        }
+
         // save operator(save frontend object)
         customerDao.save(customer);
+
+
+
         return "OK";
       } catch (Exception e) {
         return "Save not completed :" + e.getMessage();
@@ -170,7 +210,7 @@ public class CustomerController {
       if (extCustomerById == null) {
         return "Delete Not Completed : Customer not exists...!";
 
-      } // This refferes to there is a id of thre object,but ithat id is not in the
+      } // This reffers to there is a id of the object,but that id is not in the
         // database
 
       try {
@@ -178,7 +218,7 @@ public class CustomerController {
         // Set auto added data
         extCustomerById.setDelete_date_time(LocalDateTime.now());
         extCustomerById.setDelete_user_id(loggedUser.getId());
-        extCustomerById.setCustomer_status_id(customerStatusDao.getReferenceById(3));
+        extCustomerById.setCustomer_status_id(customerStatusDao.getReferenceById(6));
 
         customerDao.save(extCustomerById);
 

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Requesting header area from common header page -> header.html using ThymeLeaf Function -->
+
+<head th:replace="header :: headerFragment"></head>
+
+<!-- This is a unique element in head area -->
+
+<head>
+    <!-- link external css file -->
+    <link rel="stylesheet" href="/css/item.css">
+
+</head>
+
+<body>
+
+    <!-- nav bar -->
+    <nav th:replace="topnavbar :: topNavbarFragment"></nav>
+
+
+        <div class="row mt-2 mb-3"></div>
+        <!-- Title Row -->
+        <div class="row mt-2 mb-3">
+            <div class="col-3"></div>
+            <div class=" col-6 text-center fw-bold title text-light"
+                style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                <h4><i class="fa-solid fa-hotdog"></i> Return Item Management</h4>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-8"></div>
+
+            <!-- Button trigger modal -->
+            <button type="button" style="height: 30px;  box-shadow: 0px 4px 6px rgba(0, 0,
+                0, 0.901);" class="btn btn-dark col-3" data-bs-toggle="modal" data-bs-target="#modalReturnItemForm">
+                <h6><i class="fa-solid fa-plus"></i>
+                    <b>Add Item</b>
+                </h6>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade modal-xl" id="modalReturnItemForm" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"
+                             style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+
+                            <!-- Form Row -->
+                            <div class="row">
+
+                                <div class="col-6">
+
+                                    <form onsubmit="return false " id="returnItemForm">
+                                                <div class="row mt-2 mb-3">
+
+                                                        <div class="col">
+                                                            <div class="mb-3">
+                                                                <label for="txtDate" class="form-label"><b>Date:<span
+                                                                        class="text-danger">*</span></b></label>
+                                                                <input type="date" class="form-control" id="txtDate"
+                                                                       onchange="dateValidator(this,'returnItem','date');">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <label for="selectSession"
+                                                                   class="form-label"><b>Session:<span
+                                                                    class="text-danger">*</span></b></label>
+                                                            <select class="form-select"
+                                                                    onchange="dynamicElementValidator(this,'returnItem','production_session_id')"
+                                                                    id="selectSession"></select>
+                                                        </div>
+
+                                                </div>
+
+
+                                                <div class="row mt-2 mb-3">
+
+                                                    <div class="col">
+                                                        <label for="selectCustomerName" class="form-label"><b>Shop Customer Name
+                                                            :<span class="text-danger">*</span></b></label>
+                                                        <select class="form-select" id="selectCustomerName"
+                                                                onchange="dynamicElementValidator(this,'returnItem','customer_id');"></select>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <label for="selectInvoiceNo" class="form-label"><b>Invoice No:<span class="text-danger">*</span></b></label>
+                                                        <select class="form-select" id="selectInvoiceNo"
+                                                                onchange="dynamicElementValidator(this,'returnItem','invoice_id'),refreshInnerInvoiceTable();"></select>
+                                                    </div>
+
+                                                </div>
+
+                                        <div class="row">
+
+                                            <div class="col">
+                                                <div class="mb-3">
+                                                    <label for="txtTotalReturningPrice" class="form-label"><b>Total Returning Price:</b></label>
+                                                    <input type="text" class="form-control" id="txtTotalReturningPrice" placeholder=" Total Returning Price">
+                                                </div>
+                                            </div>
+
+                                            <div class="col">
+                                                <label for="textNote" class="form-label fw-bold">Note
+                                                    :</label>
+                                                <textarea class="form-control" id="textNote" rows="2"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                    </form>
+
+                                </div>
+
+                                <div class="col-6">
+
+                                    <div class="card"  style="background-image:url('/images/newwww.jpg');  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">
+                                        <div class="card-body">
+
+                                            <!--                                            Item Table-->
+                                            <div class="row mt-2 mb-3">
+                                                <div class="  text-center fw-bold title text-light"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                    <h5>Invoice Item Inner Table</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2 mb-3">
+                                                <table class="table table-hover"
+                                                       id="invoiceInnerTable">
+                                                    <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Item Name</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Line Price</th>
+                                                        <th scope="col">Modify</th>
+
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tableInnerInvoiceBody" style="background-color: white">
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+                                            <hr><hr>
+                                            <!--Return Item InnerForm and Table-->
+
+                                            <div class="row">
+                                                <div class=" text-center fw-bold title text-light"
+                                                     style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                    <h5>Return Items Inner Form</h5>
+                                                </div>
+
+                                            </div>
+
+                                            <form id="returnItemInnerForm">
+                                                <div class="row">
+
+                                                    <div class="col">
+                                                        <label for="selectItemName"
+                                                               class="form-label"><b>Item Name:<span
+                                                                class="text-danger">*</span></b></label>
+                                                        <select class="form-select"
+                                                                onchange="dyanamicElementValidator1(this,'returnItemHasItem','item_id')"
+                                                                id="selectItemName"></select>
+                                                    </div>
+
+                                                    <div class="col">
+
+                                                        <div class="mb-3">
+                                                            <label for="txtReturningPrice"
+                                                                   class="form-label"><b>Returning Price:<span
+                                                                    class="text-danger">*</span></b></label>
+                                                            <input type="text" class="form-control"
+                                                                   onkeyup="linePriceGenerator();"
+                                                                   id="txtReturningPrice">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Looks not good!
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col">
+
+                                                        <div class="mb-3">
+                                                            <label for="txtItemQuantity"
+                                                                   class="form-label"><b>Item
+                                                                Quantity:<span
+                                                                        class="text-danger">*</span></b></label>
+                                                            <input type="text" class="form-control"
+                                                                   id="txtItemQuantity" onkeyup="textValidator(this,'^(([1-9])|([0-9][1-9]{1,10})$)' ,'returnItemHasItem','qty'), linePriceGenerator();"
+                                                                   placeholder="Ex: Enter Item Quantity">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Looks not good!
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-6">
+
+                                                        <div class="mb-3">
+                                                            <label for="txtLinePrice"
+                                                                   class="form-label"><b>Line Price:<span
+                                                                    class="text-danger">*</span></b></label>
+                                                            <input type="text" class="form-control"
+                                                                   id="txtLinePrice">
+                                                            <div class="valid-feedback">
+                                                                Looks good!
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Looks not good!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </form>
+
+                                            <div class="row">
+                                                <div class="col-3 text-start">
+                                                </div>
+                                                <div class="col-9 text-end">
+                                                    <button type="reset" class="btn btn-info"
+                                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)">Clear</button>
+
+                                                    <button type="submit"
+                                                            class="btn btn-success"
+                                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901)"
+                                                            onclick="buttonReturnItemInnerFormSubmit();"><i
+                                                            class="fa-solid fa-plus"></i>Add</button>
+                                                </div>
+
+                                            </div>
+
+
+<!--                                            Return Item Table-->
+                                            <hr><hr>
+
+                                            <div class="row mt-2 mb-3">
+                                                <div
+                                                        class="  text-center fw-bold title text-light"
+                                                        style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);background-color: #997645">
+                                                    <h5>Return Item Inner Table</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2 mb-3">
+                                                <table class="table table-hover"
+                                                       id="returnItemInnerTable">
+                                                    <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Item Name</th>
+                                                        <th scope="col">Returning Price</th>
+                                                        <th scope="col">Item Quantity</th>
+                                                        <th scope="col">Line Price</th>
+                                                        <th scope="col">Modify</th>
+
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="returnItemInnerTableBody" style="background-color: white">
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <!--Button Row-->
+                            <div class="row">
+                                <div class="text-end" id="buttonContainer">
+                                    <button type="reset" class="btn btn-info me-2"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);"
+                                            onclick="refreshForm()">Clear</button>
+
+                                    <button type="submit" class="btn btn-warning me-2" onclick="buttonReturnItemUpdate()"
+                                            id="buttonUpdate" form="returnItemForm"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);">Update</button>
+
+                                    <button type="submit" class="btn btn-success  me-2" onclick="buttonReturnItemSubmit()"
+                                            style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.901);" id="buttonSubmit"
+                                            form="returnItemForm"><i class="fa-solid fa-plus"></i>Add</button>
+                                </div>
+                            </div>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- model view/print -->
+            <div class="modal " id="modalItemView" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="w-100 text-center">
+                                <h5 class="modal-title" id="modalItemViewHeader">Return Item View</h5>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="card">
+                                <div class="card-body form-area">
+                                    <table class="table table-hover table-striped" id="tableItemView">
+
+
+                                        <tr>
+                                            <th>Item Code </th>
+                                            <td id="tdItemCode"></td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>Item Name</th>
+                                            <td id="tdItemName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Item Category</th>
+                                            <td id="tdItemCategory"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Item Status</th>
+                                            <td id="tdItemStatus"></td>
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary" onclick="printItemRow()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!----------------Start of Return Item Table------------------------->
+                <div class="row mt-2 text-center ">
+
+                    <div class="col-1"></div>
+                    <div class="col-10">
+
+                        <div class="card card-body" style="background-color: lavender; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.596);">
+                            <div class="row mt-2 mb-3">
+                                <h5><i class="fa-solid fa-table"></i> <b>Return Item Table</b></h5>
+                            </div>
+                            <div class="row mt-2 mb-3">
+                                <table class="table table-hover" id="returnItemTable">
+                                    <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Invoice No</th>
+                                        <th scope="col">Total Returning Price</th>
+                                        <th scope="col">Modify</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="returnItemTableBody" class="text-start">
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+<!------------------------End of Return Item Table------------------>
+            </div>
+        </div>
+
+
+        <script src="/script/commonFunctions.js"></script>
+        <script src="/script/commonValidationFunctions.js"></script>
+        <script src="/uicontroller/returningItem.js"></script>
+
+</body>
+
+</html>
